@@ -38,22 +38,36 @@ export class PostsController {
     return this.postsService.createPostDraft(user, data);
   }
 
-  @Post(':id/publish')
+  @Post(':postId/publish')
   @ApiResponse({ type: PostObject })
-  @ApiImplicitParam({ name: 'id', type: String, required: true })
-  async publishPost(@Param('id') id: string): Promise<PostObject> {
-    return this.postsService.publishPost(id);
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  async publishPost(@Param('postId') postId: string): Promise<PostObject> {
+    return this.postsService.publishPost(postId);
   }
 
-  @Post(':id/comment')
+  @Post(':postId/comment')
+  @UseGuards(OptionalRestAuthGuard)
+  @ApiBearerAuth()
   @ApiResponse({ type: Comment })
-  @ApiImplicitParam({ name: 'id', type: String, required: true })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
   async createComment(
     @UserEntity() user: User,
-    @Param('id') postId: string,
+    @Param('postId') postId: string,
     @Body() data: CreateCommentInput
   ): Promise<Comment> {
     return this.postsService.createCommentDraft(user, postId, data);
+  }
+
+  @Post(':postId/comment/:commentId/publish')
+  @ApiResponse({ type: PostObject })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  @ApiImplicitParam({ name: 'commentId', type: String, required: true })
+  async publishComment(
+    @UserEntity() user: User,
+    @Param('postId') postId: string,
+    @Param('commentId') commentId: string
+  ): Promise<Comment> {
+    return this.postsService.publishComment(user, postId, commentId);
   }
 
   @Get()
@@ -70,8 +84,8 @@ export class PostsController {
     return this.postsService.getPublishedPosts(paginationArgs, query, orderBy);
   }
 
-  @Get(':id')
-  async getPublishedPost(@Param('id') postId: string): Promise<PostObject> {
+  @Get(':postId')
+  async getPublishedPost(@Param('postId') postId: string): Promise<PostObject> {
     return this.postsService.getPublishedPost(postId);
   }
 }

@@ -10,6 +10,7 @@ import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection
 import { CreatePostInput } from './dto/create-post.input';
 import { Prisma } from '@prisma/client';
 import { CreateCommentInput } from './dto/create-comment.input';
+import { User } from '../users/models/user.model';
 
 @Injectable()
 export class PostsService {
@@ -30,11 +31,10 @@ export class PostsService {
 
   async publishPost(postId: string) {
     try {
-      const post = await this.prisma.post.update({
+      return await this.prisma.post.update({
         where: { id: postId },
         data: { published: true },
       });
-      return post;
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         switch (e.code) {
@@ -47,7 +47,11 @@ export class PostsService {
     }
   }
 
-  async createCommentDraft(user, postId, data: CreateCommentInput) {
+  async createCommentDraft(
+    user: User,
+    postId: string,
+    data: CreateCommentInput
+  ) {
     return this.prisma.comment.create({
       data: {
         published: false,
@@ -56,6 +60,24 @@ export class PostsService {
         postId,
       },
     });
+  }
+
+  async publishComment(user: User, postId: string, commentId: string) {
+    try {
+      return await this.prisma.comment.update({
+        where: { id: commentId },
+        data: { published: true },
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        switch (e.code) {
+          case 'P2025':
+            throw new NotFoundException('Comment does not exist');
+        }
+      } else {
+        throw new Error(e);
+      }
+    }
   }
 
   async getPublishedPosts(
