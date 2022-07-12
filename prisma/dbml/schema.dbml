@@ -11,6 +11,7 @@ Table User {
   firstname String
   lastname String
   posts Post [not null]
+  comments Comment [not null]
   role Role [not null]
 }
 
@@ -21,8 +22,21 @@ Table Post {
   published Boolean [not null]
   title String [not null]
   content String
+  comments Comment [not null]
   author User
   authorId String
+}
+
+Table Comment {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  published Boolean [not null]
+  content String
+  author User
+  authorId String
+  post Post [not null]
+  postId String [not null]
 }
 
 Enum Role {
@@ -31,3 +45,7 @@ Enum Role {
 }
 
 Ref: Post.authorId > User.id
+
+Ref: Comment.authorId > User.id
+
+Ref: Comment.postId > Post.id

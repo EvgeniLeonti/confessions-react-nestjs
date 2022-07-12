@@ -20,13 +20,18 @@ import { UserIdArgs } from './args/user-id.args';
 import { Post } from './models/post.model';
 import { PostConnection } from './models/post-connection.model';
 import { PostOrder } from './dto/post-order.input';
-import { CreatePostInput } from './dto/createPost.input';
+import { CreatePostInput } from './dto/create-post.input';
+import { UsersService } from '../users/users.service';
+import { PostsService } from './posts.service';
 
 const pubSub = new PubSub();
 
 @Resolver(() => Post)
 export class PostsResolver {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private postsService: PostsService,
+    private prisma: PrismaService
+  ) {}
 
   @Subscription(() => Post)
   postCreated() {
@@ -63,27 +68,11 @@ export class PostsResolver {
     })
     orderBy: PostOrder
   ) {
-    const a = await findManyCursorConnection(
-      (args) =>
-        this.prisma.post.findMany({
-          include: { author: true },
-          where: {
-            published: true,
-            title: { contains: query || '' },
-          },
-          orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : null,
-          ...args,
-        }),
-      () =>
-        this.prisma.post.count({
-          where: {
-            published: true,
-            title: { contains: query || '' },
-          },
-        }),
-      { first, last, before, after }
+    return this.postsService.getPublishedPosts(
+      { after, before, first, last },
+      query,
+      orderBy
     );
-    return a;
   }
 
   @Query(() => [Post])

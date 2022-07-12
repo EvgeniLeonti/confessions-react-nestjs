@@ -4,15 +4,12 @@ import { BaseModel } from 'src/common/models/base.model';
 import { ApiProperty } from '@nestjs/swagger';
 
 @ObjectType()
-export class Post extends BaseModel {
-  @ApiProperty()
-  title: string;
-
+export class Comment extends BaseModel {
   @ApiProperty()
   content: string;
 
-  @ApiProperty()
-  published: boolean;
+  // @ApiProperty()
+  // published: boolean;
 
   // @ApiProperty()
   author?: User;

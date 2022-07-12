@@ -21,6 +21,7 @@ model User {
   firstname String?
   lastname  String?
   posts     Post[]
+  comments  Comment[]
   role      Role
 }
 
@@ -31,8 +32,21 @@ model Post {
   published Boolean
   title     String
   content   String?
+  comments  Comment[]
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  published Boolean
+  content   String?
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  post      Post    @relation(fields: [postId], references: [id])
+  postId    String
 }
 
 enum Role {
