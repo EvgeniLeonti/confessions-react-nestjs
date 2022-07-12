@@ -69,21 +69,30 @@ export class PostsController {
   async getPublishedPost(@Param('postId') postId: string): Promise<PostObject> {
     return this.postsService.getPublishedPost(postId);
   }
+}
 
-  // admin
+@Controller('admin/posts')
+@ApiTags('Admin')
+@UseGuards(AdminRestAuthGuard)
+@ApiBearerAuth()
+export class PostsAdminController {
+  constructor(private postsService: PostsService) {}
 
-  @Post(':postId/admin/publish')
-  @UseGuards(AdminRestAuthGuard)
-  @ApiBearerAuth()
+  @Post(':postId/publish')
   @ApiResponse({ type: PostObject })
   @ApiImplicitParam({ name: 'postId', type: String, required: true })
   async publishPost(@Param('postId') postId: string): Promise<PostObject> {
     return this.postsService.publishPost(postId);
   }
 
-  @Post(':postId/comment/:commentId/admin/publish')
-  @UseGuards(AdminRestAuthGuard)
-  @ApiBearerAuth()
+  @Post(':postId/draft')
+  @ApiResponse({ type: PostObject })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  async draftPost(@Param('postId') postId: string): Promise<PostObject> {
+    return this.postsService.draftPost(postId);
+  }
+
+  @Post(':postId/comment/:commentId/publish')
   @ApiResponse({ type: PostObject })
   @ApiImplicitParam({ name: 'postId', type: String, required: true })
   @ApiImplicitParam({ name: 'commentId', type: String, required: true })

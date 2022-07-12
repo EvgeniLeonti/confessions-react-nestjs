@@ -29,6 +29,24 @@ export class PostsService {
     return newPost;
   }
 
+  async draftPost(postId: string) {
+    try {
+      return await this.prisma.post.update({
+        where: { id: postId },
+        data: { published: false },
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        switch (e.code) {
+          case 'P2025':
+            throw new NotFoundException('Post does not exist');
+        }
+      } else {
+        throw new Error(e);
+      }
+    }
+  }
+
   async publishPost(postId: string) {
     try {
       return await this.prisma.post.update({
