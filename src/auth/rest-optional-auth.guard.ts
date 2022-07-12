@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { RestAuthGuard } from './rest-auth.guard';
 
 @Injectable()
