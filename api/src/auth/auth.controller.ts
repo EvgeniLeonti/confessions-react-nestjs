@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { RestAuthGuard } from '../auth/rest-auth.guard';
+import { RestAuthGuard } from './rest-auth.guard';
 import { UserEntity } from '../common/decorators/user.decorator';
 import { AuthService } from './auth.service';
 import { LoginInput } from './dto/login.input';

@@ -67,7 +67,7 @@ npm install
 
 ### 2. PostgreSQL with Docker
 
-Setup a development PostgreSQL with Docker. Copy [.env.example](./.env.example) and rename to `.env` - `cp .env.example .env` - which sets the required environments for PostgreSQL such as `POSTGRES_USER`, `POSTGRES_PASSWORD` and `POSTGRES_DB`. Update the variables as you wish and select a strong password.
+Setup a development PostgreSQL with Docker. Copy [.env.example](.env.example) and rename to `.env` - `cp .env.example .env` - which sets the required environments for PostgreSQL such as `POSTGRES_USER`, `POSTGRES_PASSWORD` and `POSTGRES_DB`. Update the variables as you wish and select a strong password.
 
 Start the PostgreSQL database
 
@@ -79,7 +79,7 @@ npm run docker:db
 
 ### 3. Prisma Migrate
 
-[Prisma Migrate](https://github.com/prisma/prisma2/tree/master/docs/prisma-migrate) is used to manage the schema and migration of the database. Prisma datasource requires an environment variable `DATABASE_URL` for the connection to the PostgreSQL database. Prisma reads the `DATABASE_URL` from the root [.env](./.env) file.
+[Prisma Migrate](https://github.com/prisma/prisma2/tree/master/docs/prisma-migrate) is used to manage the schema and migration of the database. Prisma datasource requires an environment variable `DATABASE_URL` for the connection to the PostgreSQL database. Prisma reads the `DATABASE_URL` from the root [.env](.env) file.
 
 Use Prisma Migrate in your [development environment](https://www.prisma.io/blog/prisma-migrate-preview-b5eno5g08d0b#evolving-the-schema-in-development) to
 
@@ -170,7 +170,7 @@ Open up the [example GraphQL queries](graphql/auth.graphql) and copy them to the
 
 Nest server is a Node.js application and it is easily [dockerized](https://nodejs.org/de/docs/guides/nodejs-docker-webapp/).
 
-See the [Dockerfile](./Dockerfile) on how to build a Docker image of your Nest server.
+See the [Dockerfile](Dockerfile) on how to build a Docker image of your Nest server.
 
 Now to build a Docker image of your own Nest server simply run:
 
@@ -243,7 +243,7 @@ npm run prisma:generate:watch
 
 ## NestJS - Api Schema
 
-The [schema.graphql](./src/schema.graphql) is generated with [code first approach](https://docs.nestjs.com/graphql/quick-start#code-first) from the models, resolvers and input classes.
+The [schema.graphql](srcchema.graphql) is generated with [code first approach](https://docs.nestjs.com/graphql/quick-start#code-first) from the models, resolvers and input classes.
 
 You can use [class-validator](https://docs.nestjs.com/techniques/validation) to validate your inputs and arguments.
 
