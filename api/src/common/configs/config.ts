@@ -2,7 +2,7 @@ import type { Config } from './config.interface';
 
 const config: Config = {
   nest: {
-    port: 3000,
+    port: Number(process.env.PORT) || 3000,
   },
   cors: {
     enabled: true,
@@ -12,7 +12,7 @@ const config: Config = {
     title: 'Nestjs FTW',
     description: 'The nestjs API description',
     version: '1.5',
-    path: 'api',
+    path: 'docs',
   },
   graphql: {
     playgroundEnabled: true,
@@ -21,7 +21,7 @@ const config: Config = {
     sortSchema: true,
   },
   security: {
-    expiresIn: '2m',
+    expiresIn: '60m',
     refreshIn: '7d',
     bcryptSaltOrRound: 10,
   },

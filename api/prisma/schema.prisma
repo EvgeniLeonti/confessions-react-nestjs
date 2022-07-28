@@ -30,8 +30,8 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   published Boolean
-  title     String
-  content   String?
+  title     String?
+  content   String
   comments  Comment[]
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?

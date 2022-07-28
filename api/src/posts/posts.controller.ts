@@ -10,7 +10,7 @@ import {
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PostOrder, PostOrderField } from './dto/post-order.input';
 import { PostsService } from './posts.service';
-import { GetPublishedPostsInput } from './dto/get-published-posts.input';
+import { GetPostsInput } from './dto/get-posts.input';
 import { CreatePostInput } from './dto/create-post.input';
 import { Post as PostObject } from './models/post.model';
 import { PageInfo } from '../common/pagination/page-info.model';
@@ -21,6 +21,7 @@ import { OptionalRestAuthGuard } from '../auth/rest-optional-auth.guard';
 import { CreateCommentInput } from './dto/create-comment.input';
 import { Comment } from './models/comment.model';
 import { AdminRestAuthGuard } from '../auth/rest-admin-auth.guard';
+import { OrderDirection } from '../common/order/order-direction';
 
 @Controller('posts')
 @ApiTags('Posts')
@@ -53,7 +54,7 @@ export class PostsController {
 
   @Get()
   async getPublishedPosts(
-    @Query() getPublishedPostsInput: GetPublishedPostsInput
+    @Query() getPublishedPostsInput: GetPostsInput
   ): Promise<{ items: PostObject[]; pageInfo: PageInfo; totalCount: number }> {
     const { after, before, first, last, query, orderByField } =
       getPublishedPostsInput;
@@ -77,6 +78,20 @@ export class PostsController {
 @ApiBearerAuth()
 export class PostsAdminController {
   constructor(private postsService: PostsService) {}
+
+  @Get('')
+  async getAllPosts(
+    @Query() input: GetPostsInput
+  ): Promise<{ items: PostObject[]; pageInfo: PageInfo; totalCount: number }> {
+    const { after, before, first, last, query, orderByField } = input;
+
+    const paginationArgs = { after, before, first, last };
+    const orderBy = new PostOrder();
+    orderBy.field = orderByField ? orderByField : PostOrderField.createdAt;
+    orderBy.direction = OrderDirection.desc; // todo - make this configurable
+
+    return this.postsService.getAllPosts(paginationArgs, query, orderBy);
+  }
 
   @Post(':postId/publish')
   @ApiResponse({ type: PostObject })

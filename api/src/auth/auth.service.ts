@@ -1,5 +1,5 @@
 import { PrismaService } from 'nestjs-prisma';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, Role, User } from '@prisma/client';
 import {
   Injectable,
   NotFoundException,
@@ -24,6 +24,16 @@ export class AuthService {
   ) {}
 
   async createUser(payload: SignupInput): Promise<Token> {
+    const user = await this.prisma.user.findUnique({
+      where: { email: payload.email },
+    });
+
+    if (user) {
+      throw new ConflictException(
+        `User with email ${payload.email} already exists`
+      );
+    }
+
     const hashedPassword = await this.passwordService.hashPassword(
       payload.password
     );
@@ -37,9 +47,7 @@ export class AuthService {
         },
       });
 
-      return this.generateTokens({
-        userId: user.id,
-      });
+      return this.generateTokens(user);
     } catch (e) {
       if (
         e instanceof Prisma.PrismaClientKnownRequestError &&
@@ -65,12 +73,10 @@ export class AuthService {
     );
 
     if (!passwordValid) {
-      throw new BadRequestException('Invalid password');
+      throw new UnauthorizedException('Wrong password');
     }
 
-    return this.generateTokens({
-      userId: user.id,
-    });
+    return this.generateTokens(user);
   }
 
   validateUser(userId: string): Promise<User> {
@@ -82,7 +88,11 @@ export class AuthService {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
-  generateTokens(payload: { userId: string }): Token {
+  generateTokens(user: User): Token {
+    const payload = {
+      userId: user.id,
+      role: user.role,
+    };
     return {
       accessToken: this.generateAccessToken(payload),
       refreshToken: this.generateRefreshToken(payload),
@@ -101,15 +111,13 @@ export class AuthService {
     });
   }
 
-  refreshToken(token: string) {
+  refreshToken(token: string): Token {
     try {
-      const { userId } = this.jwtService.verify(token, {
+      const user = this.jwtService.verify(token, {
         secret: this.configService.get('JWT_REFRESH_SECRET'),
       });
 
-      return this.generateTokens({
-        userId,
-      });
+      return this.generateTokens(user);
     } catch (e) {
       throw new UnauthorizedException();
     }

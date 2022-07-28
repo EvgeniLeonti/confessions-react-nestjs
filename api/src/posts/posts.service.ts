@@ -144,4 +144,39 @@ export class PostsService {
     }
     return post;
   }
+
+  async getAllPosts(
+    { after, before, first, last }: PaginationArgs,
+    query: string,
+    orderBy: PostOrder
+  ) {
+    const where = {
+      title: query ? { contains: query } : undefined,
+    };
+
+    const findMany = (args) =>
+      this.prisma.post.findMany({
+        include: { author: true },
+        where,
+        orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : null,
+        ...args,
+      });
+
+    const aggregate = () => this.prisma.post.count({ where });
+
+    const rawResult = await findManyCursorConnection(findMany, aggregate, {
+      first,
+      last,
+      before,
+      after,
+    });
+
+    const { pageInfo, totalCount, edges } = rawResult;
+
+    return {
+      items: edges.map((edge) => edge.node),
+      pageInfo,
+      totalCount,
+    };
+  }
 }

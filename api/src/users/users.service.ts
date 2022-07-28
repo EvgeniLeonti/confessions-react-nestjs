@@ -1,5 +1,9 @@
 import { PrismaService } from 'nestjs-prisma';
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PasswordService } from 'src/auth/password.service';
 import { ChangePasswordInput } from './dto/change-password.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -31,7 +35,7 @@ export class UsersService {
     );
 
     if (!passwordValid) {
-      throw new BadRequestException('Invalid password');
+      throw new UnauthorizedException('Wrong password');
     }
 
     const hashedPassword = await this.passwordService.hashPassword(

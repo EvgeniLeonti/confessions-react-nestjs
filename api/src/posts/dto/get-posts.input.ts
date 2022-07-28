@@ -6,7 +6,7 @@ import { PaginationArgs } from '../../common/pagination/pagination.args';
 import { PostOrder, PostOrderField } from './post-order.input';
 
 @InputType()
-export class GetPublishedPostsInput {
+export class GetPostsInput {
   // PaginationArgs
 
   @ApiPropertyOptional()
