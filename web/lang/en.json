@@ -1,0 +1,30 @@
+{
+  "CONFESSION": {
+    "SUBMISSION": {
+      "TITLE": "Confess",
+      "SUCCESS": "Congratulation! You have successfully confessed. It will be reviewed by the team and will be published in case of approval.",
+      "FAILURE": "Sorry! Something went wrong. Please try again later.",
+      "SUBMIT": "Submit"
+    }
+  },
+  "AUTH": {
+    "LOGIN": {
+      "TITLE": "Login",
+      "SUCCESS": "You have successfully logged in.",
+      "FAILURE": "Sorry! Something went wrong. Please try again later.",
+      "SUBMIT": "Login"
+    },
+    "LOGOUT": {
+      "TITLE": "Logout",
+      "SUCCESS": "You have successfully logged out.",
+      "FAILURE": "Sorry! Something went wrong. Please try again later.",
+      "SUBMIT": "Logout"
+    },
+    "SIGNUP": {
+      "TITLE": "Signup",
+      "SUCCESS": "You have successfully registered.",
+      "FAILURE": "Sorry! Something went wrong. Please try again later.",
+      "SUBMIT": "Signup"
+    }
+  }
+}

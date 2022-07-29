@@ -62,6 +62,7 @@ export class PostsController {
     const paginationArgs = { after, before, first, last };
     const orderBy = new PostOrder();
     orderBy.field = orderByField ? orderByField : PostOrderField.createdAt;
+    orderBy.direction = OrderDirection.desc; // todo - make this configurable
 
     return this.postsService.getPublishedPosts(paginationArgs, query, orderBy);
   }

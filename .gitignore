@@ -1,1 +1,41 @@
 .idea
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
+
+# Compiled output
+web/dist/
+
+# Yarn package manager with PnP
+# https://yarnpkg.com/getting-started/qa/#which-files-should-be-gitignored
+web/.pnp.*
+web/.yarn/*
+web/!.yarn/patches
+web/!.yarn/plugins
+web/!.yarn/releases
+web/!.yarn/sdks
+web/!.yarn/versions
+
+# Logs
+web/yarn-debug.log*
+web/yarn-error.log*
+
+# Cache
+web/.cache
+web/.eslintcache
+
+# Testing
+web//coverage
+web/*.lcov
+
+# Environment variables
+web/*.override.env
+
+# Visual Studio Code
+# https://github.com/github/gitignore/blob/master/Global/VisualStudioCode.gitignore
+web/.vscode/*
+web/!.vscode/settings.json
+web/!.vscode/tasks.json
+web/!.vscode/launch.json
+web/!.vscode/extensions.json
+web/!.vscode/react.code-snippets
+
