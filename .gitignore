@@ -39,3 +39,11 @@ web/!.vscode/launch.json
 web/!.vscode/extensions.json
 web/!.vscode/react.code-snippets
 
+# macOS
+# https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
+.DS_Store
+/web/node_modules/
+/web/.husky
+/web/.yarn
+/web/.github
+/web/.vscode
