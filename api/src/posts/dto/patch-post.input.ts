@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { InputType, Field } from '@nestjs/graphql';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 @InputType()
 export class PatchPostInput {
@@ -8,4 +8,8 @@ export class PatchPostInput {
   @Field()
   @IsNotEmpty()
   content: string;
+
+  @ApiPropertyOptional()
+  @Field()
+  language: string;
 }

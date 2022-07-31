@@ -3,6 +3,7 @@ import {Box, Button, TextField} from "@mui/material";
 import * as React from "react";
 import {LoadingButton} from "@mui/lab";
 import Typography from "@mui/material/Typography";
+import i18n from "../i18n/i18n";
 
 export default function EditableConfessionContent(props: any) {
   const { id, value, updateValue } = props;
@@ -63,6 +64,7 @@ export default function EditableConfessionContent(props: any) {
           display: '-webkit-box',
           WebkitLineClamp: '1',
           WebkitBoxOrient: 'vertical',
+          textAlign: i18n.dir() === 'rtl' ? 'right' : 'left',
         }}
         style={{cursor: 'pointer'}}
         onClick={() => setIsEditing(!isEditing)}

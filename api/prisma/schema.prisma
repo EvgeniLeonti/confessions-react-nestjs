@@ -35,6 +35,7 @@ model Post {
   comments  Comment[]
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?
+  language  String?
 }
 
 model Comment {

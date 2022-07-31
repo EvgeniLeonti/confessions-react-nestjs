@@ -5,9 +5,14 @@ import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import * as React from "react";
 import { detectTheme, saveTheme, ToggleThemeContext } from "../core/theme";
 import * as theme from "../theme";
+import i18n from "../i18n/i18n";
 
 function ThemeProvider(props: ThemeProviderProps): JSX.Element {
-  const [value, setValue] = React.useState(detectTheme);
+  const detectedTheme = detectTheme();
+  detectedTheme.direction = i18n.dir()
+
+
+  const [value, setValue] = React.useState(detectedTheme);
 
   const toggleTheme = React.useCallback(() => {
     setValue(({ palette }) => {
@@ -20,6 +25,7 @@ function ThemeProvider(props: ThemeProviderProps): JSX.Element {
       }
     });
   }, []);
+
 
   return (
     <MuiThemeProvider theme={value}>

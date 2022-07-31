@@ -25,6 +25,7 @@ Table Post {
   comments Comment [not null]
   author User
   authorId String
+  language String
 }
 
 Table Comment {

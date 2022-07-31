@@ -1,7 +1,6 @@
 import {string} from "zod";
 import GenericForm from "./GenericForm";
 import {useCreateConfessionMutation} from "../store/api";
-import LANG from "../lang";
 import {useHistory} from "../core";
 import {useTranslation} from "react-i18next";
 
@@ -20,10 +19,10 @@ const Confess = () => {
       }}
       fields={[
         {
-          type: 'text', name: 'content', label: 'Content', multiline: true, rows: 8,
+          type: 'text', name: 'content', label: t('confession.submission.content'), multiline: true, rows: 8,
           schema: string()
-            .nonempty('Content is required')
-            .min(5, 'Content too short')
+            .nonempty(t('confession.submission.content.required'))
+            .min(5, t('confession.submission.content.min'))
           ,
         },
       ]}

@@ -58,7 +58,7 @@ export class PostsController {
   async getPublishedPosts(
     @Query() getPublishedPostsInput: GetPostsInput
   ): Promise<{ items: PostObject[]; pageInfo: PageInfo; totalCount: number }> {
-    const { after, before, first, last, query, orderByField } =
+    const { after, before, first, last, query, orderByField, lang } =
       getPublishedPostsInput;
 
     const paginationArgs = { after, before, first, last };
@@ -66,7 +66,11 @@ export class PostsController {
     orderBy.field = orderByField ? orderByField : PostOrderField.createdAt;
     orderBy.direction = OrderDirection.desc; // todo - make this configurable
 
-    return this.postsService.getPublishedPosts(paginationArgs, query, orderBy);
+    return this.postsService.getPublishedPosts(
+      paginationArgs,
+      { query, language: lang },
+      orderBy
+    );
   }
 
   @Get(':postId')

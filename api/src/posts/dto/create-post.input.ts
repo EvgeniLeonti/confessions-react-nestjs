@@ -11,5 +11,9 @@ export class CreatePostInput {
 
   @ApiPropertyOptional()
   @Field()
-  title: string;
+  title?: string;
+
+  @ApiPropertyOptional()
+  @Field()
+  language?: string;
 }

@@ -29,6 +29,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
   const { t } = useTranslation();
   const { sx, ...other } = props;
   const menuAnchorRef = React.createRef<HTMLButtonElement>();
+  const languageMenuAnchorRef = React.createRef<HTMLButtonElement>();
   const toggleTheme = useToggleTheme();
   const { ...auth } = useAuth();
   const navigate = useNavigate();
@@ -43,10 +44,14 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
   });
 
   function openNotificationsMenu() {
+    console.log('openNotificationsMenu', menuAnchorRef.current)
+
     setAnchorEl((x) => ({ ...x, notifications: menuAnchorRef.current }));
   }
 
   function closeNotificationsMenu() {
+    console.log('closeNotificationsMenu', menuAnchorRef.current)
+
     setAnchorEl((x) => ({ ...x, notifications: null }));
   }
 
@@ -59,10 +64,13 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
   }
 
   function openLanguageMenu() {
-    setAnchorEl((x) => ({ ...x, languageMenu: menuAnchorRef.current }));
+    console.log('openLanguageMenu', languageMenuAnchorRef.current)
+    setAnchorEl((x) => ({ ...x, languageMenu: languageMenuAnchorRef.current }));
   }
 
   function closeLanguageMenu() {
+    console.log('closeLanguageMenu', languageMenuAnchorRef.current)
+
     setAnchorEl((x) => ({ ...x, languageMenu: null }));
   }
 
@@ -95,15 +103,34 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         }} />
 
         <IconButton
-          ref={menuAnchorRef}
+          ref={languageMenuAnchorRef}
           sx={{
             'margin-inline-end': (x) => x.spacing(2),
             width: 40,
             height: 40,
           }}
           children={<LanguageButton />}
-          onClick={openLanguageMenu}
+          onClick={() => {
+            console.log('sd')
+            openLanguageMenu();
+            // openNotificationsMenu();
+          }}
         />
+
+        {/*<IconButton*/}
+        {/*  sx={{*/}
+        {/*    marginLeft: (x) => x.spacing(1),*/}
+        {/*    backgroundColor: (x) =>*/}
+        {/*      x.palette.mode === "light"*/}
+        {/*        ? x.palette.grey[300]*/}
+        {/*        : x.palette.grey[700],*/}
+        {/*    width: 40,*/}
+        {/*    height: 40,*/}
+        {/*  }}*/}
+        {/*  children={<LanguageButton />}*/}
+        {/*  onClick={openNotificationsMenu}*/}
+        {/*/>*/}
+
 
 
 
@@ -186,17 +213,18 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         onClose={closeNotificationsMenu}
         PaperProps={{ sx: { marginTop: "8px" } }}
       />
+      <LanguageMenu
+        anchorEl={anchorEl.languageMenu}
+        onClose={closeLanguageMenu}
+        PaperProps={{ sx: { marginTop: "8px" } }}
+      />
       <UserMenu
         anchorEl={anchorEl.userMenu}
         onClose={closeUserMenu}
         PaperProps={{ sx: { marginTop: "8px" } }}
         onChangeTheme={toggleTheme}
       />
-      <LanguageMenu
-        anchorEl={anchorEl.languageMenu}
-        closeMenu={closeLanguageMenu}
-        PaperProps={{ sx: { marginTop: "8px" } }}
-      />
+
     </AppBar>
   );
 }

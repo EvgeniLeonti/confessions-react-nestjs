@@ -2,6 +2,7 @@ import {configureStore, isRejectedWithValue, Middleware, MiddlewareAPI} from '@r
 import counterReducer from '../store/counter.state'
 import authReducer, {unsetAccessToken} from '../store/auth.state'
 import toastReducer, {pushNotification} from '../store/toast.state'
+import appReducer, {setLanguage} from '../store/app.state'
 import {confessionApi} from "./api";
 
 const customMiddleware: Middleware =
@@ -63,6 +64,7 @@ const customMiddleware: Middleware =
 
 export const store = configureStore({
   reducer: {
+    app: appReducer,
     counter: counterReducer,
     auth: authReducer,
     toast: toastReducer,

@@ -70,7 +70,7 @@ export class PostsResolver {
   ) {
     return this.postsService.getPublishedPosts(
       { after, before, first, last },
-      query,
+      { query },
       orderBy
     );
   }

@@ -1,13 +1,18 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft <hello@kriasoft.com> */
 /* SPDX-License-Identifier: MIT */
 
-import {Link, ListItemIcon, ListItemText, Menu, MenuItem, MenuProps,} from "@mui/material";
+import {Link, ListItemIcon, ListItemText, Menu, MenuItem, MenuProps, Switch,} from "@mui/material";
 import {useTheme} from "@mui/material/styles";
 import * as React from "react";
 import i18n from "../i18n/i18n";
 import {useTranslation} from "react-i18next";
 import {pushNotification} from "../store/toast.state";
 import {useDispatch} from "react-redux";
+import {setLanguage} from "../store/app.state";
+import {useAuth, useHistory, useNavigate} from "../core";
+import {unsetAccessToken} from "../store/auth.state";
+import {Brightness4, Settings} from "@mui/icons-material";
+import {Logout} from "../icons";
 
 type LanguageMenuProps = Omit<
   MenuProps,
@@ -17,18 +22,26 @@ type LanguageMenuProps = Omit<
 };
 
 export function LanguageMenu(props: LanguageMenuProps): JSX.Element {
+  const { onChangeTheme, PaperProps, MenuListProps, ...other } = props;
   const { t } = useTranslation();
-  const { closeMenu, PaperProps, MenuListProps, ...other } = props;
-  const theme = useTheme();
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const history = useHistory();
+  const theme = useTheme();
+  const auth = useAuth();
+
+  function handleClick(event: React.MouseEvent<HTMLAnchorElement>): void {
+    props.onClose?.(event, "backdropClick");
+    navigate(event);
+  }
 
   function changeLanguage(lng: string) {
     const prevLng = i18n.language;
     i18n.changeLanguage(lng)
     document.body.dir = i18n.dir() || 'ltr';
     theme.direction = i18n.dir() || 'ltr';
-    closeMenu();
+    // onClose();
 
     if (prevLng !== lng) {
       dispatch(pushNotification({message: t(`language.change.success`), options: { variant: 'success' } }))
@@ -38,7 +51,7 @@ export function LanguageMenu(props: LanguageMenuProps): JSX.Element {
   const languages = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
     { code: 'he', name: 'עברית', flag: '🇮🇱' },
-  ]
+  ];
 
   return (
     <Menu
@@ -58,7 +71,16 @@ export function LanguageMenu(props: LanguageMenuProps): JSX.Element {
         </MenuItem>
       ))}
 
-    </Menu>
 
+
+      {/*<MenuItem onClick={signOut}>*/}
+      {/*  <ListItemIcon sx={{ minWidth: 40 }} children={<Logout />} />*/}
+      {/*  <ListItemText primary="Log Out" />*/}
+      {/*</MenuItem>*/}
+
+      {/* Copyright and links to legal documents */}
+
+
+    </Menu>
   );
 }

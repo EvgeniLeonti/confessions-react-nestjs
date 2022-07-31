@@ -6,7 +6,7 @@ import { IconButton, IconButtonProps } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useToggleTheme } from "../core";
 
-function LanguageButton(props: ThemeButtonProps): JSX.Element {
+function LanguageButton(props: LanguageButtonProps): JSX.Element {
   const { ...other } = props;
   const toggleTheme = useToggleTheme();
   const theme = useTheme();
@@ -16,6 +16,6 @@ function LanguageButton(props: ThemeButtonProps): JSX.Element {
   );
 }
 
-type ThemeButtonProps = Omit<IconButtonProps, "children">;
+type LanguageButtonProps = Omit<IconButtonProps, "children">;
 
 export { LanguageButton };

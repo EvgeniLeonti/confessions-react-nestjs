@@ -1,35 +1,17 @@
-import {Alert, Box, Container, TextField, Typography,} from '@mui/material';
+import {Box, Container, FormControl, FormHelperText, Input, InputLabel, TextField, Typography,} from '@mui/material';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {object, string, TypeOf} from 'zod';
+import {object, TypeOf} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import * as React from 'react';
 import {useState} from 'react';
 import {LoadingButton} from '@mui/lab';
-import {useSignupMutation} from "../store/api";
-import LANG from "../lang";
 import {useSnackbar} from "notistack";
 import {pushNotification} from "../store/toast.state";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {styled} from '@mui/material/styles';
+import i18n from "../i18n/i18n";
+import {RootState} from "../store/store";
 
-// const registerSchema = object({
-//   // name: string()
-//   //   .nonempty('Name is required')
-//   //   .max(32, 'Name must be less than 100 characters'),
-//   email: string().nonempty('Email is required').email('Email is invalid'),
-//   password: string()
-//     .nonempty('Password is required')
-//     .min(8, 'Password must be more than 8 characters')
-//     .max(32, 'Password must be less than 32 characters'),
-//   passwordConfirm: string().nonempty('Please confirm your password'),
-//   // terms: literal(true, {
-//   //   invalid_type_error: 'Accept Terms is required',
-//   // }),
-// }).refine((data) => data.password === data.passwordConfirm, {
-//   path: ['passwordConfirm'],
-//   message: 'Passwords do not match',
-// });
-//
-// type RegisterInput = TypeOf<typeof registerSchema>;
 
 
 const GenericForm = (props: any) => {
@@ -55,6 +37,7 @@ const GenericForm = (props: any) => {
   const [mutation, {isLoading}] = useMutation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [success, setSuccess] = useState(false);
+  const appState = useSelector((state: RootState) => state.app);
 
   const dispatch = useDispatch();
 
@@ -104,21 +87,26 @@ const GenericForm = (props: any) => {
         autoComplete='off'
         onSubmit={handleSubmit(onSubmitHandler)}
       >
-          {fields.map(({type, name, label, multiline, rows}, index) => (
-            <TextField
-              key={`field-${name}-${index}`}
-              sx={{ mb: 3 }}
-              label={label}
-              fullWidth
-              required
-              type={type}
-              error={!!errors[name]}
-              helperText={errors[name] ? errors[name].message : ''}
-              {...register(name)}
-              multiline={multiline}
-              rows={rows}
-            />
-          ))}
+          {fields.map(({type, name, label, multiline, rows}, index) => {
+            return (
+              <>
+                <TextField
+                  key={`field-${name}-${index}`}
+                  sx={{ mb: 3 }}
+                  label={label}
+                  fullWidth
+                  required
+                  type={type}
+                  error={!!errors[name]}
+                  helperText={errors[name] ? errors[name].message : ''}
+                  {...register(name)}
+                  multiline={multiline}
+                  rows={rows}
+                />
+              </>
+
+            )
+          })}
 
           <LoadingButton
             variant='contained'

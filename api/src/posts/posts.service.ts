@@ -12,18 +12,23 @@ import { Prisma } from '@prisma/client';
 import { CreateCommentInput } from './dto/create-comment.input';
 import { User } from '../users/models/user.model';
 import { PatchPostInput } from './dto/patch-post.input';
+import guessLanguage from '../lib/guess-language';
 
+// import { franc, francAll } from 'franc';
+// const { franc } = require('franc');
 @Injectable()
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
   async createPostDraft(user, data: CreatePostInput) {
+    const language = data.language || (await this.detectLanguage(data.content));
     const newPost = this.prisma.post.create({
       data: {
         published: false,
         title: data.title,
         content: data.content,
         authorId: user ? user.id : undefined,
+        language,
       },
     });
     // pubSub.publish('postCreated', { postCreated: newPost });
@@ -121,12 +126,13 @@ export class PostsService {
 
   async getPublishedPosts(
     { after, before, first, last }: PaginationArgs,
-    query: string,
+    { query, language }: { query?: string; language?: string },
     orderBy: PostOrder
   ) {
     const where = {
       published: true,
       title: query ? { contains: query } : undefined,
+      language,
     };
 
     const findMany = (args) =>
@@ -194,10 +200,42 @@ export class PostsService {
 
     const { pageInfo, totalCount, edges } = rawResult;
 
+    const items = edges.map((edge) => edge.node);
+
+    // todo migration only
+    // for (const item of items) {
+    //   const language = await this.detectLanguage(item.content);
+    //   await this.prisma.post.update({
+    //     where: { id: item.id },
+    //     data: { language },
+    //   });
+    // }
+
     return {
-      items: edges.map((edge) => edge.node),
+      items,
       pageInfo,
       totalCount,
     };
+  }
+
+  private async detectLanguage(content: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      guessLanguage().detect(content, function (language) {
+        resolve(language);
+        console.log(
+          'Detected language code of provided text is [' + language + ']'
+        );
+      });
+    });
+
+    // const res = guessLanguage().detect(content, function (language) {
+    //   console.log(
+    //     'Detected language code of provided text is [' + language + ']'
+    //   );
+    // });
+    //
+    // console.log(res);
+    // return '';
+    // return franc(content); // => 'heb' / 'eng' etc :https://github.com/wooorm/franc
   }
 }

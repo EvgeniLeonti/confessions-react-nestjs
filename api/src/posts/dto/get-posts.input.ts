@@ -33,4 +33,7 @@ export class GetPostsInput {
 
   @ApiPropertyOptional()
   query: string;
+
+  @ApiPropertyOptional()
+  lang?: string;
 }

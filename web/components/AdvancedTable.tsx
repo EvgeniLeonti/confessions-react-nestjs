@@ -45,6 +45,16 @@ export default function DataTable() {
       }
     },
     {
+      name: "language",
+      label: "Language",
+      options: {
+        filter: true,
+        filterType: 'dropdown',
+
+        // setCellProps: () => ({ style: { width: "50px" } }),
+      }
+    },
+    {
       name: "content",
       label: "Content",
       options: {
@@ -53,7 +63,8 @@ export default function DataTable() {
           const id = tableMeta.rowData[0];
 
           return (
-            <EditableConfessionContent id={id} value={value} updateValue={updateValue}/>
+            <EditableConfessionContent key={id} id={id} value={value} updateValue={updateValue}/>
+            // <div>{value}</div>
           )
         },
       },

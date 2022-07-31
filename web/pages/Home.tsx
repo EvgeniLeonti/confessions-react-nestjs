@@ -22,7 +22,7 @@ function Home(): JSX.Element {
       {error ? (
         <>Oh no, there was an error</>
       ) : isLoading ? (
-        <>Loading...</>
+        <>{t('loading')}</>
       ) : data ? (
         <>
           {data.items.map(item => <>

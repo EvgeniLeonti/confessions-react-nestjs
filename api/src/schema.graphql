@@ -18,7 +18,8 @@ input ChangePasswordInput {
 
 input CreatePostInput {
   content: String!
-  title: String!
+  language: String
+  title: String
 }
 
 """

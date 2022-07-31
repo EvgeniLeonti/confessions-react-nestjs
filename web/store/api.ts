@@ -2,6 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {RootState} from "./store";
 import {useSelector} from "react-redux";
+import i18n from "../i18n/i18n";
 // import type { Pokemon } from './types'
 
 export interface Api {
@@ -58,7 +59,7 @@ export const confessionApi = createApi({
 
     // confessions
     getConfessions: builder.query<Api, string>({
-      query: () => `posts`,
+      query: () => `posts?lang=${i18n.language}`,
       providesTags: (result) =>
         result?.items ? result.items.map(({ id }) => ({ type: 'Posts', id })) : ['Posts']
     }),
