@@ -17,7 +17,7 @@ import {useDispatch} from "react-redux";
 import {pushNotification} from "../store/toast.state";
 import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
-import Content from "./Content";
+import ConfessionContent from "./ConfessionContent";
 
 interface Data {
   id: string;
@@ -110,7 +110,7 @@ export default function ConfessionsTable(props: any) {
 
 
                 <Typography>
-                  <Content text={row.content} />
+                  <ConfessionContent text={row.content} />
                 </Typography>
                 {/*<Table size="small" aria-label="purchases">*/}
                 {/*  <TableHead>*/}

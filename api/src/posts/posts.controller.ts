@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -22,6 +23,7 @@ import { CreateCommentInput } from './dto/create-comment.input';
 import { Comment } from './models/comment.model';
 import { AdminRestAuthGuard } from '../auth/rest-admin-auth.guard';
 import { OrderDirection } from '../common/order/order-direction';
+import { PatchPostInput } from './dto/patch-post.input';
 
 @Controller('posts')
 @ApiTags('Posts')
@@ -106,6 +108,16 @@ export class PostsAdminController {
   @ApiImplicitParam({ name: 'postId', type: String, required: true })
   async draftPost(@Param('postId') postId: string): Promise<PostObject> {
     return this.postsService.draftPost(postId);
+  }
+
+  @Patch(':postId')
+  @ApiResponse({ type: PostObject })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  async patchPost(
+    @Param('postId') postId: string,
+    @Body() data: PatchPostInput
+  ): Promise<PostObject> {
+    return this.postsService.patchPost(postId, data);
   }
 
   @Post(':postId/comment/:commentId/publish')

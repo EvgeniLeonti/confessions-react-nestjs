@@ -2,7 +2,7 @@
 /* SPDX-License-Identifier: MIT */
 
 import Typography from "@mui/material/Typography";
-function Content({text}: {text: string}): JSX.Element {
+function ConfessionContent({text}: {text: string}): JSX.Element {
 
   return (
     <>
@@ -11,5 +11,5 @@ function Content({text}: {text: string}): JSX.Element {
   );
 }
 
-export default Content;
-export type Content = typeof Content;
+export default ConfessionContent;
+export type ConfessionContent = typeof ConfessionContent;

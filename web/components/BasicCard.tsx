@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Content from "./Content";
+import ConfessionContent from "./ConfessionContent";
 
 export default function BasicCard(props) {
 
@@ -19,7 +19,7 @@ export default function BasicCard(props) {
 
 
         {/*{props.primary && <Typography sx={{ mb: 1.5 }} variant="body2" >{props.primary}</Typography>}*/}
-        {props.primary && <Content text={props.primary} />}
+        {props.primary && <ConfessionContent text={props.primary} />}
         {props.children}
       </CardContent>
       {/*<CardActions>*/}

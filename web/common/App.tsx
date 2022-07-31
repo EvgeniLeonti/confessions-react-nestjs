@@ -39,7 +39,7 @@ class App extends React.Component<AppProps> {
 
     console.log('App mounted state', this.state.location.pathname);
 
-    document.dir = 'rtl';
+    // document.dir = 'rtl';
   }
 
   componentDidUpdate(): void {

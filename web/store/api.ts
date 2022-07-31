@@ -86,13 +86,22 @@ export const confessionApi = createApi({
         result?.items ? result.items.map(({ id }) => ({ type: 'Posts', id })) : ['Posts']
     }),
 
+    patchConfession: builder.mutation<Api, Partial<Api> & Pick<Api, 'id'>>({
+      query: ({ id, ...body }) => ({
+        url: `admin/posts/${id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Posts'], // todo invalidate by id
+    }),
+
     publishConfession: builder.mutation<Api, Partial<Api> & Pick<Api, 'id'>>({
       query: ({ id, ...body }) => ({
         url: `admin/posts/${id}/publish`,
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Posts'],
+      invalidatesTags: ['Posts'], // todo invalidate by id
 
       // todo invalidate by id
       // invalidatesTags: (result, error, arg) => [{ type: 'Post', id: arg.id }],
@@ -121,6 +130,7 @@ export const {
   useCreateConfessionMutation,
 
   useGetAdminConfessionsQuery,
+  usePatchConfessionMutation,
   usePublishConfessionMutation,
   useDraftConfessionMutation,
 

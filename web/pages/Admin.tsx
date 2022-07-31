@@ -22,7 +22,7 @@ function Admin(): JSX.Element {
       />
 
       {/*<AdminConfessionsTable />*/}
-      <ConfessionsTable />
+      {/*<ConfessionsTable />*/}
       <AdvancedTable />
 
     </Container>

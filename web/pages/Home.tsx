@@ -9,7 +9,7 @@ import {RootState} from "../store/store";
 import {useGetConfessionsQuery} from "../store/api";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import Content from "../components/Content";
+import ConfessionContent from "../components/ConfessionContent";
 
 function Home(): JSX.Element {
 
@@ -26,7 +26,7 @@ function Home(): JSX.Element {
         <>
           {data.items.map(item => <>
             <BasicCard secondary={new Date(item.createdAt).toLocaleString()}>
-              <Content text={item.content} />
+              <ConfessionContent text={item.content} />
             </BasicCard>
             <br /></>)}
 

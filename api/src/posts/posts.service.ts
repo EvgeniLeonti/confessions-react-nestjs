@@ -11,6 +11,7 @@ import { CreatePostInput } from './dto/create-post.input';
 import { Prisma } from '@prisma/client';
 import { CreateCommentInput } from './dto/create-comment.input';
 import { User } from '../users/models/user.model';
+import { PatchPostInput } from './dto/patch-post.input';
 
 @Injectable()
 export class PostsService {
@@ -34,6 +35,26 @@ export class PostsService {
       return await this.prisma.post.update({
         where: { id: postId },
         data: { published: false },
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        switch (e.code) {
+          case 'P2025':
+            throw new NotFoundException('Post does not exist');
+        }
+      } else {
+        throw new Error(e);
+      }
+    }
+  }
+
+  async patchPost(postId: string, data: PatchPostInput) {
+    try {
+      return await this.prisma.post.update({
+        where: { id: postId },
+        data: {
+          content: data.content,
+        },
       });
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
