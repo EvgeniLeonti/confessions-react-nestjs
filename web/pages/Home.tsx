@@ -10,10 +10,11 @@ import {useGetConfessionsQuery} from "../store/api";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import ConfessionContent from "../components/ConfessionContent";
+import { useTranslation } from 'react-i18next';
 
 function Home(): JSX.Element {
-
   const { data, error, isLoading } = useGetConfessionsQuery();
+  const { t } = useTranslation();
 
 
   return (

@@ -7,12 +7,14 @@ import {RootState} from "../store/store";
 import {useSnackbar} from "notistack";
 import {useEffect} from "react";
 import {clearNotifications} from "../store/toast.state";
+import i18n from "../i18n/i18n";
 
 export function Wrapper(props: { children: any }): JSX.Element {
   const {notifications} = useSelector((state: RootState) => state.toast);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const dispatch = useDispatch();
 
+  document.body.dir = i18n.dir();
 
   useEffect(() => {
     if (notifications.length === 0) {

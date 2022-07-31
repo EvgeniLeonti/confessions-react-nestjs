@@ -19,10 +19,14 @@ import { NotificationsMenu, UserMenu } from "../menus";
 import { ThemeButton } from "./ThemeButton";
 import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
+import {LanguageButton} from "./LanguageButton";
+import {LanguageMenu} from "../menus/LanguageMenu";
+import {useTranslation} from "react-i18next";
 
 type AppToolbarProps = AppBarProps;
 
 export function AppToolbar(props: AppToolbarProps): JSX.Element {
+  const { t } = useTranslation();
   const { sx, ...other } = props;
   const menuAnchorRef = React.createRef<HTMLButtonElement>();
   const toggleTheme = useToggleTheme();
@@ -34,6 +38,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
 
   const [anchorEl, setAnchorEl] = React.useState({
     userMenu: null as HTMLElement | null,
+    languageMenu: null as HTMLElement | null,
     notifications: null as HTMLElement | null,
   });
 
@@ -53,6 +58,14 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
     setAnchorEl((x) => ({ ...x, userMenu: null }));
   }
 
+  function openLanguageMenu() {
+    setAnchorEl((x) => ({ ...x, languageMenu: menuAnchorRef.current }));
+  }
+
+  function closeLanguageMenu() {
+    setAnchorEl((x) => ({ ...x, languageMenu: null }));
+  }
+
   function signIn(event: React.MouseEvent): void {
     event.preventDefault();
     auth.signIn();
@@ -70,15 +83,29 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
 
         <Typography variant="h1" sx={{ fontSize: "1.5rem", fontWeight: 500 }}>
           <Link color="inherit" underline="none" href="/" onClick={navigate}>
-            {config.app.name}
+            {t('app.name')}
           </Link>
         </Typography>
 
         <span style={{ flexGrow: 1 }} />
 
-        {/* Account related controls (icon buttons) */}
+        <ThemeButton sx={{
+          'margin-inline-start': (x) => x.spacing(1),
+          'margin-inline-end': (x) => x.spacing(1),
+        }} />
 
-        <ThemeButton sx={{ mr: 1 }} />
+        <IconButton
+          ref={menuAnchorRef}
+          sx={{
+            'margin-inline-end': (x) => x.spacing(2),
+            width: 40,
+            height: 40,
+          }}
+          children={<LanguageButton />}
+          onClick={openLanguageMenu}
+        />
+
+
 
         {/*{authState.accessToken ? 'logged-in' : 'logged-out'}*/}
         {/*{me && (*/}
@@ -164,6 +191,11 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         onClose={closeUserMenu}
         PaperProps={{ sx: { marginTop: "8px" } }}
         onChangeTheme={toggleTheme}
+      />
+      <LanguageMenu
+        anchorEl={anchorEl.languageMenu}
+        closeMenu={closeLanguageMenu}
+        PaperProps={{ sx: { marginTop: "8px" } }}
       />
     </AppBar>
   );

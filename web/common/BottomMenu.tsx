@@ -14,11 +14,13 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
+import {useTranslation} from "react-i18next";
 
 type AppToolbarProps = AppBarProps;
 
 export function BottomMenu(props: AppToolbarProps): JSX.Element {
   const history = useHistory();
+  const { t } = useTranslation();
   const authState = useSelector((state: RootState) => state.auth);
 
   return (
@@ -28,10 +30,10 @@ export function BottomMenu(props: AppToolbarProps): JSX.Element {
         value={history.location.pathname}
         onChange={(event, newValue) => history.push(newValue)}
       >
-        <BottomNavigationAction label="Home" icon={<HomeIcon />} value={HomeRoute.path}/>
-        <BottomNavigationAction label="Confess" icon={<AddIcon />} value={ConfessRoute.path}/>
-        {authState.user && <BottomNavigationAction label="Profile" icon={<AccountBoxIcon />} value="/profile"/>}
-        {authState.user?.role === 'ADMIN' && <BottomNavigationAction label="Admin" icon={<AdminPanelSettingsIcon />} value='/admin'/>}
+        <BottomNavigationAction label={t('menu.home')} icon={<HomeIcon />} value={HomeRoute.path}/>
+        <BottomNavigationAction label={t('menu.confess')} icon={<AddIcon />} value={ConfessRoute.path}/>
+        {authState.user && <BottomNavigationAction label={t('menu.profile')} icon={<AccountBoxIcon />} value="/profile"/>}
+        {authState.user?.role === 'ADMIN' && <BottomNavigationAction label={t('menu.admin')} icon={<AdminPanelSettingsIcon />} value='/admin'/>}
 
       </BottomNavigation>
     </Paper>

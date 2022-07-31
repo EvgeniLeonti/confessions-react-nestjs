@@ -10,7 +10,7 @@ const config = {
    * Web application settings
    */
   app: {
-    name: "Confessions",
+    // name: "Confessions",
     origin: process.env.APP_ORIGIN as string,
     env: process.env.APP_ENV as "local" | "test" | "production",
   },
