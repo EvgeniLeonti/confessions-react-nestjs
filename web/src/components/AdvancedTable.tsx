@@ -2,15 +2,13 @@ import MUIDataTable from "mui-datatables";
 import {
   useDraftConfessionMutation,
   useGetAdminConfessionsQuery,
-  usePatchConfessionMutation,
   usePublishConfessionMutation
 } from "../store/confession-api";
 import {useDispatch} from "react-redux";
-import {FormControlLabel, Switch, TextField} from "@mui/material";
+import {FormControlLabel, Switch} from "@mui/material";
 import {pushNotification} from "../store/toast.state";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import {LoadingButton} from "@mui/lab";
 import EditableConfessionContent from "./EditableConfessionContent";
 
 

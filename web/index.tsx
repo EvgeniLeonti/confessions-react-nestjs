@@ -4,8 +4,8 @@
 import history from "history/browser";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { App } from "./common";
-import {store} from "./store/store";
+import { App } from "./src/common";
+import {store} from "./src/store/store";
 import { SnackbarProvider } from 'notistack';
 
 const root = createRoot(document.getElementById("root") as HTMLElement);

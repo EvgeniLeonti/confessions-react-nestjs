@@ -23,6 +23,11 @@ import {styled} from "@mui/material/styles";
 import {LoadingButton} from "@mui/lab";
 import {useCreateCommentMutation, useGetCommentsQuery} from "../store/confession-api";
 import {useTranslation} from "react-i18next";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {object, string, TypeOf} from 'zod';
+import {pushNotification} from "../store/toast.state";
+import {useDispatch} from "react-redux";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -44,94 +49,120 @@ function ConfessionComments(props) {
   const [createCommentMutation, {isLoading: isCreateCommentLoading}] = useCreateCommentMutation();
   const { data, error, isLoading } = useGetCommentsQuery({id: confession.id});
   const { t } = useTranslation();
-  const [comment, setComment] = React.useState<string>('');
+  const dispatch = useDispatch();
 
-  const postComment = () => {
-    createCommentMutation({id: confession.id, content: comment}).then(() => {
-      setComment('');
+  const schema = object({
+    content: string()
+      .nonempty(t('confession.submission.content.required'))
+  });
+  const {
+    register,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+    handleSubmit,
+  } = useForm<TypeOf<typeof schema>>({
+    resolver: zodResolver(schema),
+  });
+
+
+
+
+  const onSubmitHandler = (result) => {
+    console.log('result', result)
+    createCommentMutation({id: confession.id, content: result.content}).then(() => {
+      dispatch(pushNotification({message: 'comment sent', options: { variant: 'success' } }))
+      reset()
     });
   }
 
 
-    return (
-      <>
-
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          style={{width: '100%'}}
+  return (
+    <>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        component='form'
+        noValidate
+        autoComplete='off'
+        onSubmit={handleSubmit(onSubmitHandler)}
+        style={{width: '100%'}}
+      >
+        <TextField
+          autoFocus
+          label="Write a comment"
+          fullWidth
+          required
+          type="text"
+          size='small'
+          sx={{
+            '& fieldset': {
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+            },
+          }}
+          // error={!!errors.content} // todo fix
+          // helperText={errors.content ? error.content.message : ''} // todo fix
+          {...register('content')}
+        />
+        <LoadingButton
+          variant='contained'
+          type='submit'
+          size='small'
+          sx={{
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+            textTransform: "lowercase",
+          }}
+          loading={isCreateCommentLoading}
         >
-          <TextField
-            autoFocus
-            label="Write a comment"
-            fullWidth
-            required
-            type="text"
-            size='small'
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            sx={{
-              '& fieldset': {
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0,
-              },
-            }}
-          />
-          <LoadingButton
-            variant='contained'
-            type='submit'
-            size='small'
-            disabled={!comment}
-            sx={{
-              borderTopLeftRadius: 0,
-              borderBottomLeftRadius: 0,
-              textTransform: "lowercase",
-            }}
-            onClick={postComment}
-            loading={isCreateCommentLoading}
-          >
-            send
-          </LoadingButton>
-        </Box>
+          send
+        </LoadingButton>
+      </Box>
 
-        <List sx={{ width: '100%' }}>
-          {error ? (
-            <><div>Oh no, there was an error: {JSON.stringify(error)}</div></>
-          ) : isLoading ? (
-            <>{t('loading')}</>
-          ) : data ? (
-            <>
-              {(data.items || []).map(comment =>
-                <>
-                  <ListItem>
-                    <ListItemText
-                      primary={comment.content}
-                      secondary={
-                        <>
-                          <Typography
-                            sx={{ display: 'inline' }}
-                            component="span"
-                            variant="body2"
-                            color="text.primary"
-                          >
-                            Anonymous
-                          </Typography>
-                          {" at 07/02/2023"}
-                        </>
-                      }
-                    />
-                  </ListItem>
-                  <Divider component="li" />
-                </>
-              )}
+      {/* comments list */}
+      <List sx={{
+        width: '100%',
+        maxHeight: 300,
+        overflow: "hidden",
+        overflowY: "scroll",
+      }}>
+        {error ? (
+          <><div>Oh no, there was an error: {JSON.stringify(error)}</div></>
+        ) : isLoading ? (
+          <>{t('loading')}</>
+        ) : data?.items ? (
+          <>
+            {data.items.map(comment =>
+              <>
+                <ListItem>
+                  <ListItemText
+                    primary={comment.content}
+                    secondary={
+                      <>
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          Anonymous
+                        </Typography>
+                        {` at ${new Date(comment.createdAt).toLocaleString()}`}
+                      </>
+                    }
+                  />
+                </ListItem>
+                <Divider component="li" />
+              </>
+            )}
 
-            </>
-          ) : null}
+          </>
+        ) : null}
 
-        </List>
+      </List>
 
-        </>
-    )
+      </>
+  )
 }
 
 export default function ConfessionCard(props) {

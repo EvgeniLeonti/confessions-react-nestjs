@@ -3,11 +3,9 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import {object, TypeOf} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import * as React from 'react';
-import {useState} from 'react';
 import {LoadingButton} from '@mui/lab';
 import {pushNotification} from "../store/toast.state";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../store/store";
+import {useDispatch} from "react-redux";
 
 
 const GenericForm = (props: any) => {

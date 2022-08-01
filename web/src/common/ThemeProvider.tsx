@@ -20,7 +20,7 @@ const cacheRtl = createCache({
   stylisPlugins: [rtlPlugin],
 });
 
-function StyleProvider(props) {
+function StyleProvider(props: ThemeProviderProps) {
   return <CacheProvider value={i18n.dir() === "ltr" ? cacheLtr : cacheRtl}>{props.children}</CacheProvider>;
 }
 

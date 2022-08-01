@@ -30,16 +30,16 @@ Be sure to join our [Discord channel](https://discord.com/invite/2nKEnKq) for as
 
 `├──`[`.github`](.github) — GitHub configuration including CI/CD workflows<br>
 `├──`[`.vscode`](.vscode) — VSCode settings including code snippets, recommended extensions etc.<br>
-`├──`[`common`](./common) — Common (shared) React components<br>
-`├──`[`core`](./core) — Core modules, React hooks, environment variables, etc.<br>
-`├──`[`dialogs`](./dialogs) — React components implementing modal dialogs<br>
-`├──`[`icons`](./icons) — Custom icon React components<br>
-`├──`[`menus`](./menus) — React components implementing popup menus<br>
+`├──`[`common`](src/common) — Common (shared) React components<br>
+`├──`[`core`](src/core) — Core modules, React hooks, environment variables, etc.<br>
+`├──`[`dialogs`](src/dialogs) — React components implementing modal dialogs<br>
+`├──`[`icons`](src/icons) — Custom icon React components<br>
+`├──`[`menus`](src/menus) — React components implementing popup menus<br>
 `├──`[`public`](./public) — Static assets such as robots.txt, index.html etc.<br>
-`├──`[`routes`](./routes) — Application routes and page (screen) components<br>
+`├──`[`routes`](src/routes) — Application routes and page (screen) components<br>
 `├──`[`scripts`](./scripts) — Automation scripts such as `yarn deploy`<br>
-`├──`[`theme`](./theme) — Application theme - colors, fonts, paddings, etc.<br>
-`├──`[`workers`](./workers) — Cloudflare Worker scripts (reverse proxy, SSR)<br>
+`├──`[`theme`](src/theme) — Application theme - colors, fonts, paddings, etc.<br>
+`├──`[`workers`](src/workers) — Cloudflare Worker scripts (reverse proxy, SSR)<br>
 `└──`[`index.ts`](./index.ts) — Application entry point<br>
 
 ## Tech Stack
@@ -60,7 +60,7 @@ Be sure to join our [Discord channel](https://discord.com/invite/2nKEnKq) for as
 
 [Generate](https://github.com/kriasoft/react-starter-kit/generate) a new project
 from this template, clone it, install project dependencies, update the
-environment variables found in [`core/*.env`](./core/), and start hacking:
+environment variables found in [`core/*.env`](src/core/), and start hacking:
 
 ```
 $ git clone https://github.com/kriasoft/react-starter-kit.git
@@ -88,7 +88,7 @@ and ESLint.
 ## How to Deploy
 
 Ensure that all the environment variables for the target deployment environment
-(`test`, `prod`) found in [`/core/*.env`](./core/) files are up-to-date.
+(`test`, `prod`) found in [`/core/*.env`](src/core/) files are up-to-date.
 
 If you haven't done it already, push any secret values you may need to CF Workers
 environment by running `yarn cf secret put <NAME> [--env #0]`.

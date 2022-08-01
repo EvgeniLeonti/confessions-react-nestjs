@@ -1,28 +1,23 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft <hello@kriasoft.com> */
 /* SPDX-License-Identifier: MIT */
 
-import {Link, ListItemIcon, ListItemText, Menu, MenuItem, MenuProps, Switch,} from "@mui/material";
+import {Link, ListItemIcon, ListItemText, Menu, MenuItem, MenuProps,} from "@mui/material";
 import {useTheme} from "@mui/material/styles";
 import * as React from "react";
 import i18n from "../i18n/i18n";
 import {useTranslation} from "react-i18next";
-import {pushNotification} from "../store/toast.state";
 import {useDispatch} from "react-redux";
-import {setLanguage} from "../store/app.state";
 import {useAuth, useHistory, useNavigate} from "../core";
-import {unsetAccessToken} from "../store/auth.state";
-import {Brightness4, Settings} from "@mui/icons-material";
-import {Logout} from "../icons";
 
 type LanguageMenuProps = Omit<
   MenuProps,
   "id" | "role" | "open" | "anchorOrigin" | "transformOrigin"
 > & {
-  closeMenu: () => void;
+  // closeMenu: () => void;
 };
 
 export function LanguageMenu(props: LanguageMenuProps): JSX.Element {
-  const { onChangeTheme, PaperProps, MenuListProps, ...other } = props;
+  const { PaperProps, MenuListProps, ...other } = props;
   const { t } = useTranslation();
 
   const dispatch = useDispatch();

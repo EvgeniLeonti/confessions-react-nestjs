@@ -1,8 +1,8 @@
 import {configureStore, isRejectedWithValue, Middleware, MiddlewareAPI} from '@reduxjs/toolkit'
-import counterReducer from '../store/counter.state'
-import authReducer, {unsetAccessToken} from '../store/auth.state'
-import toastReducer, {pushNotification} from '../store/toast.state'
-import appReducer, {setLanguage} from '../store/app.state'
+import counterReducer from './counter.state'
+import authReducer, {unsetAccessToken} from './auth.state'
+import toastReducer, {pushNotification} from './toast.state'
+import appReducer, {setLanguage} from './app.state'
 import {confessionApi} from "./confession-api";
 
 const customMiddleware: Middleware =
