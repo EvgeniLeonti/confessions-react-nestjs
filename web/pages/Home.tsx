@@ -1,7 +1,7 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft <hello@kriasoft.com> */
 /* SPDX-License-Identifier: MIT */
 
-import {Box, Container} from "@mui/material";
+import {Box, Container, IconButton} from "@mui/material";
 import {useNavigate} from "../core";
 import BasicCard from "../components/BasicCard";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,6 +11,18 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import ConfessionContent from "../components/ConfessionContent";
 import { useTranslation } from 'react-i18next';
+import {
+  FacebookSelector,
+  FacebookCounter,
+  ReactionBarSelector,
+  ReactionCounter,
+  GithubCounter
+} from "@charkour/react-reactions";
+
+import ShareIcon from '@mui/icons-material/Share';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CommentIcon from '@mui/icons-material/Comment';
+import ConfessionCard from "../components/ConfessionCard";
 
 function Home(): JSX.Element {
   const { data, error, isLoading } = useGetConfessionsQuery();
@@ -25,10 +37,8 @@ function Home(): JSX.Element {
         <>{t('loading')}</>
       ) : data ? (
         <>
-          {data.items.map(item => <>
-            <BasicCard secondary={new Date(item.createdAt).toLocaleString()}>
-              <ConfessionContent text={item.content} />
-            </BasicCard>
+          {data.items.map(confession => <>
+            <ConfessionCard confession={confession} />
             <br /></>)}
 
         </>

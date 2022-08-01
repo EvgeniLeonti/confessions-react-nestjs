@@ -3,28 +3,22 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ConfessionContent from "./ConfessionContent";
+import {CardActions} from "@mui/material";
 
 export default function BasicCard(props) {
+  const {cardActions} = props;
 
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
         {props.secondary && <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>{props.secondary}</Typography>}
-        {/*<Typography variant="h5" component="div">*/}
-        {/*  be{bull}nev{bull}o{bull}lent*/}
-        {/*</Typography>*/}
-        {/*<Typography sx={{ mb: 1.5 }} color="text.secondary">*/}
-        {/*  adjective*/}
-        {/*</Typography>*/}
-
-
-        {/*{props.primary && <Typography sx={{ mb: 1.5 }} variant="body2" >{props.primary}</Typography>}*/}
         {props.primary && <ConfessionContent text={props.primary} />}
         {props.children}
       </CardContent>
-      {/*<CardActions>*/}
-      {/*  <Button size="small">Learn More</Button>*/}
-      {/*</CardActions>*/}
+      {cardActions && <CardActions>
+        {cardActions}
+      </CardActions>}
+
     </Card>
   );
 }

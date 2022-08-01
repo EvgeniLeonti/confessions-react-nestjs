@@ -41,19 +41,6 @@ export class PostsController {
     return this.postsService.createPostDraft(user, data);
   }
 
-  @Post(':postId/comment')
-  @UseGuards(OptionalRestAuthGuard)
-  @ApiBearerAuth()
-  @ApiResponse({ type: Comment })
-  @ApiImplicitParam({ name: 'postId', type: String, required: true })
-  async createComment(
-    @UserEntity() user: User,
-    @Param('postId') postId: string,
-    @Body() data: CreateCommentInput
-  ): Promise<Comment> {
-    return this.postsService.createCommentDraft(user, postId, data);
-  }
-
   @Get()
   async getPublishedPosts(
     @Query() getPublishedPostsInput: GetPostsInput
@@ -66,16 +53,48 @@ export class PostsController {
     orderBy.field = orderByField ? orderByField : PostOrderField.createdAt;
     orderBy.direction = OrderDirection.desc; // todo - make this configurable
 
-    return this.postsService.getPublishedPosts(
-      paginationArgs,
-      { query, language: lang },
-      orderBy
+    const filter = {
+      published: true,
+      ...(query && { content: { contains: query } }),
+      ...(lang && { language: lang }),
+    };
+
+    return this.postsService.getPosts(
+      filter,
+      { author: true },
+      orderBy,
+      paginationArgs
     );
   }
 
   @Get(':postId')
   async getPublishedPost(@Param('postId') postId: string): Promise<PostObject> {
     return this.postsService.getPublishedPost(postId);
+  }
+
+  @Post(':postId/comments')
+  @UseGuards(OptionalRestAuthGuard)
+  @ApiBearerAuth()
+  @ApiResponse({ type: Comment })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  async createComment(
+    @UserEntity() user: User,
+    @Param('postId') postId: string,
+    @Body() data: CreateCommentInput
+  ): Promise<Comment> {
+    return this.postsService.createCommentDraft(user, postId, data);
+  }
+
+  @Get(':postId/comments')
+  @UseGuards(OptionalRestAuthGuard)
+  @ApiBearerAuth()
+  @ApiResponse({ type: Comment })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  async getPostComments(
+    @UserEntity() user: User,
+    @Param('postId') postId: string
+  ): Promise<Comment[]> {
+    return this.postsService.getPublishedPostComments(user, postId);
   }
 }
 
@@ -97,7 +116,16 @@ export class PostsAdminController {
     orderBy.field = orderByField ? orderByField : PostOrderField.createdAt;
     orderBy.direction = OrderDirection.desc; // todo - make this configurable
 
-    return this.postsService.getAllPosts(paginationArgs, query, orderBy);
+    const filter = {
+      ...(query && { content: { contains: query } }),
+    };
+
+    return this.postsService.getPosts(
+      filter,
+      { author: true },
+      orderBy,
+      paginationArgs
+    );
   }
 
   @Post(':postId/publish')

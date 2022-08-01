@@ -124,26 +124,39 @@ export class PostsService {
     }
   }
 
-  async getPublishedPosts(
-    { after, before, first, last }: PaginationArgs,
-    { query, language }: { query?: string; language?: string },
-    orderBy: PostOrder
-  ) {
-    const where = {
-      published: true,
-      title: query ? { contains: query } : undefined,
-      language,
-    };
+  async getPublishedPostComments(user: User, postId: string) {
+    try {
+      return await this.prisma.comment.findMany({
+        where: { postId, published: true },
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        switch (e.code) {
+          case 'P2025':
+            throw new NotFoundException('Comment does not exist');
+        }
+      } else {
+        throw new Error(e);
+      }
+    }
+  }
 
+  async getPosts(
+    filter: any,
+    include: any,
+    order: PostOrder,
+    paginationArgs: PaginationArgs
+  ) {
+    const { after, before, first, last } = paginationArgs;
     const findMany = (args) =>
       this.prisma.post.findMany({
-        include: { author: true },
-        where,
-        orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : null,
+        include,
+        where: filter,
+        orderBy: order ? { [order.field]: order.direction } : null,
         ...args,
       });
 
-    const aggregate = () => this.prisma.post.count({ where });
+    const aggregate = () => this.prisma.post.count({ where: filter });
 
     const rawResult = await findManyCursorConnection(findMany, aggregate, {
       first,
@@ -170,52 +183,6 @@ export class PostsService {
       throw new NotFoundException('Post does not exist');
     }
     return post;
-  }
-
-  async getAllPosts(
-    { after, before, first, last }: PaginationArgs,
-    query: string,
-    orderBy: PostOrder
-  ) {
-    const where = {
-      title: query ? { contains: query } : undefined,
-    };
-
-    const findMany = (args) =>
-      this.prisma.post.findMany({
-        include: { author: true },
-        where,
-        orderBy: orderBy ? { [orderBy.field]: orderBy.direction } : null,
-        ...args,
-      });
-
-    const aggregate = () => this.prisma.post.count({ where });
-
-    const rawResult = await findManyCursorConnection(findMany, aggregate, {
-      first,
-      last,
-      before,
-      after,
-    });
-
-    const { pageInfo, totalCount, edges } = rawResult;
-
-    const items = edges.map((edge) => edge.node);
-
-    // todo migration only
-    // for (const item of items) {
-    //   const language = await this.detectLanguage(item.content);
-    //   await this.prisma.post.update({
-    //     where: { id: item.id },
-    //     data: { language },
-    //   });
-    // }
-
-    return {
-      items,
-      pageInfo,
-      totalCount,
-    };
   }
 
   private async detectLanguage(content: string): Promise<string> {

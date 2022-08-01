@@ -38,14 +38,17 @@ export function LanguageMenu(props: LanguageMenuProps): JSX.Element {
 
   function changeLanguage(lng: string) {
     const prevLng = i18n.language;
-    i18n.changeLanguage(lng)
+    i18n.changeLanguage(lng).then(() => {
+      if (prevLng !== lng) {
+        history.go(0); // todo invalidate get posts cache
+        // dispatch(pushNotification({message: t(`language.change.success`), options: { variant: 'success' } }))
+      }
+    });
     document.body.dir = i18n.dir() || 'ltr';
     theme.direction = i18n.dir() || 'ltr';
     // onClose();
 
-    if (prevLng !== lng) {
-      dispatch(pushNotification({message: t(`language.change.success`), options: { variant: 'success' } }))
-    }
+
   }
 
   const languages = [

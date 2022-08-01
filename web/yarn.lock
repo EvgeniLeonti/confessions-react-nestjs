@@ -1455,6 +1455,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@charkour/react-reactions@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "@charkour/react-reactions@npm:0.10.1"
+  peerDependencies:
+    react: ">=16"
+  checksum: db3ab88b790708efc3bc3e558a7418d7a3d880c616562c29b5c01e7495af5294111b85316bfcac65aee666926dc1da0e9c890a10a74184844a0e9789f78a6914
+  languageName: node
+  linkType: hard
+
 "@cloudflare/kv-asset-handler@npm:^0.2.0":
   version: 0.2.0
   resolution: "@cloudflare/kv-asset-handler@npm:0.2.0"
@@ -3817,6 +3826,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.17.12"
     "@babel/register": "npm:^7.17.7"
     "@babel/runtime": "npm:^7.18.3"
+    "@charkour/react-reactions": "npm:^0.10.1"
     "@cloudflare/kv-asset-handler": "npm:^0.2.0"
     "@cloudflare/workers-types": "npm:^3.11.0"
     "@emotion/babel-plugin": "npm:^11.9.2"
@@ -3873,7 +3883,6 @@ __metadata:
     js-cookie: "npm:^3.0.1"
     jss: "npm:^10.9.1"
     jss-rtl: "npm:^0.3.0"
-    material-ui-flags: "npm:^1.2.4"
     mui-datatables: "npm:^4.2.2"
     notistack: "npm:^2.0.5"
     path-to-regexp: "npm:^6.2.1"
@@ -8470,13 +8479,6 @@ __metadata:
   version: 0.1.0
   resolution: "map-stream@npm:0.1.0"
   checksum: 3eb6020cbbd07226602f849eb95e613087bc1c17a00018f28f1a1f605bc53374fe0554ecac9a841e7a33fc1fd55399a0a01308d90ec73f0693dcae2923969385
-  languageName: node
-  linkType: hard
-
-"material-ui-flags@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "material-ui-flags@npm:1.2.4"
-  checksum: 403962f31d3b9dd057c1ae24e95102e098e1ca08861b6d07992f969f7fa17dd109b63a37ad0604919c3ae060739efb51e90d24eb64a9d155e69c92b4474af869
   languageName: node
   linkType: hard
 

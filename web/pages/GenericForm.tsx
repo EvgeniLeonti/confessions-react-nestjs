@@ -1,17 +1,13 @@
-import {Box, Container, FormControl, FormHelperText, Input, InputLabel, TextField, Typography,} from '@mui/material';
+import {Box, Container, TextField, Typography,} from '@mui/material';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {object, TypeOf} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import * as React from 'react';
 import {useState} from 'react';
 import {LoadingButton} from '@mui/lab';
-import {useSnackbar} from "notistack";
 import {pushNotification} from "../store/toast.state";
 import {useDispatch, useSelector} from "react-redux";
-import {styled} from '@mui/material/styles';
-import i18n from "../i18n/i18n";
 import {RootState} from "../store/store";
-
 
 
 const GenericForm = (props: any) => {
@@ -31,13 +27,9 @@ const GenericForm = (props: any) => {
     schema = schema.refine(refine.check, refine.message);
   }
 
-
   type MutationInputType = TypeOf<typeof schema>;
 
   const [mutation, {isLoading}] = useMutation();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [success, setSuccess] = useState(false);
-  const appState = useSelector((state: RootState) => state.app);
 
   const dispatch = useDispatch();
 
@@ -54,14 +46,8 @@ const GenericForm = (props: any) => {
   const onSubmitHandler: SubmitHandler<MutationInputType> = (values) => {
     mutation(buildPayload(values)).then(result => {
       if (result.error) {
-        // enqueueSnackbar(result?.error?.data?.message || lang.FAILURE, { variant: 'error' });
-        // setAlert({severity: 'warning', message: result?.error?.data?.message || lang.FAILURE});
         return;
       }
-
-      setSuccess(true);
-      // enqueueSnackbar(lang.SUCCESS, { variant: 'success' });
-      // setAlert({severity: 'success', message: lang.SUCCESS});
 
       dispatch(pushNotification({message: lang.SUCCESS, options: { variant: 'success' } }))
 
