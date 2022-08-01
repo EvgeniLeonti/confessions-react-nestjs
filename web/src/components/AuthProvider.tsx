@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { AuthContext, LoginMethod, type Auth, type User } from "../core";
-import { LoginDialog } from "../dialogs/LoginDialog";
+import { LoginDialog } from "./LoginDialog";
 import { LoginWindow } from "./LoginWindow";
 
 function AuthProvider(props: AuthProviderProps): JSX.Element {

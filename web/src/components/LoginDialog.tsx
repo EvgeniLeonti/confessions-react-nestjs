@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import * as React from "react";
-import { LoginButton } from "../common";
+import { LoginButton } from "./index";
 import { LoginMethod, type User } from "../core";
 
 function LoginDialog(props: LoginDialogProps): JSX.Element {

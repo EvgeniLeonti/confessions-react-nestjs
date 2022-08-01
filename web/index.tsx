@@ -4,7 +4,7 @@
 import history from "history/browser";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { App } from "./src/common";
+import { App } from "./src/components";
 import {store} from "./src/store/store";
 import { SnackbarProvider } from 'notistack';
 
