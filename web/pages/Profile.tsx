@@ -3,7 +3,7 @@
 
 import {Box, Container} from "@mui/material";
 import BasicCard from "../components/BasicCard";
-import {useGetMeQuery} from "../store/api";
+import {useGetMeQuery} from "../store/confession-api";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import {useSelector} from "react-redux";

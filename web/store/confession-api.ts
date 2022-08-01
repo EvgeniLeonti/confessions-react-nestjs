@@ -5,9 +5,13 @@ import {useSelector} from "react-redux";
 import i18n from "../i18n/i18n";
 // import type { Pokemon } from './types'
 
-export interface Api {
+export interface ConfessionApi {
   id: string
   content: string
+}
+
+export interface ConfessionsResult {
+  items: ConfessionApi[]
 }
 
 // todo use env var
@@ -31,11 +35,8 @@ export const confessionApi = createApi({
     },
 
   }),
-  tagTypes: ['Post', 'User'],
+  tagTypes: ['Confession', 'User', 'Comment'],
   endpoints: (builder) => ({
-    // getPokemonByName: builder.query<Pokemon, string>({
-    //   query: (name) => `pokemon/${name}`,
-    // }),
     // auth
     signup: builder.mutation({
       query: (body) => ({
@@ -51,69 +52,84 @@ export const confessionApi = createApi({
         body,
       }),
     }),
-
-    // user
-    getMe: builder.query<Api, string>({
+    getMe: builder.query({
       query: () => `users/me`,
     }),
 
     // confessions
-    getConfessions: builder.query<Api, string>({
+    getConfessions: builder.query<ConfessionsResult, null>({
       query: () => `posts?lang=${i18n.language}`,
       providesTags: (result) =>
-        result?.items ? result.items.map(({ id }) => ({ type: 'Posts', id })) : ['Posts']
+        result?.items ? result.items.map(({ id }) => ({ type: 'Confession', id })) : ['Confession']
     }),
     getConfession: builder.query({
       query: ({ id }) => ({
-        url: `posts/${id}h`,
+        url: `posts/${id}`,
         method: 'GET',
       }),
-      providesTags: (result, error, id) => [{ type: 'Posts', id }],
+      providesTags: (result, error, id) => [{ type: 'Confession', id }],
     }),
 
-    createConfession: builder.mutation<Api, Partial<Api>>({
+    createConfession: builder.mutation<ConfessionApi, Partial<ConfessionApi>>({
       query: (body) => ({
         url: `posts`,
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Posts'],
+      invalidatesTags: ['Confession'],
+    }),
+
+    createComment: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `posts/${id}/comments`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Comment'],
+    }),
+
+    getComments: builder.query({
+      query: ({ id }) => ({
+        url: `posts/${id}/comments`,
+        method: 'GET',
+      }),
+      providesTags: (result, error, id) => [{ type: 'Comment', id }],
     }),
 
     // admin
-    getAdminConfessions: builder.query<Api, string>({
+    getAdminConfessions: builder.query<ConfessionsResult, string>({
       query: () => `admin/posts`,
       providesTags: (result) =>
-        result?.items ? result.items.map(({ id }) => ({ type: 'Posts', id })) : ['Posts']
+        result?.items ? result.items.map(({ id }) => ({ type: 'Confession', id })) : ['Confession']
     }),
 
-    patchConfession: builder.mutation<Api, Partial<Api> & Pick<Api, 'id'>>({
+    patchConfession: builder.mutation<ConfessionApi, Partial<ConfessionApi> & Pick<ConfessionApi, 'id'>>({
       query: ({ id, ...body }) => ({
         url: `admin/posts/${id}`,
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: ['Posts'], // todo invalidate by id
+      invalidatesTags: ['Confession'], // todo invalidate by id
     }),
 
-    publishConfession: builder.mutation<Api, Partial<Api> & Pick<Api, 'id'>>({
+    publishConfession: builder.mutation<ConfessionApi, Partial<ConfessionApi> & Pick<ConfessionApi, 'id'>>({
       query: ({ id, ...body }) => ({
         url: `admin/posts/${id}/publish`,
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Posts'], // todo invalidate by id
+      invalidatesTags: ['Confession'], // todo invalidate by id
 
       // todo invalidate by id
       // invalidatesTags: (result, error, arg) => [{ type: 'Post', id: arg.id }],
     }),
-    draftConfession: builder.mutation<Api, Partial<Api> & Pick<Api, 'id'>>({
+    draftConfession: builder.mutation<ConfessionApi, Partial<ConfessionApi> & Pick<ConfessionApi, 'id'>>({
       query: ({ id, ...body }) => ({
         url: `admin/posts/${id}/draft`,
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Posts'],
+      invalidatesTags: ['Confession'],
     }),
   }),
 })
@@ -122,13 +138,18 @@ export const confessionApi = createApi({
 // auto-generated based on the defined endpoints
 // export const { useGetPokemonByNameQuery } = confessionApi
 export const {
+  // auth
   useSignupMutation,
   useLoginMutation,
-
   useGetMeQuery,
 
+  // confessions
   useGetConfessionsQuery,
   useCreateConfessionMutation,
+
+  // comments
+  useCreateCommentMutation,
+  useGetCommentsQuery,
 
   useGetAdminConfessionsQuery,
   usePatchConfessionMutation,

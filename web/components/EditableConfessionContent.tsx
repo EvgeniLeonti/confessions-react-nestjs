@@ -1,4 +1,4 @@
-import {usePatchConfessionMutation} from "../store/api";
+import {usePatchConfessionMutation} from "../store/confession-api";
 import {Box, Button, TextField} from "@mui/material";
 import * as React from "react";
 import {LoadingButton} from "@mui/lab";

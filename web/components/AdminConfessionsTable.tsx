@@ -22,7 +22,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import {visuallyHidden} from '@mui/utils';
 import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
-import {useDraftConfessionMutation, useGetAdminConfessionsQuery, usePublishConfessionMutation} from "../store/api";
+import {useDraftConfessionMutation, useGetAdminConfessionsQuery, usePublishConfessionMutation} from "../store/confession-api";
 import {LoadingButton} from "@mui/lab";
 import {pushNotification} from "../store/toast.state";
 import {useDispatch} from "react-redux";

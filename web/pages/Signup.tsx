@@ -1,6 +1,6 @@
 import {string} from 'zod';
 import * as React from 'react';
-import {useSignupMutation} from "../store/api";
+import {useSignupMutation} from "../store/confession-api";
 import LANG from "../lang";
 import GenericForm from "./GenericForm";
 

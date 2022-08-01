@@ -43,6 +43,7 @@ export const authSlice = createSlice({
     },
     unsetAccessToken: (state) => {
       state.accessToken = null
+      state.user = null
     },
     setRefreshToken: (state, action: PayloadAction<string>) => {
       state.refreshToken = action.payload

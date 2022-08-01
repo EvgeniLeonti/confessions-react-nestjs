@@ -4,7 +4,7 @@ import {
   useGetAdminConfessionsQuery,
   usePatchConfessionMutation,
   usePublishConfessionMutation
-} from "../store/api";
+} from "../store/confession-api";
 import {useDispatch} from "react-redux";
 import {FormControlLabel, Switch, TextField} from "@mui/material";
 import {pushNotification} from "../store/toast.state";

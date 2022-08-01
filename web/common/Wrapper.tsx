@@ -14,7 +14,6 @@ export function Wrapper(props: { children: any }): JSX.Element {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const dispatch = useDispatch();
 
-  document.body.dir = i18n.dir();
 
   useEffect(() => {
     if (notifications.length === 0) {

@@ -1,6 +1,6 @@
 import {string} from "zod";
 import GenericForm from "./GenericForm";
-import {useCreateConfessionMutation} from "../store/api";
+import {useCreateConfessionMutation} from "../store/confession-api";
 import {useHistory} from "../core";
 import {useTranslation} from "react-i18next";
 

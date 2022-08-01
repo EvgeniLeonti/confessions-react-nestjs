@@ -9,10 +9,11 @@ import {
   Collapse,
   Divider,
   IconButton,
-  IconButtonProps, InputAdornment,
+  IconButtonProps,
   List,
   ListItem,
-  ListItemText, TextField
+  ListItemText,
+  TextField
 } from "@mui/material";
 import {ReactionBarSelector} from "@charkour/react-reactions";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -20,6 +21,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import {styled} from "@mui/material/styles";
 import {LoadingButton} from "@mui/lab";
+import {useCreateCommentMutation, useGetCommentsQuery} from "../store/confession-api";
+import {useTranslation} from "react-i18next";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -36,14 +39,111 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
+function ConfessionComments(props) {
+  const { confession } = props;
+  const [createCommentMutation, {isLoading: isCreateCommentLoading}] = useCreateCommentMutation();
+  const { data, error, isLoading } = useGetCommentsQuery({id: confession.id});
+  const { t } = useTranslation();
+  const [comment, setComment] = React.useState<string>('');
+
+  const postComment = () => {
+    createCommentMutation({id: confession.id, content: comment}).then(() => {
+      setComment('');
+    });
+  }
+
+
+    return (
+      <>
+
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          style={{width: '100%'}}
+        >
+          <TextField
+            autoFocus
+            label="Write a comment"
+            fullWidth
+            required
+            type="text"
+            size='small'
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            sx={{
+              '& fieldset': {
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+              },
+            }}
+          />
+          <LoadingButton
+            variant='contained'
+            type='submit'
+            size='small'
+            disabled={!comment}
+            sx={{
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0,
+              textTransform: "lowercase",
+            }}
+            onClick={postComment}
+            loading={isCreateCommentLoading}
+          >
+            send
+          </LoadingButton>
+        </Box>
+
+        <List sx={{ width: '100%' }}>
+          {error ? (
+            <><div>Oh no, there was an error: {JSON.stringify(error)}</div></>
+          ) : isLoading ? (
+            <>{t('loading')}</>
+          ) : data ? (
+            <>
+              {(data.items || []).map(comment =>
+                <>
+                  <ListItem>
+                    <ListItemText
+                      primary={comment.content}
+                      secondary={
+                        <>
+                          <Typography
+                            sx={{ display: 'inline' }}
+                            component="span"
+                            variant="body2"
+                            color="text.primary"
+                          >
+                            Anonymous
+                          </Typography>
+                          {" at 07/02/2023"}
+                        </>
+                      }
+                    />
+                  </ListItem>
+                  <Divider component="li" />
+                </>
+              )}
+
+            </>
+          ) : null}
+
+        </List>
+
+        </>
+    )
+}
 
 export default function ConfessionCard(props) {
-  const {content, createdAt} = props.confession;
+  const {id, content, createdAt} = props.confession;
   const [expanded, setExpanded] = React.useState(false);
+
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+
 
   return (
     <Card sx={{minWidth: 275}}>
@@ -98,54 +198,7 @@ export default function ConfessionCard(props) {
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <TextField
-            label="Write a comment"
-            fullWidth
-            required
-            type="text"
-            size="small"
-            InputProps={{
-              endAdornment:     (
-                <InputAdornment position="end">
-                  <IconButton edge="end" color="primary">
-                    <LoadingButton type='submit'>send</LoadingButton>
-                  </IconButton>
-                </InputAdornment>
-              ),
-
-
-              // endAdornment: <LoadingButton variant='contained' type='submit'>send</LoadingButton>
-          }}
-
-            // error={!!errors[name]}
-            // helperText={errors[name] ? errors[name].message : ''}
-            // multiline={multiline}
-            // rows={rows}
-          />
-
-
-          <List sx={{ width: '100%' }}>
-            <ListItem sx={{ textAlign: 'right'}}>
-              <ListItemText
-                primary="I'll be in your neighborhood doing errands this"
-                secondary={
-                  <>
-                    <Typography
-                      sx={{ display: 'inline' }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      Anonymous
-                    </Typography>
-                    {" at 07/02/2023"}
-                  </>
-                }
-              />
-            </ListItem>
-            <Divider component="li" />
-
-          </List>
+          <ConfessionComments confession={props.confession}/>
         </CardContent>
       </Collapse>
 

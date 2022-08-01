@@ -6,7 +6,7 @@ import {useNavigate} from "../core";
 import BasicCard from "../components/BasicCard";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store";
-import {useGetConfessionsQuery} from "../store/api";
+import {useGetConfessionsQuery} from "../store/confession-api";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import ConfessionContent from "../components/ConfessionContent";

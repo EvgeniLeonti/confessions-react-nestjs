@@ -7,10 +7,29 @@ import { detectTheme, saveTheme, ToggleThemeContext } from "../core/theme";
 import * as theme from "../theme";
 import i18n from "../i18n/i18n";
 
+import rtlPlugin from 'stylis-plugin-rtl';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+
+// Create rtl cache
+const cacheLtr = createCache({
+  key: 'muiltr'
+});
+const cacheRtl = createCache({
+  key: 'muirtl',
+  stylisPlugins: [rtlPlugin],
+});
+
+function StyleProvider(props) {
+  return <CacheProvider value={i18n.dir() === "ltr" ? cacheLtr : cacheRtl}>{props.children}</CacheProvider>;
+}
+
 function ThemeProvider(props: ThemeProviderProps): JSX.Element {
   const detectedTheme = detectTheme();
   detectedTheme.direction = i18n.dir()
 
+  document.getElementById('root')?.setAttribute('dir', i18n.dir());
+  // document.body.dir = i18n.dir();
 
   const [value, setValue] = React.useState(detectedTheme);
 
@@ -26,13 +45,14 @@ function ThemeProvider(props: ThemeProviderProps): JSX.Element {
     });
   }, []);
 
-
   return (
-    <MuiThemeProvider theme={value}>
-      <ToggleThemeContext.Provider value={toggleTheme}>
-        {props.children}
-      </ToggleThemeContext.Provider>
-    </MuiThemeProvider>
+    <StyleProvider>
+      <MuiThemeProvider theme={value}>
+        <ToggleThemeContext.Provider value={toggleTheme}>
+          {props.children}
+        </ToggleThemeContext.Provider>
+      </MuiThemeProvider>
+    </StyleProvider>
   );
 }
 

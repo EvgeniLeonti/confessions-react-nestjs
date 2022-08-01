@@ -79,6 +79,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
     auth.signIn();
   }
 
+
   return (
     <AppBar
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, ...sx }}

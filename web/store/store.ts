@@ -3,7 +3,7 @@ import counterReducer from '../store/counter.state'
 import authReducer, {unsetAccessToken} from '../store/auth.state'
 import toastReducer, {pushNotification} from '../store/toast.state'
 import appReducer, {setLanguage} from '../store/app.state'
-import {confessionApi} from "./api";
+import {confessionApi} from "./confession-api";
 
 const customMiddleware: Middleware =
   (api: MiddlewareAPI) => (next) => (action) => {
@@ -31,7 +31,7 @@ const customMiddleware: Middleware =
           case 200:
             break;
           default:
-            console.log('uknown action', action)
+            console.log('unknown action', action)
             api.dispatch(pushNotification({message: data?.message || 'Unknown error', options: { variant: 'error' } }))
 
         }

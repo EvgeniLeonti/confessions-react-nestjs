@@ -1,6 +1,6 @@
 import {string} from 'zod';
 import * as React from 'react';
-import {useLoginMutation} from "../store/api";
+import {useLoginMutation} from "../store/confession-api";
 import LANG from "../lang";
 import GenericForm from "./GenericForm";
 import {useDispatch, useSelector} from "react-redux";

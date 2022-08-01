@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import {useDraftConfessionMutation, useGetAdminConfessionsQuery, usePublishConfessionMutation} from "../store/api";
+import {useDraftConfessionMutation, useGetAdminConfessionsQuery, usePublishConfessionMutation} from "../store/confession-api";
 import {useDispatch} from "react-redux";
 import {pushNotification} from "../store/toast.state";
 import DoneIcon from "@mui/icons-material/Done";

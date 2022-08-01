@@ -13,6 +13,7 @@ import { CreateCommentInput } from './dto/create-comment.input';
 import { User } from '../users/models/user.model';
 import { PatchPostInput } from './dto/patch-post.input';
 import guessLanguage from '../lib/guess-language';
+import { CommentOrder } from './dto/comment-order.input';
 
 // import { franc, francAll } from 'franc';
 // const { franc } = require('franc');
@@ -98,7 +99,7 @@ export class PostsService {
   ) {
     return this.prisma.comment.create({
       data: {
-        published: false,
+        published: true, // todo debug only
         content: data.content,
         authorId: user ? user.id : undefined,
         postId,
@@ -157,6 +158,39 @@ export class PostsService {
       });
 
     const aggregate = () => this.prisma.post.count({ where: filter });
+
+    const rawResult = await findManyCursorConnection(findMany, aggregate, {
+      first,
+      last,
+      before,
+      after,
+    });
+
+    const { pageInfo, totalCount, edges } = rawResult;
+
+    return {
+      items: edges.map((edge) => edge.node),
+      pageInfo,
+      totalCount,
+    };
+  }
+
+  async getComments(
+    filter: any,
+    include: any,
+    order: CommentOrder,
+    paginationArgs: PaginationArgs
+  ) {
+    const { after, before, first, last } = paginationArgs;
+    const findMany = (args) =>
+      this.prisma.comment.findMany({
+        include,
+        where: filter,
+        orderBy: order ? { [order.field]: order.direction } : null,
+        ...args,
+      });
+
+    const aggregate = () => this.prisma.comment.count({ where: filter });
 
     const rawResult = await findManyCursorConnection(findMany, aggregate, {
       first,

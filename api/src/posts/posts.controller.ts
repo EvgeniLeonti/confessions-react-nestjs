@@ -24,6 +24,8 @@ import { Comment } from './models/comment.model';
 import { AdminRestAuthGuard } from '../auth/rest-admin-auth.guard';
 import { OrderDirection } from '../common/order/order-direction';
 import { PatchPostInput } from './dto/patch-post.input';
+import { GetCommentsInput } from './dto/get-comments.input';
+import { CommentOrder, CommentOrderField } from './dto/comment-order.input';
 
 @Controller('posts')
 @ApiTags('Posts')
@@ -92,9 +94,22 @@ export class PostsController {
   @ApiImplicitParam({ name: 'postId', type: String, required: true })
   async getPostComments(
     @UserEntity() user: User,
-    @Param('postId') postId: string
-  ): Promise<Comment[]> {
-    return this.postsService.getPublishedPostComments(user, postId);
+    @Param('postId') postId: string,
+    @Query() getCommentsInput: GetCommentsInput
+  ): Promise<{ items: Comment[]; pageInfo: PageInfo; totalCount: number }> {
+    // return this.postsService.getPublishedPostComments(user, postId);
+    const { after, before, first, last, query, orderByField, lang } =
+      getCommentsInput;
+    const paginationArgs = { after, before, first, last };
+    const orderBy = new CommentOrder();
+    orderBy.field = orderByField ? orderByField : CommentOrderField.createdAt;
+    orderBy.direction = OrderDirection.desc; // todo - make this configurable
+
+    const filter = {
+      // published: true,
+      postId,
+    };
+    return this.postsService.getComments(filter, null, orderBy, paginationArgs);
   }
 }
 
