@@ -64,9 +64,6 @@ function ConfessionComments(props) {
     resolver: zodResolver(schema),
   });
 
-
-
-
   const onSubmitHandler = (result) => {
     console.log('result', result)
     createCommentMutation({id: confession.id, content: result.content}).then(() => {
@@ -88,7 +85,8 @@ function ConfessionComments(props) {
         style={{width: '100%'}}
       >
         <TextField
-          autoFocus
+          // autoFocus
+          // multiline
           label="Write a comment"
           fullWidth
           required
@@ -134,7 +132,9 @@ function ConfessionComments(props) {
           <>
             {data.items.map(comment =>
               <>
-                <ListItem>
+                <ListItem sx={{
+                  // padding: 0,
+                }}>
                   <ListItemText
                     primary={comment.content}
                     secondary={

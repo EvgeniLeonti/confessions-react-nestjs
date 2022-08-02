@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -84,6 +85,9 @@ export class PostsController {
     @Param('postId') postId: string,
     @Body() data: CreateCommentInput
   ): Promise<Comment> {
+    if (data.content.trim().length < 1) {
+      throw new BadRequestException('Comment content is required');
+    }
     return this.postsService.createCommentDraft(user, postId, data);
   }
 
@@ -167,7 +171,7 @@ export class PostsAdminController {
     return this.postsService.patchPost(postId, data);
   }
 
-  @Post(':postId/comment/:commentId/publish')
+  @Post(':postId/comments/:commentId/publish')
   @ApiResponse({ type: PostObject })
   @ApiImplicitParam({ name: 'postId', type: String, required: true })
   @ApiImplicitParam({ name: 'commentId', type: String, required: true })
