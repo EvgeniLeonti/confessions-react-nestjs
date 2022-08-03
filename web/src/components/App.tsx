@@ -91,7 +91,6 @@ class App extends React.Component<AppProps> {
 
     return (
       <ThemeProvider>
-        <AuthProvider>
           <HistoryContext.Provider value={history}>
             <LocationContext.Provider value={location}>
               <Wrapper>
@@ -105,7 +104,6 @@ class App extends React.Component<AppProps> {
               </Wrapper>
             </LocationContext.Provider>
           </HistoryContext.Provider>
-        </AuthProvider>
       </ThemeProvider>
     );
   }

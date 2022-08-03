@@ -58,7 +58,7 @@ export const confessionApi = createApi({
 
     // confessions
     getConfessions: builder.query<ConfessionsResult, null>({
-      query: () => `posts?lang=${i18n.language}`,
+      query: () => `posts?lang=${i18n.language.split('-')[0]}`,
       providesTags: (result) =>
         result?.items ? result.items.map(({ id }) => ({ type: 'Confession', id })) : ['Confession']
     }),

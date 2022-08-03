@@ -28,6 +28,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {object, string, TypeOf} from 'zod';
 import {pushNotification} from "../store/toast.state";
 import {useDispatch} from "react-redux";
+import ReactionsCTA from "./ReactionsCTA";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -188,16 +189,10 @@ export default function ConfessionCard(props) {
         <Box
           display="flex"
           justifyContent="space-between"
+          alignItems="center"
           style={{width: '100%'}}
         >
-          <div>
-            <ReactionBarSelector style={{backgroundColor: 'unset !important'}} iconSize={24}
-                                 onSelect={(reaction) => {
-                                   console.log('reaction selected', reaction)
-                                 }}
-            />
-
-          </div>
+          <ReactionsCTA confession={props.confession}/>
 
           <div>
 
@@ -216,9 +211,9 @@ export default function ConfessionCard(props) {
 
           </div>
           <div>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon/>
-            </IconButton>
+            {/*<IconButton aria-label="add to favorites">*/}
+            {/*  <FavoriteIcon/>*/}
+            {/*</IconButton>*/}
             <IconButton aria-label="share">
               <ShareIcon/>
             </IconButton>
