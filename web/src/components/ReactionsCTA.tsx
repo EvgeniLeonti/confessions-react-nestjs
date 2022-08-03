@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {ReactionBarSelector} from "@charkour/react-reactions";
 import {IconButton, Popover, Typography} from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import i18n from "../i18n/i18n";
+import {useWindowScroll} from 'react-use';
 
 
 const selectedToEmoji = {
@@ -16,6 +17,13 @@ const selectedToEmoji = {
 function ReactionsCTA(props: {confession: any}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selected, setSelected] = React.useState(null);
+  const {y} = useWindowScroll();
+
+  useEffect(() => {
+    if (anchorEl) {
+      setAnchorEl(null);
+    }
+  }, [y])
 
   function handleClick(event: { currentTarget: React.SetStateAction<null>; }) {
     if (anchorEl !== event.currentTarget) {
@@ -34,9 +42,10 @@ function ReactionsCTA(props: {confession: any}) {
   const id = `${props.confession.id}-react-menu`;
   const horizontal = i18n.dir() === 'rtl' ? 'right' : 'left';
 
+  const containerRef = React.useRef();
 
   return (
-    <div>
+    <div ref={containerRef} >
 
       {!selected && (<IconButton aria-describedby={id}
                                        onClick={handleClick}
@@ -59,6 +68,7 @@ function ReactionsCTA(props: {confession: any}) {
         onClose={handleClose}
         anchorOrigin={{vertical: 'center', horizontal}}
         transformOrigin={{vertical: 'center', horizontal}}
+        container={containerRef.current}
         PaperProps={{
           elevation: 0,
           style: {
