@@ -1,0 +1,20 @@
+{
+  "welcome": "ברוכים הבאים לריאקט!",
+  "loading": "טוען...",
+
+  "menu.home": "בית",
+  "menu.confess": "פרסם",
+  "menu.profile": "פרופיל",
+  "menu.admin": "ניהול",
+
+  "confession.submission.title": "שליחת וידוי",
+  "confession.submission.content": "תוכן הוידוי",
+  "confession.submission.content.min": "תוכן הוידוי קצר מדי",
+  "confession.submission.content.required": "תוכן הוידוי הוא חובה",
+  "confession.submission.success": "הוידוי נשלח בהצלחה!",
+  "confession.submission.failure": "אירעה שגיאה בעת שליחת הוידוי, נא נסה שוב מאוחר יותר.",
+  "confession.submission.submit": "שליחה",
+
+  "app.name": "קונפשנס",
+  "language.change.success": "שפה שונתה בהצלחה"
+}
