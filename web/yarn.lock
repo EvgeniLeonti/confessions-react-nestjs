@@ -2718,6 +2718,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/clientjs@npm:^0":
+  version: 0.2.0
+  resolution: "@types/clientjs@npm:0.2.0"
+  checksum: 067f896b589a0b6fb313146d5fc25886dbf3e0f333170389f74c54e666cb695ec6ecea23b69e26f7627f29c17bb98ab1bf93adf36cf8e2a1fd56edce3aef26fa
+  languageName: node
+  linkType: hard
+
 "@types/connect-history-api-fallback@npm:^1.3.5":
   version: 1.3.5
   resolution: "@types/connect-history-api-fallback@npm:1.3.5"
@@ -3756,6 +3763,7 @@ __metadata:
     "@types/babel__core": "npm:^7.1.19"
     "@types/babel__plugin-transform-runtime": "npm:^7.9.2"
     "@types/babel__preset-env": "npm:^7.9.2"
+    "@types/clientjs": "npm:^0"
     "@types/eslint": "npm:^8.4.2"
     "@types/js-cookie": "npm:^3.0.2"
     "@types/prettier": "npm:^2.6.3"
@@ -3769,6 +3777,7 @@ __metadata:
     babel-jest: "npm:^28.1.1"
     babel-loader: "npm:^8.2.5"
     babel-plugin-import: "npm:^1.13.5"
+    clientjs: "npm:^0.2.1"
     copy-webpack-plugin: "npm:^11.0.0"
     cross-spawn: "npm:^7.0.3"
     del-cli: "npm:^4.0.1"
@@ -4481,6 +4490,18 @@ __metadata:
   version: 2.2.0
   resolution: "clean-stack@npm:2.2.0"
   checksum: 0a476c914f0a5e9e12b215729e1a633fcbdd47b8c3d508ebe6441f2ef8d5047fdd0800926349dd18253db4bfcab3e48aa0aca1f2e7f5d614f7194778d7851be4
+  languageName: node
+  linkType: hard
+
+"clientjs@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "clientjs@npm:0.2.1"
+  dependencies:
+    globalthis: "npm:^1.0.2"
+    inherits: "npm:^2.0.4"
+    murmurhash-js: "npm:^1.0.0"
+    ua-parser-js: "npm:^0.7.30"
+  checksum: a821f95d7815ca703a830d3f68cf324537765ebb0236f7d9f8d8c936f20bbf8e9d03a31e72fcdb3264a8525996d522f748de408fc51120dd5e2d0aea8e813e33
   languageName: node
   linkType: hard
 
@@ -6493,6 +6514,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"globalthis@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "globalthis@npm:1.0.3"
+  dependencies:
+    define-properties: "npm:^1.1.3"
+  checksum: 712d9e130f2c47067e6590cb1eee418df1106f53ffeddaadb4c8b0793ac0f46039e5f71008c44089523aa2b58d270bb2c4e5721795ddad114bc23d9eb63ec6d5
+  languageName: node
+  linkType: hard
+
 "globby@npm:^11.0.1, globby@npm:^11.1.0":
   version: 11.1.0
   resolution: "globby@npm:11.1.0"
@@ -7043,7 +7073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:~2.0.3":
+"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.3":
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: ca76c7e45ec715bfe6c1dd67b780b9a15068f37b37ab56cf8b773537b2654238469a42950f5f4d301212755e7512be888f627752e778e1863d95cfedefc8b8bd
@@ -8770,6 +8800,13 @@ __metadata:
   bin:
     multicast-dns: cli.js
   checksum: ce090ef9e93c73179c78c9f8cb3bb1d4e06266b7914ba6dec371ef2ded3ceed4ec7788fbb41688385b3b84bd152afb8f213b33ef6dbf69a57a47ff47e01fc23c
+  languageName: node
+  linkType: hard
+
+"murmurhash-js@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "murmurhash-js@npm:1.0.0"
+  checksum: 8b09c2f2b38bd9172cc267470405a644c237946efc09ac716ce8c780975da0689059ec92af637ac179eaf49bf57ead5d51fa8ef106616e3243cb7b0b8c902c65
   languageName: node
   linkType: hard
 
@@ -11455,6 +11492,13 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 19bcd9153bbacaabed753b39fbd6adb5417690230b07db63f02e22588865b444b7504da9b9fcdcca5b4ac34be19904271a266bfa54d75fcfb0f5d699cb1e2314
+  languageName: node
+  linkType: hard
+
+"ua-parser-js@npm:^0.7.30":
+  version: 0.7.31
+  resolution: "ua-parser-js@npm:0.7.31"
+  checksum: 12aeb0aca94b6e41a841e2f8fc96317c128ebd11bf83ad8ffc89b31117bd3e3b066bf76f983f98c3df1a10a1395c778e3de214d9b55d748925211b368b9e9a4f
   languageName: node
   linkType: hard
 

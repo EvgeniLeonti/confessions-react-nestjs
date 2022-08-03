@@ -8,6 +8,8 @@ import {
   Post,
   Query,
   UseGuards,
+  Headers,
+  Delete,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
@@ -23,6 +25,8 @@ import { Comment } from './models/comment.model';
 import { AdminRestAuthGuard } from '../auth/rest-admin-auth.guard';
 import { PatchPostInput } from './dto/patch-post.input';
 import { ListInput, Sort } from './dto/list.input';
+import { CreateReactionInput } from './dto/create-reaction.input';
+import { Reaction } from './models/reaction.model';
 
 @Controller('posts')
 @ApiTags('Posts')
@@ -56,7 +60,7 @@ export class PostsController {
 
     return this.postsService.getPosts(
       filter,
-      { author: true },
+      { author: true, reactions: true },
       new Sort(input.sort),
       paginationArgs
     );
@@ -107,6 +111,56 @@ export class PostsController {
       new Sort(input.sort),
       paginationArgs
     );
+  }
+
+  @Post(':postId/reactions')
+  @UseGuards(OptionalRestAuthGuard)
+  @ApiBearerAuth()
+  @ApiResponse({ type: Reaction })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  async createReaction(
+    @UserEntity() user: User,
+    @Param('postId') postId: string,
+    @Body() data: CreateReactionInput,
+    @Headers() headers
+  ): Promise<Reaction> {
+    if (data.name.trim().length < 1) {
+      throw new BadRequestException('Reaction name is required');
+    }
+    const browserFP = headers['browser-fingerprint'];
+    return this.postsService.createReaction(user, browserFP, postId, data);
+  }
+
+  @Get(':postId/reactions/summary')
+  @UseGuards(OptionalRestAuthGuard)
+  @ApiBearerAuth()
+  // @ApiResponse({ type: Comment })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  async getReactionsSummary(
+    @UserEntity() user: User,
+    @Param('postId') postId: string,
+    @Query() input: ListInput,
+    @Headers() headers
+  ): Promise<any> {
+    const browserFP = headers['browser-fingerprint'];
+    return this.postsService.getReactionsSummary(user, browserFP, postId);
+  }
+
+  @Delete(':postId/reactions')
+  @UseGuards(OptionalRestAuthGuard)
+  @ApiBearerAuth()
+  // @ApiResponse({ type: Comment })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  async deleteReaction(
+    @UserEntity() user: User,
+    @Param('postId') postId: string,
+    @Headers() headers
+  ): Promise<any> {
+    const browserFP = headers['browser-fingerprint'];
+    if (!browserFP && !user) {
+      throw new BadRequestException('User or browser fingerprint is required');
+    }
+    return this.postsService.deleteReaction(user, browserFP, postId);
   }
 }
 

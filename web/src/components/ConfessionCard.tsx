@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ConfessionContent from "./ConfessionContent";
 import {
+  Badge,
   Box,
   CardActions,
   Collapse,
@@ -15,20 +16,34 @@ import {
   ListItemText,
   TextField
 } from "@mui/material";
-import {ReactionBarSelector} from "@charkour/react-reactions";
 import CommentIcon from "@mui/icons-material/Comment";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import {styled} from "@mui/material/styles";
+import {styled, useTheme} from "@mui/material/styles";
 import {LoadingButton} from "@mui/lab";
-import {useCreateCommentMutation, useGetCommentsQuery} from "../store/confession-api";
+import {
+  useCreateCommentMutation, useCreateReactionMutation, useDeleteReactionMutation,
+  useGetCommentsQuery,
+  useGetConfessionsQuery,
+  useGetReactionsSummaryQuery
+} from "../store/confession-api";
 import {useTranslation} from "react-i18next";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {object, string, TypeOf} from 'zod';
 import {pushNotification} from "../store/toast.state";
 import {useDispatch} from "react-redux";
 import ReactionsCTA from "./ReactionsCTA";
+import {useEffect, useState} from "react";
+
+const ALL_REACTIONS = [
+  {name: 'like', emoji: '👍'},
+  {name: 'dislike', emoji: '👎'},
+  {name: 'laugh', emoji: '😂'},
+  {name: 'love', emoji: '❤️'},
+  {name: 'sad', emoji: '😢'},
+  {name: 'angry', emoji: '😠'},
+  {name: 'surprise', emoji: '😮'},
+];
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -51,6 +66,7 @@ function ConfessionComments(props) {
   const { data, error, isLoading } = useGetCommentsQuery({id: confession.id});
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const schema = object({
     content: string()
@@ -166,24 +182,124 @@ function ConfessionComments(props) {
   )
 }
 
-export default function ConfessionCard(props) {
-  const {id, content, createdAt} = props.confession;
-  const [expanded, setExpanded] = React.useState(false);
+function ConfessionReactions(props) {
+  const {id, content, createdAt, reactions} = props.confession;
 
+  const [createReactionMutation, {isLoading: isCreateReactionLoading}] = useCreateReactionMutation();
+  const [deleteReactionMutation, {isLoading: isDeleteReactionLoading}] = useDeleteReactionMutation();
+  const { data, error, isLoading } = useGetReactionsSummaryQuery({id});
+  const theme = useTheme();
+  const [selectedReaction, setSelectedReaction] = useState(null);
+  const [summary, setSummary] = useState(null);
+
+
+  useEffect(() => {
+    setSummary(data);
+  }, [data]);
+
+  useEffect(() => {
+    if (!selectedReaction) {
+      setSelectedReaction(summary?.myReaction?.name);
+    }
+  }, [summary])
+
+  const onReactionClickHandler = (name) => {
+      const currentMyReaction = summary?.myReaction?.name;
+      setSelectedReaction(name);
+
+
+
+      console.log('summary', summary)
+      console.log('currentMyReaction', currentMyReaction)
+      console.log('summary.count[currentMyReaction]', summary.count)
+      setSummary({
+        ...summary,
+        count: {
+          ...summary.count,
+          [name]: {
+            ...summary.count[name],
+            count: summary.count[name].count + 1,
+          },
+          ...currentMyReaction && summary.count[currentMyReaction] &&{
+            [currentMyReaction]: {
+              ...summary.count[currentMyReaction],
+              count: summary.count[currentMyReaction].count - 1,
+            }
+          },
+        },
+        myReaction: currentMyReaction === name ? null : {name},
+      });
+
+      // console.log('currentMyReaction', currentMyReaction)
+      // console.log('name', name)
+      if (currentMyReaction === name) {
+        deleteReactionMutation({id, name})
+      }
+      else {
+        createReactionMutation({id, name})
+      }
+  }
+
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      {summary?.count && Object.values(summary?.count).map(({name, emoji, count}) => {
+        return (<Badge key={`${id}-${name}-reaction-count`} badgeContent={count} color="primary" sx={{
+          '& .MuiBadge-badge': {
+            right: '50%',
+            top: selectedReaction === name ? 15 : 10,
+            border: `2px solid ${theme.palette.background.paper}`,
+            // padding: '0 4px',
+          },
+        }}>
+          <Typography
+            sx={{
+              cursor: 'pointer',
+              padding: '1rem',
+              fontSize: selectedReaction === name ? '36px' : '24px',
+              // transform: activeReaction === name ? 'scale(1.2)' : 'scale(1)',
+              transition: theme.transitions.create(['background-color', 'transform'], {
+                duration: theme.transitions.duration.standard,
+              }),
+              '&:hover': {
+                transform: 'scale(1.5)',
+                // fontSize: '36px'
+              },
+              // '&:active': {
+              //   transform: 'scale(2)',
+              //   // fontSize: '36px'
+              // },
+            }}
+
+                      onClick={() => onReactionClickHandler(name)}
+                      // onMouseEnter={() => setHoveringReaction(name)}
+                      // onMouseLeave={() => setHoveringReaction(null)}
+          >
+            {emoji}
+          </Typography>
+        </Badge>)
+      })}
+    </Box>
+
+  )
+}
+export default function ConfessionCard(props) {
+  const {id, content, createdAt, reactions} = props.confession;
+  const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-
-
   return (
     <Card sx={{minWidth: 275}}>
-      <CardContent>
+      <CardContent sx={{paddingBottom: 0}}>
         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
           {new Date(createdAt).toLocaleString()}
         </Typography>
         <ConfessionContent text={content}/>
+      </CardContent>
+      <CardContent>
+        <ConfessionReactions confession={props.confession}/>
       </CardContent>
       <CardActions>
         <Box
@@ -193,10 +309,7 @@ export default function ConfessionCard(props) {
           style={{width: '100%'}}
         >
           <ReactionsCTA confession={props.confession}/>
-
           <div>
-
-
             <ExpandMore
               expand={expanded}
               onClick={handleExpandClick}

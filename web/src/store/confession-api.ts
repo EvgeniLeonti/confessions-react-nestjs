@@ -24,6 +24,7 @@ export const confessionApi = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const {accessToken} = (getState() as RootState).auth
+      const {clientJs} = (getState() as RootState).app
 
 
       // If we have a token set in state, let's assume that we should be passing it.
@@ -31,11 +32,15 @@ export const confessionApi = createApi({
         headers.set('authorization', `Bearer ${accessToken}`)
       }
 
+      if (clientJs) {
+        headers.set('browser-fingerprint', clientJs.fingerprint)
+      }
+
       return headers
     },
 
   }),
-  tagTypes: ['Confession', 'User', 'Comment'],
+  tagTypes: ['Confession', 'User', 'Comment', 'Reactions'],
   endpoints: (builder) => ({
     // auth
     signup: builder.mutation({
@@ -58,7 +63,7 @@ export const confessionApi = createApi({
 
     // confessions
     getConfessions: builder.query<ConfessionsResult, null>({
-      query: () => `posts?lang=${i18n.language.split('-')[0]}`,
+      query: () => `posts?lang=${i18n.language.split('-')[0]}&limit=1`,
       providesTags: (result) =>
         result?.items ? result.items.map(({ id }) => ({ type: 'Confession', id })) : ['Confession']
     }),
@@ -96,6 +101,34 @@ export const confessionApi = createApi({
       providesTags: (result, error, id) => [{ type: 'Comment', id }],
     }),
 
+    // reactions
+
+    createReaction: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `posts/${id}/reactions`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: (result, error, id) => ([{ type: 'Reactions', id: result.postId }]),
+    }),
+
+    getReactionsSummary: builder.query({
+      query: ({ id }) => ({
+        url: `posts/${id}/reactions/summary`,
+        method: 'GET',
+      }),
+      providesTags: (result, error, id) => [{ type: 'Reactions', id: result.postId }],
+    }),
+
+    deleteReaction: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `posts/${id}/reactions`,
+        method: 'DELETE',
+        body,
+      }),
+      invalidatesTags: (result, error, id) => ([{ type: 'Reactions', id: result.postId }]),
+    }),
+
     // admin
     getAdminConfessions: builder.query<ConfessionsResult, string>({
       query: () => `admin/posts`,
@@ -131,6 +164,9 @@ export const confessionApi = createApi({
       }),
       invalidatesTags: ['Confession'],
     }),
+
+
+
   }),
 })
 
@@ -150,6 +186,11 @@ export const {
   // comments
   useCreateCommentMutation,
   useGetCommentsQuery,
+
+  // reactions
+  useCreateReactionMutation,
+  useGetReactionsSummaryQuery,
+  useDeleteReactionMutation,
 
   useGetAdminConfessionsQuery,
   usePatchConfessionMutation,

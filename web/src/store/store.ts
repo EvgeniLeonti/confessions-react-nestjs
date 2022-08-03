@@ -7,7 +7,6 @@ import {confessionApi} from "./confession-api";
 
 const customMiddleware: Middleware =
   (api: MiddlewareAPI) => (next) => (action) => {
-  console.log('apiMiddleware action', action)
     const {accessToken, user} = (store.getState() as RootState).auth
 
 

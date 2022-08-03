@@ -9,9 +9,20 @@ import { User } from '../users/models/user.model';
 import { PatchPostInput } from './dto/patch-post.input';
 import guessLanguage from '../lib/guess-language';
 import { Sort } from './dto/list.input';
+import { CreateReactionInput } from './dto/create-reaction.input';
 
 // import { franc, francAll } from 'franc';
 // const { franc } = require('franc');
+const ALL_REACTIONS = [
+  { name: 'like', emoji: '👍' },
+  // { name: 'dislike', emoji: '👎' },
+  { name: 'laugh', emoji: '😂' },
+  { name: 'love', emoji: '❤️' },
+  { name: 'sad', emoji: '😢' },
+  { name: 'angry', emoji: '😠' },
+  { name: 'surprise', emoji: '😮' },
+];
+
 @Injectable()
 export class PostsService {
   constructor(private prisma: PrismaService) {}
@@ -214,6 +225,78 @@ export class PostsService {
     return post;
   }
 
+  async createReaction(
+    user: User,
+    browserFP: string,
+    postId: string,
+    data: CreateReactionInput
+  ) {
+    if (browserFP) {
+      await this.prisma.reaction.deleteMany({
+        where: {
+          postId,
+          browserFP,
+        },
+      });
+    }
+
+    // todo use browserFP as unique identifier
+    return this.prisma.reaction.create({
+      data: {
+        name: data.name,
+        browserFP,
+        authorId: user?.id,
+        postId,
+      },
+    });
+  }
+
+  async getReactionsSummary(user: User, browserFP: string, postId: string) {
+    const emojiMap = ALL_REACTIONS.reduce((acc, reaction) => {
+      acc[reaction.name] = reaction.emoji;
+      return acc;
+    }, {});
+
+    const count = ALL_REACTIONS.reduce((acc, reaction) => {
+      if (!acc[reaction.name]) {
+        const emoji = emojiMap[reaction.name];
+        acc[reaction.name] = {
+          name: reaction.name,
+          count: 0,
+          emoji,
+        };
+      }
+      return acc;
+    }, {});
+
+    const reactions = await this.prisma.reaction.findMany({
+      where: { postId },
+      orderBy: { id: 'desc' },
+    });
+
+    reactions.forEach((reaction) => {
+      if (count[reaction.name]) {
+        count[reaction.name].count++;
+      }
+    });
+
+    const myReactions = reactions.filter(
+      (reaction) => reaction.browserFP === browserFP
+    );
+
+    const myReaction = myReactions.length > 0 ? myReactions[0] : null;
+
+    return { count, myReaction, postId };
+  }
+
+  async deleteReaction(user: User, browserFP: string, postId: string) {
+    await this.prisma.reaction.deleteMany({
+      where: {
+        browserFP,
+        postId,
+      },
+    });
+  }
   private async detectLanguage(content: string): Promise<string> {
     return new Promise((resolve, reject) => {
       guessLanguage().detect(content, function (language) {

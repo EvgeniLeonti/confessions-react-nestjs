@@ -1,10 +1,11 @@
 import React, {useEffect} from "react";
 import {ReactionBarSelector} from "@charkour/react-reactions";
-import {IconButton, Popover, Typography} from "@mui/material";
+import {Box, IconButton, Popover, Typography} from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import i18n from "../i18n/i18n";
 import {useWindowScroll} from 'react-use';
-
+import {useCreateReactionMutation} from "../store/confession-api";
+import {useDispatch} from "react-redux";
 
 const selectedToEmoji = {
   'happy': '😆',
@@ -13,11 +14,17 @@ const selectedToEmoji = {
   'love': '❤️',
   'satisfaction': '👍',
   'surprise': '😮',
-}
+};
 function ReactionsCTA(props: {confession: any}) {
+  const { confession } = props;
+  const [createReactionMutation, {isLoading: isCreateReactionLoading}] = useCreateReactionMutation();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selected, setSelected] = React.useState(null);
   const {y} = useWindowScroll();
+
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     if (anchorEl) {
@@ -38,14 +45,24 @@ function ReactionsCTA(props: {confession: any}) {
     setAnchorEl(null);
   }
 
+  function handleReactionSelect(reaction: string) {
+    console.log('reaction selected', reaction)
+    setSelected(reaction);
+    handleClose();
 
-  const id = `${props.confession.id}-react-menu`;
+    createReactionMutation({id: confession.id, name: reaction}).then(() => {
+      // dispatch(pushNotification({message: 'comment sent', options: { variant: 'success' } }))
+      // reset()
+    });
+  }
+
+  const id = `${confession.id}-react-menu`;
   const horizontal = i18n.dir() === 'rtl' ? 'right' : 'left';
 
   const containerRef = React.useRef();
 
   return (
-    <div ref={containerRef} >
+    <Box ref={containerRef} >
 
       {!selected && (<IconButton aria-describedby={id}
                                        onClick={handleClick}
@@ -86,15 +103,11 @@ function ReactionsCTA(props: {confession: any}) {
             // boxShadow: 'unset !important',
           }}
            iconSize={24}
-           onSelect={(reaction) => {
-             console.log('reaction selected', reaction)
-             setSelected(reaction);
-             handleClose();
-           }}
+           onSelect={handleReactionSelect}
           />
         </div>
       </Popover>
-    </div>
+    </Box>
   );
 }
 
