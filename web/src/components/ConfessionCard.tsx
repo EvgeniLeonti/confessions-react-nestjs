@@ -298,9 +298,9 @@ export default function ConfessionCard(props) {
         </Typography>
         <ConfessionContent text={content}/>
       </CardContent>
-      {/*<CardContent>*/}
-      {/*  <ConfessionReactions confession={props.confession}/>*/}
-      {/*</CardContent>*/}
+      <CardContent sx={{padding: 0}}>
+        <ConfessionReactions confession={props.confession}/>
+      </CardContent>
       <CardActions>
         <Box
           display="flex"
@@ -324,7 +324,7 @@ export default function ConfessionCard(props) {
 
           </div>
 
-          <ConfessionReactions confession={props.confession}/>
+          {/*<ConfessionReactions confession={props.confession}/>*/}
           <div>
             {/*<IconButton aria-label="add to favorites">*/}
             {/*  <FavoriteIcon/>*/}
