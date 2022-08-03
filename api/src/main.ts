@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
-import { AppModule } from './app.module';
+import { AppModule } from './app/app.module';
 import type {
   CorsConfig,
   NestConfig,

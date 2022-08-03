@@ -1,11 +1,6 @@
 import { PrismaService } from 'nestjs-prisma';
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PaginationArgs } from '../common/pagination/pagination.args';
-import { PostOrder } from './dto/post-order.input';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { CreatePostInput } from './dto/create-post.input';
 import { Prisma } from '@prisma/client';
@@ -13,7 +8,7 @@ import { CreateCommentInput } from './dto/create-comment.input';
 import { User } from '../users/models/user.model';
 import { PatchPostInput } from './dto/patch-post.input';
 import guessLanguage from '../lib/guess-language';
-import { CommentOrder } from './dto/comment-order.input';
+import { Sort } from './dto/list.input';
 
 // import { franc, francAll } from 'franc';
 // const { franc } = require('franc');
@@ -145,7 +140,7 @@ export class PostsService {
   async getPosts(
     filter: any,
     include: any,
-    order: PostOrder,
+    sort: Sort,
     paginationArgs: PaginationArgs
   ) {
     const { after, before, first, last } = paginationArgs;
@@ -153,7 +148,7 @@ export class PostsService {
       this.prisma.post.findMany({
         include,
         where: filter,
-        orderBy: order ? { [order.field]: order.direction } : null,
+        orderBy: { [sort.field]: sort.direction },
         ...args,
       });
 
@@ -178,7 +173,7 @@ export class PostsService {
   async getComments(
     filter: any,
     include: any,
-    order: CommentOrder,
+    sort: Sort,
     paginationArgs: PaginationArgs
   ) {
     const { after, before, first, last } = paginationArgs;
@@ -186,7 +181,7 @@ export class PostsService {
       this.prisma.comment.findMany({
         include,
         where: filter,
-        orderBy: order ? { [order.field]: order.direction } : null,
+        orderBy: { [sort.field]: sort.direction },
         ...args,
       });
 
