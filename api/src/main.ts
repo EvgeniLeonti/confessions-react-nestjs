@@ -1,3 +1,5 @@
+import serverlessExpress from '@vendia/serverless-express';
+import { Callback, Context, Handler } from 'aws-lambda';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
@@ -9,6 +11,21 @@ import type {
   NestConfig,
   SwaggerConfig,
 } from 'src/common/configs/config.interface';
+
+// todo use env var
+const IS_SERVERLESS = false;
+
+// serverless start
+let server: Handler;
+export const handler: Handler = async (
+  event: any,
+  context: Context,
+  callback: Callback
+) => {
+  server = server ?? (await bootstrap());
+  return server(event, context, callback);
+};
+// serverless end
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -45,6 +62,12 @@ async function bootstrap() {
   // Cors
   if (corsConfig.enabled) {
     app.enableCors();
+  }
+
+  if (IS_SERVERLESS) {
+    await app.init();
+    const expressApp = app.getHttpAdapter().getInstance();
+    return serverlessExpress({ app: expressApp });
   }
 
   await app.listen(nestConfig.port || 3000);

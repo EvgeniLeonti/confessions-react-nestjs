@@ -23,6 +23,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "serverless:offline": "npx serverless offline start",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -103,7 +104,9 @@
     "ts-loader": "9.2.6",
     "ts-node": "10.4.0",
     "tsconfig-paths": "3.12.0",
-    "typescript": "4.5.4"
+    "typescript": "4.5.4",
+    "@types/aws-lambda": "^8.10.101",
+    "serverless-offline": "^9.1.4"
   },
   "jest": {
     "moduleFileExtensions": [
