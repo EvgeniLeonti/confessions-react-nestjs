@@ -51,3 +51,8 @@ custom:
   serverless-offline:
     httpPort: 4000
     noPrependStageInUrl: true
+
+package:
+  exclude:
+    - node_modules/**
+    - .git/**
