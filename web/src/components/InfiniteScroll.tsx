@@ -24,6 +24,7 @@ const InfiniteScroll = () => {
         return;
       }
 
+
       setFetching(true);
 
       try {
@@ -32,6 +33,10 @@ const InfiniteScroll = () => {
           limit: LIMIT,
           after,
         });
+
+        if (!result.data) {
+          return;
+        }
         const { items: newItems, pageInfo } = result.data as ConfessionsResult;
 
         setItems([...items, ...newItems]);
@@ -48,28 +53,27 @@ const InfiniteScroll = () => {
         setFetching(false);
       }
     },
-    [items, fetching]
+    [result]
   );
 
-  const loader = (
-    <div key="loader" className="loader">
-      {t('loading')}
-    </div>
-  );
 
   return (
-    <Scroller
-      loadMore={fetchItems}
-      hasMore={hasMore}
-      loader={loader}
-    >
+    <>
+      {result?.isError && <div>Error: {result.error.status}</div>}
+      {!result?.isError && items && <Scroller
+        loadMore={fetchItems}
+        hasMore={hasMore}
+        loader={<div key="loader" className="loader">{t('loading')}</div>}
+      >
         {items.map(item => (
           <>
             <Card key={item.id} confession={item} />
             <br />
           </>
         ))}
-    </Scroller>
+      </Scroller>}
+    </>
+
   );
 };
 

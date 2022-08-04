@@ -47,3 +47,4 @@ web/!.vscode/react.code-snippets
 /web/.yarn
 /web/.github
 /web/.vscode
+/api/.build/

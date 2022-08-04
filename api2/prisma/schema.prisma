@@ -1,0 +1,71 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+model User {
+  id        String   @id @default(cuid()) @map("_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  password  String
+  firstname String?
+  lastname  String?
+  posts     Post[]
+  comments  Comment[]
+  reactions Reaction[]
+  role      Role
+}
+
+model Post {
+  id        String   @id @default(cuid()) @map("_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  published Boolean
+  title     String?
+  content   String
+  comments  Comment[]
+  reactions Reaction[]
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  language  String?
+}
+
+model Comment {
+  id        String   @id @default(cuid()) @map("_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  published Boolean
+  content   String?
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  post      Post    @relation(fields: [postId], references: [id])
+  postId    String
+}
+
+model Reaction {
+  id        String   @id @default(cuid()) @map("_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  post      Post?    @relation(fields: [postId], references: [id])
+  postId    String?
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  browserFP String?
+  name      String // todo enum
+}
+
+
+enum Role {
+  ADMIN
+  USER
+}

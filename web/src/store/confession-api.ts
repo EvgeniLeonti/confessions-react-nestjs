@@ -7,7 +7,8 @@ import {PaginationParams} from "../types/pagination-params";
 import {ConfessionsResult} from "../types/list-result";
 
 // todo use env var
-export const BASE_URL = 'http://localhost:4000';
+// export const BASE_URL = 'http://localhost:4000';
+export const BASE_URL = 'https://6pnry5fzb5.execute-api.eu-west-1.amazonaws.com/dev';
 
 // Define a service using a base URL and expected endpoints
 export const confessionApi = createApi({
