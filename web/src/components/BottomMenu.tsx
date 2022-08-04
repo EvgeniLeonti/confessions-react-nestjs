@@ -24,7 +24,7 @@ export function BottomMenu(props: AppToolbarProps): JSX.Element {
   const authState = useSelector((state: RootState) => state.auth);
 
   return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: (theme) => theme.zIndex.drawer + 1 }} elevation={3}>
       <BottomNavigation
         showLabels
         value={history.location.pathname}

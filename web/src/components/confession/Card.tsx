@@ -1,8 +1,9 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import ConfessionContent from "./ConfessionContent";
+import ConfessionContent from "./Content";
 import {
   Badge,
   Box,
@@ -21,29 +22,18 @@ import ShareIcon from "@mui/icons-material/Share";
 import {styled, useTheme} from "@mui/material/styles";
 import {LoadingButton} from "@mui/lab";
 import {
-  useCreateCommentMutation, useCreateReactionMutation, useDeleteReactionMutation,
+  useCreateCommentMutation,
+  useCreateReactionMutation,
+  useDeleteReactionMutation,
   useGetCommentsQuery,
-  useGetConfessionsQuery,
   useGetReactionsSummaryQuery
-} from "../store/confession-api";
+} from "../../store/confession-api";
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {object, string, TypeOf} from 'zod';
-import {pushNotification} from "../store/toast.state";
+import {pushNotification} from "../../store/toast.state";
 import {useDispatch} from "react-redux";
-import ReactionsCTA from "./ReactionsCTA";
-import {useEffect, useState} from "react";
-
-const ALL_REACTIONS = [
-  {name: 'like', emoji: '👍'},
-  {name: 'dislike', emoji: '👎'},
-  {name: 'laugh', emoji: '😂'},
-  {name: 'love', emoji: '❤️'},
-  {name: 'sad', emoji: '😢'},
-  {name: 'angry', emoji: '😠'},
-  {name: 'surprise', emoji: '😮'},
-];
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -207,11 +197,6 @@ function ConfessionReactions(props) {
       const currentMyReaction = summary?.myReaction?.name;
       setSelectedReaction(name);
 
-
-
-      console.log('summary', summary)
-      console.log('currentMyReaction', currentMyReaction)
-      console.log('summary.count[currentMyReaction]', summary.count)
       setSummary({
         ...summary,
         count: {
@@ -282,6 +267,7 @@ function ConfessionReactions(props) {
 
   )
 }
+
 export default function ConfessionCard(props) {
   const {id, content, createdAt, reactions} = props.confession;
   const [expanded, setExpanded] = React.useState(false);
@@ -296,7 +282,7 @@ export default function ConfessionCard(props) {
         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
           {new Date(createdAt).toLocaleString()}
         </Typography>
-        <ConfessionContent text={content}/>
+        <ConfessionContent confession={props.confession}/>
       </CardContent>
       <CardContent sx={{padding: 0}}>
         <ConfessionReactions confession={props.confession}/>

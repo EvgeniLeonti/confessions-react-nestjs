@@ -1,19 +1,10 @@
-// Need to use the React-specific entry point to import createApi
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "./store";
-import {useSelector} from "react-redux";
 import i18n from "../i18n/i18n";
-// import type { Pokemon } from './types'
 import * as qs from 'querystring';
-
-export interface ConfessionApi {
-  id: string
-  content: string
-}
-
-export interface ConfessionsResult {
-  items: ConfessionApi[]
-}
+import {Confession} from '../types/confession';
+import {PaginationParams} from "../types/pagination-params";
+import {ConfessionsResult} from "../types/list-result";
 
 // todo use env var
 export const BASE_URL = 'http://192.168.1.62:4000';
@@ -63,10 +54,10 @@ export const confessionApi = createApi({
     }),
 
     // confessions
-    getConfessions: builder.query<ConfessionsResult, null>({
-      query: (query) => {
-        const queryString = query ? qs.stringify(query) : '';
-        return `posts?lang=${i18n.language.split('-')[0]}&${queryString}`
+    getConfessions: builder.query<ConfessionsResult, PaginationParams>({
+      query: (query: PaginationParams) => {
+        const queryString = query ? qs.stringify(query as any) : '';
+        return `posts?lang=${i18n.language.split('-')[0]}&${queryString}&debug=true`
       },
       providesTags: (result) =>
         result?.items ? result.items.map(({ id }) => ({ type: 'Confession', id })) : ['Confession']
@@ -79,7 +70,7 @@ export const confessionApi = createApi({
       providesTags: (result, error, id) => [{ type: 'Confession', id }],
     }),
 
-    createConfession: builder.mutation<ConfessionApi, Partial<ConfessionApi>>({
+    createConfession: builder.mutation<Confession, Partial<Confession>>({
       query: (body) => ({
         url: `posts`,
         method: 'POST',
@@ -140,7 +131,7 @@ export const confessionApi = createApi({
         result?.items ? result.items.map(({ id }) => ({ type: 'Confession', id })) : ['Confession']
     }),
 
-    patchConfession: builder.mutation<ConfessionApi, Partial<ConfessionApi> & Pick<ConfessionApi, 'id'>>({
+    patchConfession: builder.mutation<Confession, Partial<Confession> & Pick<Confession, 'id'>>({
       query: ({ id, ...body }) => ({
         url: `admin/posts/${id}`,
         method: 'PATCH',
@@ -149,7 +140,7 @@ export const confessionApi = createApi({
       invalidatesTags: ['Confession'], // todo invalidate by id
     }),
 
-    publishConfession: builder.mutation<ConfessionApi, Partial<ConfessionApi> & Pick<ConfessionApi, 'id'>>({
+    publishConfession: builder.mutation<Confession, Partial<Confession> & Pick<Confession, 'id'>>({
       query: ({ id, ...body }) => ({
         url: `admin/posts/${id}/publish`,
         method: 'POST',
@@ -160,7 +151,7 @@ export const confessionApi = createApi({
       // todo invalidate by id
       // invalidatesTags: (result, error, arg) => [{ type: 'Post', id: arg.id }],
     }),
-    draftConfession: builder.mutation<ConfessionApi, Partial<ConfessionApi> & Pick<ConfessionApi, 'id'>>({
+    draftConfession: builder.mutation<Confession, Partial<Confession> & Pick<Confession, 'id'>>({
       query: ({ id, ...body }) => ({
         url: `admin/posts/${id}/draft`,
         method: 'POST',
@@ -185,6 +176,7 @@ export const {
 
   // confessions
   useGetConfessionsQuery,
+  useLazyGetConfessionsQuery,
   useCreateConfessionMutation,
 
   // comments

@@ -1400,7 +1400,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.18.9
   resolution: "@babel/runtime@npm:7.18.9"
   dependencies:
@@ -2956,6 +2956,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/parse-link-header@npm:^2":
+  version: 2.0.0
+  resolution: "@types/parse-link-header@npm:2.0.0"
+  checksum: 7a26727fe3d04dbdb9446fb69dac70e2113e502b2c90b48712827e4f7d24686d6af68a4c99491364b21c245150da9e19f48562beee22c0fdf301b8f840172a73
+  languageName: node
+  linkType: hard
+
 "@types/prettier@npm:^2.1.5, @types/prettier@npm:^2.6.3":
   version: 2.6.4
   resolution: "@types/prettier@npm:2.6.4"
@@ -3000,6 +3007,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-infinite-scroller@npm:^1":
+  version: 1.2.3
+  resolution: "@types/react-infinite-scroller@npm:1.2.3"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 709bd23d913ab4217b7f868c659ec8b4807d9a7b0f6eca1ad26e2f5b554fd9772bdebf2abf070ee2fc9881ce9e7856fa623cbec00a82c6c6a247b993a1f853a6
+  languageName: node
+  linkType: hard
+
 "@types/react-is@npm:^16.7.1 || ^17.0.0":
   version: 17.0.3
   resolution: "@types/react-is@npm:17.0.3"
@@ -3015,6 +3031,34 @@ __metadata:
   dependencies:
     "@types/react": "npm:*"
   checksum: 62b80b5b438a6d531ce614ddfbf63791de25e8ba22b071e73c37bd94688398f63e42dc0be3f2b3add4a14d20f322593f51cf329ba81ca3ebcaf414d27217c433
+  languageName: node
+  linkType: hard
+
+"@types/react-virtualized-auto-sizer@npm:^1":
+  version: 1.0.1
+  resolution: "@types/react-virtualized-auto-sizer@npm:1.0.1"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 3fde85fc90446ff5a0d327507269fcf805bdec5c3c5dc70f60d3f97d3081aa7c3868e19f13ba1fa92c9b5262d3b0a1508e5a333672267d9849ec1d22d48a5e0a
+  languageName: node
+  linkType: hard
+
+"@types/react-window-infinite-loader@npm:^1":
+  version: 1.0.6
+  resolution: "@types/react-window-infinite-loader@npm:1.0.6"
+  dependencies:
+    "@types/react": "npm:*"
+    "@types/react-window": "npm:*"
+  checksum: 26146e6ce75b0dcdc82fb34d1cda675878eda837203e9ca867a7e7583eccb6e2321f84056a11bd1e8756c337af05b078b13b705ced85645e01ef8bafa9bbd4b0
+  languageName: node
+  linkType: hard
+
+"@types/react-window@npm:*, @types/react-window@npm:^1":
+  version: 1.8.5
+  resolution: "@types/react-window@npm:1.8.5"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: ab9d389fe8a63fb86d2d51776013b72dda57d0b9799327f3f013287d32dd088bc2afd89f6fbf28657efcc933e700e1a81d15a0d8f6ae51b46abe95bb6b87cb6e
   languageName: node
   linkType: hard
 
@@ -3766,9 +3810,14 @@ __metadata:
     "@types/clientjs": "npm:^0"
     "@types/eslint": "npm:^8.4.2"
     "@types/js-cookie": "npm:^3.0.2"
+    "@types/parse-link-header": "npm:^2"
     "@types/prettier": "npm:^2.6.3"
     "@types/react": "npm:^18.0.12"
     "@types/react-dom": "npm:^18.0.5"
+    "@types/react-infinite-scroller": "npm:^1"
+    "@types/react-virtualized-auto-sizer": "npm:^1"
+    "@types/react-window": "npm:^1"
+    "@types/react-window-infinite-loader": "npm:^1"
     "@types/webpack-bundle-analyzer": "npm:^4.4.1"
     "@types/webpack-env": "npm:^1.17.0"
     "@types/webpack-manifest-plugin": "npm:^3.0.5"
@@ -3804,15 +3853,20 @@ __metadata:
     jss-rtl: "npm:^0.3.0"
     mui-datatables: "npm:^4.2.2"
     notistack: "npm:^2.0.5"
+    parse-link-header: "npm:^2.0.0"
     path-to-regexp: "npm:^6.2.1"
     prettier: "npm:^2.6.2"
     react: "npm:^18.1.0"
     react-dom: "npm:^18.1.0"
     react-hook-form: "npm:^7.33.1"
     react-i18next: "npm:^11.18.3"
+    react-infinite-scroller: "npm:^1.2.6"
     react-redux: "npm:^8.0.2"
     react-refresh: "npm:^0.13.0"
     react-use: "npm:^17.4.0"
+    react-virtualized-auto-sizer: "npm:^1.0.6"
+    react-window: "npm:^1.8.7"
+    react-window-infinite-loader: "npm:^1.0.8"
     relay-config: "npm:^12.0.1"
     stylis-plugin-rtl: "npm:^2.1.1"
     terser-webpack-plugin: "npm:^5.3.3"
@@ -8422,6 +8476,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"memoize-one@npm:>=3.1.1 <6":
+  version: 5.2.1
+  resolution: "memoize-one@npm:5.2.1"
+  checksum: f244677e72d753c0889bb21db4dc9e7adb4fdd748c67c3033c40ed72534ce06dfae006976ddc72c2b1a3649c8dbd725103fdc549565b53242b116448d022d74b
+  languageName: node
+  linkType: hard
+
 "meow@npm:^10.1.0":
   version: 10.1.3
   resolution: "meow@npm:10.1.3"
@@ -9325,6 +9386,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"parse-link-header@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "parse-link-header@npm:2.0.0"
+  dependencies:
+    xtend: "npm:~4.0.1"
+  checksum: 29bc8e22e7fb71319d31d1a7380551af2e297b0450e1b32b3c7e830d1b97b3276fe1897b6b9953695f53dda2ce5557eeb58eb40d3b0e033ffab794caf4a863db
+  languageName: node
+  linkType: hard
+
 "parseurl@npm:~1.3.2, parseurl@npm:~1.3.3":
   version: 1.3.3
   resolution: "parseurl@npm:1.3.3"
@@ -9539,7 +9609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.9, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.8, prop-types@npm:^15.5.9, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -9755,6 +9825,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-infinite-scroller@npm:^1.2.6":
+  version: 1.2.6
+  resolution: "react-infinite-scroller@npm:1.2.6"
+  dependencies:
+    prop-types: "npm:^15.5.8"
+  peerDependencies:
+    react: ^0.14.9 || ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 74225d56b17eceeb7a0d7308590abaebbbeb2dcac610979d1d8418656d9e081862f13dad1b53ef460a0bd3f02c579fe60cb895ce07add411070a609eaf22d9c6
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -9898,6 +9979,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-virtualized-auto-sizer@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "react-virtualized-auto-sizer@npm:1.0.6"
+  peerDependencies:
+    react: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
+    react-dom: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
+  checksum: 122d5be6f5877fbf827cadac442e06cde70366702919e895caab352a8410de8af52230c64124838e892dfa6c34993c3ce80730d5cdf7c17cb73e576f74f138b3
+  languageName: node
+  linkType: hard
+
 "react-virtualized@npm:^9.21.2":
   version: 9.22.3
   resolution: "react-virtualized@npm:9.22.3"
@@ -9912,6 +10003,29 @@ __metadata:
     react: ^15.3.0 || ^16.0.0-alpha
     react-dom: ^15.3.0 || ^16.0.0-alpha
   checksum: 25ef066aae73f9e4eb5f946a975dbea9b05f151cc00cd589fce7f269dd301540c9c40277d38a2ec31c7b2594204e4f04ffa4ae3a62fe20d822ab7024d6f5ac78
+  languageName: node
+  linkType: hard
+
+"react-window-infinite-loader@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "react-window-infinite-loader@npm:1.0.8"
+  peerDependencies:
+    react: ^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0
+    react-dom: ^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0
+  checksum: 39ef4040903952aeba3b70a48f485b6ccb63f80b90c16a74c8aff0c9b1d16fbb4f4b605ae437ae72f5d8474f6b3a0ce1ab1573a6cd05ce9e46539861b57158ce
+  languageName: node
+  linkType: hard
+
+"react-window@npm:^1.8.7":
+  version: 1.8.7
+  resolution: "react-window@npm:1.8.7"
+  dependencies:
+    "@babel/runtime": "npm:^7.0.0"
+    memoize-one: "npm:>=3.1.1 <6"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 75b1621e440570f150fed11ba8ff39bc540f8f178da1c22e583a51605a9c47c35fdd10bb330e11d5412bf809640df0563b6efa0d18d904bb1d4378b1e07b97fe
   languageName: node
   linkType: hard
 
@@ -12080,6 +12194,13 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 807217fa26495f179b03c1160bacaee829234b66f4d22b6df00dc335268e92b537add73edb84046827aadd858c997213d1c78743c571339fe25cc6d51d3e5dea
+  languageName: node
+  linkType: hard
+
+"xtend@npm:~4.0.1":
+  version: 4.0.2
+  resolution: "xtend@npm:4.0.2"
+  checksum: 3d5d245e44d76b4eaf8a357199541347da8ce522bc0573fdb89b01ff6594b33364569d1dba02ccfe3ee86b384c0d61c06fda1b0cff71f382029e2a18e2f592f7
   languageName: node
   linkType: hard
 

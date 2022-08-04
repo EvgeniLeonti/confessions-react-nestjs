@@ -48,9 +48,15 @@ export class PostsController {
   async listPublishedPosts(
     @Query() input: ListInput
   ): Promise<{ items: PostObject[]; pageInfo: PageInfo; totalCount: number }> {
-    const { after, before, first, last, query, lang } = input;
+    const { after, before, first, last, limit, query, lang } = input;
 
-    const paginationArgs = { after, before, first, last };
+    const paginationArgs = {
+      after: after || undefined,
+      before: before || undefined,
+      first: first || undefined,
+      last: last || undefined,
+      limit: limit || undefined,
+    };
 
     const filter = {
       published: true,
@@ -60,7 +66,7 @@ export class PostsController {
 
     return this.postsService.getPosts(
       filter,
-      { author: true, reactions: true },
+      { author: true, reactions: false },
       new Sort(input.sort),
       paginationArgs
     );

@@ -160,14 +160,14 @@ export class PostsService {
         include,
         where: filter,
         orderBy: { [sort.field]: sort.direction },
-        take: limit || 10,
+        // take: limit ? Number(limit) : 10,
         ...args,
       });
 
     const aggregate = () => this.prisma.post.count({ where: filter });
 
     const rawResult = await findManyCursorConnection(findMany, aggregate, {
-      first,
+      first: limit ? Number(limit) : 10,
       last,
       before,
       after,
@@ -218,7 +218,7 @@ export class PostsService {
   async getPublishedPost(postId: string) {
     const post = await this.prisma.post.findUnique({
       where: { id: postId },
-      include: { comments: true },
+      include: { comments: true, reactions: false },
     });
     if (!post || !post.published) {
       throw new NotFoundException('Post does not exist');

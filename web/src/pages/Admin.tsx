@@ -4,7 +4,7 @@
 import {Container, Typography} from "@mui/material";
 import * as React from "react";
 import AdminConfessionsTable from "../components/AdminConfessionsTable";
-import ConfessionsTable from "../components/ConfessionsTable";
+import ConfessionsTable from "../components/confession/Table";
 import AdvancedTable from "../components/AdvancedTable";
 
 
