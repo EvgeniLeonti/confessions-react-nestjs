@@ -94,10 +94,7 @@ functions:
 #          method: ANY
 #          path: '{proxy+}'
 #
-#custom:
-#  serverless-offline:
-#    httpPort: 4000
-#    noPrependStageInUrl: true
+
 #  webpack:
 #    includeModules: true
 #    webpackConfig: 'webpack.config.js' # Name of webpack configuration file
