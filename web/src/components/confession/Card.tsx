@@ -328,7 +328,7 @@ export default function ConfessionCard(props) {
               aria-label="share"
               startIcon={<ShareIcon />}
               variant='outlined'
-              color="secondary"
+              color="primary"
             >
               {t('share')}
             </Button>
