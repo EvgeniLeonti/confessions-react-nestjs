@@ -236,7 +236,7 @@ export default function config(args, options) {
   const proxyConfig = {
     ...appConfig,
     name: "workers",
-    entry: "./workers/proxy",
+    entry: "./src/workers/proxy",
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "proxy.js",
