@@ -1,6 +1,8 @@
 {
   "welcome": "ברוכים הבאים לריאקט!",
   "loading": "טוען...",
+  "share": "שיתוף",
+
 
   "menu.home": "בית",
   "menu.confess": "פרסם",
@@ -14,6 +16,9 @@
   "confession.submission.success": "הוידוי נשלח בהצלחה!",
   "confession.submission.failure": "אירעה שגיאה בעת שליחת הוידוי, נא נסה שוב מאוחר יותר.",
   "confession.submission.submit": "שליחה",
+
+  "comment.list": "תגובות",
+
 
   "app.name": "קונפשנס",
   "language.change.success": "שפה שונתה בהצלחה"

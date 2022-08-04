@@ -1,6 +1,7 @@
 {
   "welcome": "Welcome to React",
   "loading": "Loading...",
+  "share": "Share",
 
   "menu.home": "Home",
   "menu.confess": "Confess",
@@ -14,6 +15,8 @@
   "confession.submission.success": "Congratulation! You have successfully confessed. It will be reviewed by the team and will be published in case of approval.",
   "confession.submission.failure": "Sorry! Something went wrong. Please try again later.",
   "confession.submission.submit": "Submit",
+
+  "comment.list": "Comments",
 
   "app.name": "Confessions",
   "language.change.success": "Language changed successfully"

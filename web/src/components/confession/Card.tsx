@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import ConfessionContent from "./Content";
 import {
   Badge,
-  Box,
+  Box, Button,
   CardActions,
   Collapse,
   Divider,
@@ -41,13 +41,13 @@ interface ExpandMoreProps extends IconButtonProps {
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
   const { expand, ...other } = props;
-  return <IconButton {...other} />;
+  return <Button {...other} startIcon={<CommentIcon />} />;
 })(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
+  // transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  // marginLeft: 'auto',
+  // transition: theme.transitions.create('transform', {
+  //   duration: theme.transitions.duration.shortest,
+  // }),
 }));
 
 function ConfessionComments(props) {
@@ -228,11 +228,13 @@ function ConfessionReactions(props) {
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
       {summary?.count && Object.values(summary?.count).map(({name, emoji, count}) => {
-        return (<Badge key={`${id}-${name}-reaction-count`} badgeContent={count} color="primary" sx={{
+        return (<Badge key={`${id}-${name}-reaction-count`} badgeContent={count} sx={{
           '& .MuiBadge-badge': {
             right: '50%',
-            top: selectedReaction === name ? 15 : 10,
-            border: `2px solid ${theme.palette.background.paper}`,
+            // top: selectedReaction === name ? 15 : 10,
+            top: selectedReaction === name ? '90%' : '100%',
+            // left: '0.5rem',
+            // border: `2px solid ${theme.palette.background.paper}`,
             // padding: '0 4px',
           },
         }}>
@@ -272,6 +274,7 @@ export default function ConfessionCard(props) {
   const {id, content, createdAt, reactions} = props.confession;
   const [expanded, setExpanded] = React.useState(false);
 
+  const {t} = useTranslation();
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -297,14 +300,22 @@ export default function ConfessionCard(props) {
           {/*<ReactionsCTA confession={props.confession}/>*/}
           <div>
             <ExpandMore
+              variant={expanded ? 'outlined' : 'contained'}
               expand={expanded}
               onClick={handleExpandClick}
               aria-expanded={expanded}
               aria-label="show more"
             >
               {/*<ExpandMoreIcon />*/}
-              <CommentIcon />
+              {/*<CommentIcon />*/}
+                {t('comment.list')}
             </ExpandMore>
+
+
+            {/*<Button variant="outlined" startIcon={<CommentIcon />}>*/}
+            {/*  {t('comment')}*/}
+            {/*</Button>*/}
+
 
 
 
@@ -312,12 +323,16 @@ export default function ConfessionCard(props) {
 
           {/*<ConfessionReactions confession={props.confession}/>*/}
           <div>
-            {/*<IconButton aria-label="add to favorites">*/}
-            {/*  <FavoriteIcon/>*/}
-            {/*</IconButton>*/}
-            <IconButton aria-label="share">
-              <ShareIcon/>
-            </IconButton>
+
+            <Button
+              aria-label="share"
+              startIcon={<ShareIcon />}
+              variant='outlined'
+              color="secondary"
+            >
+              {t('share')}
+            </Button>
+
           </div>
 
         </Box>
