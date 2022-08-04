@@ -2,11 +2,11 @@ import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { PrismaService } from 'nestjs-prisma';
 import { RestAuthGuard } from '../auth/rest-auth.guard';
-import { UserEntity } from '../common/decorators/user.decorator';
 import { User } from './models/user.model';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UpdateUserInput } from './dto/update-user.input';
 import { ChangePasswordInput } from './dto/change-password.input';
+import { UserEntity } from '../common/decorators/user.decorator';
 
 @ApiBearerAuth()
 @Controller('users')

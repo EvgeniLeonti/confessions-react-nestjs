@@ -1,4 +1,3 @@
-import { InputType } from '@nestjs/graphql';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 enum SortDirection {
@@ -29,7 +28,6 @@ export class Sort {
   }
 }
 
-@InputType()
 export class ListInput {
   // Pagination args
 
