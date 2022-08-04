@@ -11,9 +11,10 @@ import type {
   SwaggerConfig,
 } from 'src/common/configs/config.interface';
 
-// todo use env var
-// const IS_SERVERLESS = process.env.IS_SERVERLESS === 'true' || false;
-const IS_SERVERLESS = true;
+// default is true
+const IS_SERVERLESS = !process.env.IS_SERVERLESS
+  ? true
+  : process.env.IS_SERVERLESS === 'true';
 
 // serverless start
 let server: Handler;
