@@ -17,4 +17,7 @@ export class PaginationArgs {
 
   @ApiPropertyOptional()
   last?: number;
+
+  @ApiPropertyOptional()
+  limit?: number;
 }

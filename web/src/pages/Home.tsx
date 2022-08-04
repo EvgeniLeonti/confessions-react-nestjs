@@ -8,7 +8,7 @@ import {useTranslation} from 'react-i18next';
 import ConfessionCard from "../components/ConfessionCard";
 
 function Home(): JSX.Element {
-  const { data, error, isLoading } = useGetConfessionsQuery();
+  const { data, error, isLoading } = useGetConfessionsQuery({limit: 10});
   const { t } = useTranslation();
 
 

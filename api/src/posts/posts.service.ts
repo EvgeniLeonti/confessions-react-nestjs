@@ -154,12 +154,13 @@ export class PostsService {
     sort: Sort,
     paginationArgs: PaginationArgs
   ) {
-    const { after, before, first, last } = paginationArgs;
+    const { after, before, first, last, limit } = paginationArgs;
     const findMany = (args) =>
       this.prisma.post.findMany({
         include,
         where: filter,
         orderBy: { [sort.field]: sort.direction },
+        take: limit || 10,
         ...args,
       });
 

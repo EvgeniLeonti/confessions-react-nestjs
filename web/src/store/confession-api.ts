@@ -4,6 +4,7 @@ import {RootState} from "./store";
 import {useSelector} from "react-redux";
 import i18n from "../i18n/i18n";
 // import type { Pokemon } from './types'
+import * as qs from 'querystring';
 
 export interface ConfessionApi {
   id: string
@@ -63,7 +64,10 @@ export const confessionApi = createApi({
 
     // confessions
     getConfessions: builder.query<ConfessionsResult, null>({
-      query: () => `posts?lang=${i18n.language.split('-')[0]}`,
+      query: (query) => {
+        const queryString = query ? qs.stringify(query) : '';
+        return `posts?lang=${i18n.language.split('-')[0]}&${queryString}`
+      },
       providesTags: (result) =>
         result?.items ? result.items.map(({ id }) => ({ type: 'Confession', id })) : ['Confession']
     }),

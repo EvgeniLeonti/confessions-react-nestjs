@@ -48,6 +48,9 @@ export class ListInput {
   @ApiPropertyOptional()
   last?: number;
 
+  @ApiPropertyOptional()
+  limit?: number;
+
   // Filter and sort args
 
   @ApiPropertyOptional()

@@ -175,8 +175,8 @@ export class PostsAdminController {
   async listAllPosts(
     @Query() input: ListInput
   ): Promise<{ items: PostObject[]; pageInfo: PageInfo; totalCount: number }> {
-    const { after, before, first, last, query, lang } = input;
-    const paginationArgs = { after, before, first, last };
+    const { after, before, first, last, limit, query, lang } = input;
+    const paginationArgs = { after, before, first, last, limit };
 
     const filter = {
       // published: true,
