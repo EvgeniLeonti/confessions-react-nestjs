@@ -20,10 +20,10 @@ const InfiniteScroll = () => {
 
   const fetchItems = useCallback(
     async () => {
+      console.log('result', result);
       if (fetching) {
         return;
       }
-
 
       setFetching(true);
 
@@ -33,11 +33,11 @@ const InfiniteScroll = () => {
           limit: LIMIT,
           after,
         });
-
         if (!result.data) {
           return;
         }
         const { items: newItems, pageInfo } = result.data as ConfessionsResult;
+
 
         setItems([...items, ...newItems]);
 
@@ -53,7 +53,7 @@ const InfiniteScroll = () => {
         setFetching(false);
       }
     },
-    [result]
+    [items, fetching]
   );
 
 
