@@ -20,7 +20,7 @@ function ReactionsCTA(props: {confession: any}) {
   const [createReactionMutation, {isLoading: isCreateReactionLoading}] = useCreateReactionMutation();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selected, setSelected] = React.useState(null);
+  const [selected, setSelected] = React.useState<string | null>(null);
   const {y} = useWindowScroll();
 
   const dispatch = useDispatch();

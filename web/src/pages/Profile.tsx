@@ -1,6 +1,3 @@
-/* SPDX-FileCopyrightText: 2014-present Kriasoft <hello@kriasoft.com> */
-/* SPDX-License-Identifier: MIT */
-
 import {Box, Container} from "@mui/material";
 import BasicCard from "../components/BasicCard";
 import {useGetMeQuery} from "../store/confession-api";
@@ -10,7 +7,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
 
 function Profile(): JSX.Element {
-  const { data, error, isLoading } = useGetMeQuery();
+  const { data, error, isLoading } = useGetMeQuery(null);
   const authState = useSelector((state: RootState) => state.auth);
 
   return (

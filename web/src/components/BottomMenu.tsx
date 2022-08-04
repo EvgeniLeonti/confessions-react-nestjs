@@ -1,6 +1,3 @@
-/* SPDX-FileCopyrightText: 2014-present Kriasoft <hello@kriasoft.com> */
-/* SPDX-License-Identifier: MIT */
-
 import {AppBarProps, BottomNavigation, BottomNavigationAction, Paper,} from "@mui/material";
 import * as React from "react";
 import {useHistory} from "../core";
@@ -8,8 +5,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import HomeRoute from "../routes/Home.route";
 import AddIcon from "@mui/icons-material/Add";
 import ConfessRoute from "../routes/Confess.route";
-import SettingsIcon from "@mui/icons-material/Settings";
-import SettingsRoute from "../routes/Settings.route";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import {useSelector} from "react-redux";
