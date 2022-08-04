@@ -1,7 +1,16 @@
 service: confessions-api
 
 plugins:
+  - '@hewmen/serverless-plugin-typescript'
+  - serverless-plugin-optimize
   - serverless-offline
+  # - serverless-plugin-warmup
+
+# custom:
+#   # Enable warmup on all functions (only for production and staging)
+#   warmup:
+#       - production
+#       - staging
 
 provider:
   name: aws
@@ -9,50 +18,117 @@ provider:
   region: eu-west-1
   profile: default
   stackName: confessions-api-stack
-  memorySize: 512
+  memorySize: 1024
   versionFunctions: false
+  environment:
+    IS_SERVERLESS: true
 
-
-
-  httpApi:
-    # Enable CORS HTTP headers with default settings (allow all)
-    # Can be fine-tuned with specific options
-    cors: true
-
-
-  # Default timeout for functions (default: 6 seconds)
-  # Note: API Gateway has a maximum timeout of 30 seconds
-#  timeout: 10
-  # Function environment variables
-#  environment:
-#    APP_ENV_VARIABLE: FOOBAR
-  # Duration for CloudWatch log retention (default: forever)
-#  logRetentionInDays: 14
-  # KMS key ARN to use for encryption for all functions
-#  kmsKeyArn: arn:aws:kms:us-east-1:XXXXXX:key/some-hash
-  # Version of hashing algorithm used by Serverless Framework for function packaging
-#  lambdaHashingVersion: 20201221
-  # Use function versioning (enabled by default)
-  # Processor architecture: 'x86_64' or 'arm64' via Graviton2 (default: x86_64)
-#  architecture: x86_64
+package:
+  individually: true
 
 functions:
   main:
-    handler: dist/main.handler
+    handler: src/main.handler
     events:
       - http:
-          method: ANY
-          path: /
-      - http:
-          method: ANY
-          path: '{proxy+}'
+          method: any
+          path: /{proxy+}
 
-custom:
-  serverless-offline:
-    httpPort: 4000
-    noPrependStageInUrl: true
 
-package:
-  exclude:
-    - node_modules/**
-    - .git/**
+
+
+
+
+
+#service: confessions-api
+#
+#plugins:
+#  - serverless-offline
+#  - serverless-webpack
+##  - serverless-plugin-typescript
+##  - serverless-plugin-typescript
+##  - serverless-plugin-optimize
+#
+#provider:
+#  name: aws
+#  runtime: nodejs14.x
+#  region: eu-west-1
+#  profile: default
+#  stackName: confessions-api-stack
+#  memorySize: 1024
+#  versionFunctions: false
+#  environment:
+#    IS_SERVERLESS: true
+#
+#
+#  httpApi:
+#    # Enable CORS HTTP headers with default settings (allow all)
+#    # Can be fine-tuned with specific options
+#    cors: true
+#
+#
+#  # Default timeout for functions (default: 6 seconds)
+#  # Note: API Gateway has a maximum timeout of 30 seconds
+##  timeout: 10
+#  # Function environment variables
+#
+#  # Duration for CloudWatch log retention (default: forever)
+##  logRetentionInDays: 14
+#  # KMS key ARN to use for encryption for all functions
+##  kmsKeyArn: arn:aws:kms:us-east-1:XXXXXX:key/some-hash
+#  # Version of hashing algorithm used by Serverless Framework for function packaging
+##  lambdaHashingVersion: 20201221
+#  # Use function versioning (enabled by default)
+#  # Processor architecture: 'x86_64' or 'arm64' via Graviton2 (default: x86_64)
+##  architecture: x86_64
+#
+#functions:
+#  main:
+#    handler: dist/main.handler1
+##    handler: src/main.handler
+#    events:
+#      - http:
+#          method: ANY
+#          path: /
+#      - http:
+#          method: ANY
+#          path: '{proxy+}'
+#
+#custom:
+#  serverless-offline:
+#    httpPort: 4000
+#    noPrependStageInUrl: true
+#  webpack:
+#    includeModules: true
+#    webpackConfig: 'webpack.config.js' # Name of webpack configuration file
+#    packager: 'yarn' # Packager that will be used to package your external modules
+#    excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
+#
+#
+#package:
+#  individually: true
+##
+##package:
+##    exclude:
+##      - ./**/*
+##    include:
+##      - dist/**
+##
+##package:
+##  patterns:
+##    - '!node_modules/**'
+##    - 'node_modules/@vendia/**'
+##    - 'node_modules/@vendia/**'
+##    - 'node_modules/@nestjs/common/**'
+##    - 'node_modules/@nestjs/config/**'
+##    - 'node_modules/@nestjs/core/**'
+##    - 'node_modules/@nestjs/swagger/**'
+##    - 'node_modules/nestjs-prisma/**'
+##    - 'node_modules/tslib/**'
+##    - 'node_modules/reflect-metadata/**'
+##    - .git/**
+##    - .vscode/**
+##    - .serverless/**
+##    - .github/**
+##
+##

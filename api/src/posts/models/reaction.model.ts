@@ -1,6 +1,6 @@
-import { User } from 'src/users/models/user.model';
-import { BaseModel } from 'src/common/models/base.model';
 import { ApiProperty } from '@nestjs/swagger';
+import { BaseModel } from '../../common/models/base.model';
+import { User } from '../../users/models/user.model';
 
 export class Reaction extends BaseModel {
   @ApiProperty()

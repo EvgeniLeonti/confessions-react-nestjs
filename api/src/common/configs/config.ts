@@ -14,12 +14,7 @@ const config: Config = {
     version: '1.5',
     path: 'docs',
   },
-  graphql: {
-    playgroundEnabled: true,
-    debug: true,
-    schemaDestination: './src/schema.graphql',
-    sortSchema: true,
-  },
+
   security: {
     expiresIn: '60m',
     refreshIn: '7d',

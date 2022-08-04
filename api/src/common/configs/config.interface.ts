@@ -2,7 +2,6 @@ export interface Config {
   nest: NestConfig;
   cors: CorsConfig;
   swagger: SwaggerConfig;
-  graphql: GraphqlConfig;
   security: SecurityConfig;
 }
 
@@ -21,14 +20,6 @@ export interface SwaggerConfig {
   version: string;
   path: string;
 }
-
-export interface GraphqlConfig {
-  playgroundEnabled: boolean;
-  debug: boolean;
-  schemaDestination: string;
-  sortSchema: boolean;
-}
-
 export interface SecurityConfig {
   expiresIn: string;
   refreshIn: string;
