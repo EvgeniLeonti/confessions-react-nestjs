@@ -2,7 +2,6 @@
   "name": "app",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "yarn@4.0.0-rc.6",
   "type": "module",
   "scripts": {
     "start": "webpack serve --mode=development --port=4001",
