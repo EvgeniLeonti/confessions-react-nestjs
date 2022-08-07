@@ -1,7 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "./store";
 import i18n from "../i18n/i18n";
-import * as qs from 'querystring';
+import * as qs from 'query-string';
 import {Confession} from '../types/confession';
 import {PaginationParams} from "../types/pagination-params";
 import {ConfessionsResult} from "../types/list-result";
