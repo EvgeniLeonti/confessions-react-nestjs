@@ -12,7 +12,7 @@
   "menu.admin": "Admin",
 
 
-  "login.submission.title": "התחבר",
+  "login.submission.title": "Login",
   "login.submission.success": "You have successfully logged in.",
   "login.submission.failure": "Error occurred while logging in.",
   "login.submission.submit": "Login",

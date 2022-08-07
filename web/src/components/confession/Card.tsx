@@ -6,7 +6,7 @@ import ConfessionContent from "./Content";
 import {Box, Button, CardActions, Collapse, IconButtonProps} from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import ShareIcon from "@mui/icons-material/Share";
-import {styled} from "@mui/material/styles";
+import {styled, useTheme} from "@mui/material/styles";
 import {useTranslation} from "react-i18next";
 import ConfessionReactions from "./Reactions";
 import ConfessionComments from "./Comments";
@@ -31,6 +31,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 export default function ConfessionCard(props) {
   const {standalone, confession, sx} = props;
   const history = useHistory();
+  const theme = useTheme();
   const {id, content, createdAt, reactions} = confession;
   const {data: commentsCount, error, isLoading} = useGetCommentsCountQuery({id});
   const [expanded, setExpanded] = React.useState(standalone);
