@@ -178,9 +178,9 @@ export class PostsService {
     const items = edges.map(({ node }) => ({
       ...node,
       // @ts-ignore
-      commentsCount: node._count.comments,
+      commentsCount: node._count?.comments,
       // @ts-ignore
-      reactionsCount: node._count.reactions,
+      reactionsCount: node._count?.reactions,
       _count: undefined,
     }));
 

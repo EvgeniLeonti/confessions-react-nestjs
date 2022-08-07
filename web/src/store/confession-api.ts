@@ -68,7 +68,7 @@ export const confessionApi = createApi({
         url: `posts/${id}`,
         method: 'GET',
       }),
-      providesTags: (result, error, id) => [{ type: 'Confession', id }],
+      providesTags: (result, error, {id}) => [{ type: 'Confession', id }],
     }),
 
     createConfession: builder.mutation<Confession, Partial<Confession>>({
@@ -88,7 +88,10 @@ export const confessionApi = createApi({
       }),
       // invalidatesTags: ['Comment'],
       invalidatesTags: (result, error, {id}) => {
-        return [{ type: 'Comment', id }]
+        return [
+          { type: 'Comment', id },
+          { type: 'Confession', id },
+        ]
       },
 
 
@@ -102,7 +105,6 @@ export const confessionApi = createApi({
         }
       },
       providesTags: (result, error, {id}) => {
-        console.log('providesTags', result, error, id)
         return [{ type: 'Comment', id }]
       },
 

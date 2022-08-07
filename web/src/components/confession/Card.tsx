@@ -27,6 +27,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export default function ConfessionCard(props) {
+  console.log(`ConfessionCard render ${props.confession.id}`)
+
   const {id, content, createdAt, reactions, commentsCount} = props.confession;
   const [expanded, setExpanded] = React.useState(false);
 
@@ -35,8 +37,9 @@ export default function ConfessionCard(props) {
     setExpanded(!expanded);
   };
 
+  // console.log('ConfessionCard key', `confession-card-${id}-${commentsCount}`);
   return (
-    <Card sx={{minWidth: 275}}>
+    <Card sx={{minWidth: 275}} key={`confession-card-${id}-${commentsCount}`}>
       <CardContent sx={{paddingBottom: 0}}>
         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
           {new Date(createdAt).toLocaleString()}

@@ -16,9 +16,10 @@ import {pushNotification} from "../../store/toast.state";
 import {useDispatch} from "react-redux";
 import InfiniteScroll from "../InfiniteScroll";
 import Card from "./Card";
+import {useEffect, useState} from "react";
 
 export default function ConfessionComments(props) {
-  const { confession } = props;
+  const { confession, increaseCommentCount } = props;
   const [createCommentMutation, {isLoading: isCreateCommentLoading}] = useCreateCommentMutation();
   const { data, error, isLoading } = useGetCommentsQuery({id: confession.id});
   const { t } = useTranslation();
@@ -43,6 +44,13 @@ export default function ConfessionComments(props) {
       reset()
     });
   }
+
+  // useEffect(() => {
+  //   // console.log('isSubmitSuccessful', isSubmitSuccessful)
+  //   if (isSubmitSuccessful) {
+  //     increaseCommentCount(confession.id)
+  //   }
+  // }, [isSubmitSuccessful])
 
   const CommentsInfiniteScroll = InfiniteScroll<any>;
 
