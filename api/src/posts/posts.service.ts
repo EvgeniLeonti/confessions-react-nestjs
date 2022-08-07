@@ -157,7 +157,12 @@ export class PostsService {
     const { after, before, first, last, limit } = paginationArgs;
     const findMany = (args) =>
       this.prisma.post.findMany({
-        include,
+        include: {
+          ...include,
+          _count: {
+            select: { comments: true, reactions: true },
+          },
+        },
         where: filter,
         orderBy: { [sort.field]: sort.direction },
         // take: limit ? Number(limit) : 10,
@@ -224,15 +229,33 @@ export class PostsService {
     };
   }
 
+  async countComments(postId: string) {
+    return {
+      count: await this.prisma.comment.count({ where: { postId } }),
+    };
+  }
+
   async getPublishedPost(postId: string) {
     const post = await this.prisma.post.findUnique({
       where: { id: postId },
-      include: { comments: true, reactions: false },
+      include: {
+        comments: true,
+        reactions: false,
+        _count: {
+          select: { comments: true, reactions: true },
+        },
+      },
     });
     if (!post || !post.published) {
       throw new NotFoundException('Post does not exist');
     }
-    return post;
+
+    return {
+      ...post,
+      commentsCount: post._count?.comments,
+      reactionsCount: post._count?.reactions,
+      count: undefined,
+    };
   }
 
   async createReaction(

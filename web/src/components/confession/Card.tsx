@@ -10,6 +10,7 @@ import {styled} from "@mui/material/styles";
 import {useTranslation} from "react-i18next";
 import ConfessionReactions from "./Reactions";
 import ConfessionComments from "./Comments";
+import {useGetCommentsCountQuery} from "../../store/confession-api";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -27,9 +28,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export default function ConfessionCard(props) {
-  console.log(`ConfessionCard render ${props.confession.id}`)
-
-  const {id, content, createdAt, reactions, commentsCount} = props.confession;
+  const {id, content, createdAt, reactions} = props.confession;
+  const {data: commentsCount, error, isLoading} = useGetCommentsCountQuery({id});
   const [expanded, setExpanded] = React.useState(false);
 
   const {t} = useTranslation();
@@ -67,7 +67,7 @@ export default function ConfessionCard(props) {
             >
               {/*<ExpandMoreIcon />*/}
               {/*<CommentIcon />*/}
-                {t('comment.list')} ({commentsCount})
+                {t('comment.list')} ({commentsCount?.count || 0})
             </ExpandMore>
 
 

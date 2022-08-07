@@ -66,9 +66,6 @@ export class PostsController {
 
     const include = {
       author: true,
-      _count: {
-        select: { comments: true, reactions: true },
-      },
     };
 
     return this.postsService.getPosts(
@@ -131,6 +128,18 @@ export class PostsController {
       new Sort(input.sort),
       paginationArgs,
     );
+  }
+
+  @Get(':postId/comments/count')
+  @UseGuards(OptionalRestAuthGuard)
+  @ApiBearerAuth()
+  // @ApiResponse({ type: Comment })
+  @ApiImplicitParam({ name: 'postId', type: String, required: true })
+  async countComments(
+    @UserEntity() user: User,
+    @Param('postId') postId: string,
+  ): Promise<{ count: number }> {
+    return await this.postsService.countComments(postId);
   }
 
   @Post(':postId/reactions')

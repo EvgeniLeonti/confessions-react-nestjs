@@ -1,7 +1,5 @@
-/* SPDX-FileCopyrightText: 2014-present Kriasoft <hello@kriasoft.com> */
-/* SPDX-License-Identifier: MIT */
-
 import HomeRoute from "./Home.route";
+import ConfessionRoutes from "./Confession.route";
 import LegalRoutes from "./Legal.route";
 import AuthRoutes from "./Auth.route";
 import createNew from "./Confess.route";
@@ -14,6 +12,7 @@ import AdminRoute from "./Admin.route";
  */
 export default [
   ...AuthRoutes,
+  ConfessionRoutes,
   ProfileRoute,
   HomeRoute,
   createNew,

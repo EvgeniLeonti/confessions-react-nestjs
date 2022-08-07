@@ -33,7 +33,7 @@ export const confessionApi = createApi({
     },
 
   }),
-  tagTypes: ['Confession', 'User', 'Comment', 'Reactions'],
+  tagTypes: ['Confession', 'User', 'Comment', 'CommentsCount', 'Reactions'],
   endpoints: (builder) => ({
     // auth
     signup: builder.mutation({
@@ -90,7 +90,8 @@ export const confessionApi = createApi({
       invalidatesTags: (result, error, {id}) => {
         return [
           { type: 'Comment', id },
-          { type: 'Confession', id },
+          { type: 'CommentsCount', id },
+          // { type: 'Confession', id },
         ]
       },
 
@@ -107,16 +108,18 @@ export const confessionApi = createApi({
       providesTags: (result, error, {id}) => {
         return [{ type: 'Comment', id }]
       },
+    }),
 
-      // providesTags: (result, error, page) =>
-      //   result
-      //     ? [
-      //       // Provides a tag for each post in the current page,
-      //       // as well as the 'PARTIAL-LIST' tag.
-      //       ...result.items.map(({ id }) => ({ type: 'Comment' as const, id })),
-      //       { type: 'Comment', id: 'PARTIAL-LIST' },
-      //     ]
-      //     : [{ type: 'Comment', id: 'PARTIAL-LIST' }],
+    getCommentsCount: builder.query({
+      query: ({id, ...body}) => {
+        return {
+          url: `posts/${id}/comments/count?${qs.stringify(body || {})}`,
+          method: 'GET',
+        }
+      },
+      providesTags: (result, error, {id}) => {
+        return [{ type: 'CommentsCount', id }]
+      },
     }),
 
     // reactions
@@ -199,6 +202,7 @@ export const {
 
   // confessions
   useGetConfessionsQuery,
+  useGetConfessionQuery,
   useLazyGetConfessionsQuery,
   useCreateConfessionMutation,
 
@@ -206,6 +210,7 @@ export const {
   useCreateCommentMutation,
   useLazyGetCommentsQuery,
   useGetCommentsQuery,
+  useGetCommentsCountQuery,
 
   // reactions
   useCreateReactionMutation,
