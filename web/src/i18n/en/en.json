@@ -16,6 +16,10 @@
   "confession.submission.failure": "Sorry! Something went wrong. Please try again later.",
   "confession.submission.submit": "Submit",
 
+  "comment.submission.submit": "Submit",
+  "comment.submission.success": "Comment submitted successfully",
+
+
   "comment.list": "Comments",
 
   "app.name": "Confessions",

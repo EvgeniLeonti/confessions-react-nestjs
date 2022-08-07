@@ -101,7 +101,7 @@ export class PostsService {
   async createCommentDraft(
     user: User,
     postId: string,
-    data: CreateCommentInput
+    data: CreateCommentInput,
   ) {
     return this.prisma.comment.create({
       data: {
@@ -152,7 +152,7 @@ export class PostsService {
     filter: any,
     include: any,
     sort: Sort,
-    paginationArgs: PaginationArgs
+    paginationArgs: PaginationArgs,
   ) {
     const { after, before, first, last, limit } = paginationArgs;
     const findMany = (args) =>
@@ -175,8 +175,17 @@ export class PostsService {
 
     const { pageInfo, totalCount, edges } = rawResult;
 
+    const items = edges.map(({ node }) => ({
+      ...node,
+      // @ts-ignore
+      commentsCount: node._count.comments,
+      // @ts-ignore
+      reactionsCount: node._count.reactions,
+      _count: undefined,
+    }));
+
     return {
-      items: edges.map((edge) => edge.node),
+      items,
       pageInfo,
       totalCount,
     };
@@ -186,7 +195,7 @@ export class PostsService {
     filter: any,
     include: any,
     sort: Sort,
-    paginationArgs: PaginationArgs
+    paginationArgs: PaginationArgs,
   ) {
     const { after, before, first, last } = paginationArgs;
     const findMany = (args) =>
@@ -230,7 +239,7 @@ export class PostsService {
     user: User,
     browserFP: string,
     postId: string,
-    data: CreateReactionInput
+    data: CreateReactionInput,
   ) {
     if (browserFP) {
       await this.prisma.reaction.deleteMany({
@@ -282,7 +291,7 @@ export class PostsService {
     });
 
     const myReactions = reactions.filter(
-      (reaction) => reaction.browserFP === browserFP
+      (reaction) => reaction.browserFP === browserFP,
     );
 
     const myReaction = myReactions.length > 0 ? myReactions[0] : null;
@@ -303,7 +312,7 @@ export class PostsService {
       guessLanguage().detect(content, function (language) {
         resolve(language);
         console.log(
-          'Detected language code of provided text is [' + language + ']'
+          'Detected language code of provided text is [' + language + ']',
         );
       });
     });

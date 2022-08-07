@@ -39,14 +39,14 @@ export class PostsController {
   @ApiResponse({ type: PostObject })
   async createPostDraft(
     @UserEntity() user: User,
-    @Body() data: CreatePostInput
+    @Body() data: CreatePostInput,
   ): Promise<PostObject> {
     return this.postsService.createPostDraft(user, data);
   }
 
   @Get()
   async listPublishedPosts(
-    @Query() input: ListInput
+    @Query() input: ListInput,
   ): Promise<{ items: PostObject[]; pageInfo: PageInfo; totalCount: number }> {
     const { after, before, first, last, limit, query, lang } = input;
 
@@ -64,11 +64,18 @@ export class PostsController {
       ...(lang && { language: lang }),
     };
 
+    const include = {
+      author: true,
+      _count: {
+        select: { comments: true, reactions: true },
+      },
+    };
+
     return this.postsService.getPosts(
       filter,
-      { author: true, reactions: false },
+      include,
       new Sort(input.sort),
-      paginationArgs
+      paginationArgs,
     );
   }
 
@@ -85,7 +92,7 @@ export class PostsController {
   async createComment(
     @UserEntity() user: User,
     @Param('postId') postId: string,
-    @Body() data: CreateCommentInput
+    @Body() data: CreateCommentInput,
   ): Promise<Comment> {
     if (data.content.trim().length < 1) {
       throw new BadRequestException('Comment content is required');
@@ -101,7 +108,7 @@ export class PostsController {
   async listComments(
     @UserEntity() user: User,
     @Param('postId') postId: string,
-    @Query() input: ListInput
+    @Query() input: ListInput,
   ): Promise<{ items: Comment[]; pageInfo: PageInfo; totalCount: number }> {
     // return this.postsService.getPublishedPostComments(user, postId);
     const { after, before, first, last, query, lang } = input;
@@ -115,7 +122,7 @@ export class PostsController {
       filter,
       null,
       new Sort(input.sort),
-      paginationArgs
+      paginationArgs,
     );
   }
 
@@ -128,7 +135,7 @@ export class PostsController {
     @UserEntity() user: User,
     @Param('postId') postId: string,
     @Body() data: CreateReactionInput,
-    @Headers() headers
+    @Headers() headers,
   ): Promise<Reaction> {
     if (data.name.trim().length < 1) {
       throw new BadRequestException('Reaction name is required');
@@ -146,7 +153,7 @@ export class PostsController {
     @UserEntity() user: User,
     @Param('postId') postId: string,
     @Query() input: ListInput,
-    @Headers() headers
+    @Headers() headers,
   ): Promise<any> {
     const browserFP = headers['browser-fingerprint'];
     return this.postsService.getReactionsSummary(user, browserFP, postId);
@@ -160,7 +167,7 @@ export class PostsController {
   async deleteReaction(
     @UserEntity() user: User,
     @Param('postId') postId: string,
-    @Headers() headers
+    @Headers() headers,
   ): Promise<any> {
     const browserFP = headers['browser-fingerprint'];
     if (!browserFP && !user) {
@@ -179,7 +186,7 @@ export class PostsAdminController {
 
   @Get('')
   async listAllPosts(
-    @Query() input: ListInput
+    @Query() input: ListInput,
   ): Promise<{ items: PostObject[]; pageInfo: PageInfo; totalCount: number }> {
     const { after, before, first, last, limit, query, lang } = input;
     const paginationArgs = { after, before, first, last, limit };
@@ -192,7 +199,7 @@ export class PostsAdminController {
       filter,
       { author: true },
       new Sort(input.sort),
-      paginationArgs
+      paginationArgs,
     );
   }
 
@@ -215,7 +222,7 @@ export class PostsAdminController {
   @ApiImplicitParam({ name: 'postId', type: String, required: true })
   async patchPost(
     @Param('postId') postId: string,
-    @Body() data: PatchPostInput
+    @Body() data: PatchPostInput,
   ): Promise<PostObject> {
     return this.postsService.patchPost(postId, data);
   }
@@ -227,7 +234,7 @@ export class PostsAdminController {
   async publishComment(
     @UserEntity() user: User,
     @Param('postId') postId: string,
-    @Param('commentId') commentId: string
+    @Param('commentId') commentId: string,
   ): Promise<Comment> {
     return this.postsService.publishComment(user, postId, commentId);
   }
