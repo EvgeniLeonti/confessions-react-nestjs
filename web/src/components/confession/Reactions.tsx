@@ -18,7 +18,7 @@ export default function ConfessionReactions(props) {
   const theme = useTheme();
   const [selectedReaction, setSelectedReaction] = useState(null);
   const [summary, setSummary] = useState(null);
-
+  const currentMyReaction = summary?.myReaction?.name;
 
   useEffect(() => {
     setSummary(data);
@@ -31,7 +31,6 @@ export default function ConfessionReactions(props) {
   }, [summary])
 
   const onReactionClickHandler = (name) => {
-      const currentMyReaction = summary?.myReaction?.name;
       setSelectedReaction(name);
 
       setSummary({
@@ -64,12 +63,12 @@ export default function ConfessionReactions(props) {
   }
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center">
+    <Box display="flex" justifyContent="center" alignItems="center" sx={props.sx}>
       {summary?.count && Object.values(summary?.count).map(({name, emoji, count}) => {
         return (<Badge key={`${id}-${name}-reaction-count`} badgeContent={count} sx={{
           '& .MuiBadge-badge': {
             right: '50%',
-            marginTop: '10px',
+            marginTop: '125%',
             // top: selectedReaction === name ? 15 : 10,
             // top: selectedReaction === name ? '90%' : '100%',
 
@@ -87,6 +86,7 @@ export default function ConfessionReactions(props) {
               // fontSize: selectedReaction === name ? '36px' : '24px',
               fontSize: '24px',
               transform: selectedReaction === name ? 'scale(1.7)' : null,
+              opacity: selectedReaction === name ? '100%' : '50%',
               // transform: activeReaction === name ? 'scale(1.2)' : 'scale(1)',
               transition: theme.transitions.create(['background-color', 'transform'], {
                 duration: theme.transitions.duration.standard,

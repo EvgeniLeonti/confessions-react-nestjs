@@ -54,7 +54,7 @@ export default function ConfessionCard(props) {
         <ConfessionContent confession={props.confession}/>
       </CardContent>
       <CardContent sx={{padding: 0}}>
-        <ConfessionReactions confession={props.confession}/>
+        <ConfessionReactions confession={props.confession} sx={{marginBottom: '15px'}}/>
       </CardContent>
       <CardActions>
         <Box
