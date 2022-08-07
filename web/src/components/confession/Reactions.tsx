@@ -68,7 +68,7 @@ export default function ConfessionReactions(props) {
         return (<Badge key={`${id}-${name}-reaction-count`} badgeContent={count} sx={{
           '& .MuiBadge-badge': {
             right: '50%',
-            marginTop: '125%',
+            marginTop: '135%',
             // top: selectedReaction === name ? 15 : 10,
             // top: selectedReaction === name ? '90%' : '100%',
 
@@ -82,7 +82,7 @@ export default function ConfessionReactions(props) {
             component="span"
             sx={{
               cursor: 'pointer',
-              padding: '10px',
+              margin: '10px',
               // fontSize: selectedReaction === name ? '36px' : '24px',
               fontSize: '24px',
               transform: selectedReaction === name ? 'scale(1.7)' : null,
