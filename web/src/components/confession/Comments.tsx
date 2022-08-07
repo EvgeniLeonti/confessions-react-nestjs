@@ -1,15 +1,21 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import {Box, Divider, List, ListItem, ListItemText, TextField} from "@mui/material";
-import {useTheme} from "@mui/material/styles";
 import {LoadingButton} from "@mui/lab";
-import {useCreateCommentMutation, useGetCommentsQuery} from "../../store/confession-api";
+import {
+  useCreateCommentMutation,
+  useGetCommentsQuery,
+  useLazyGetCommentsQuery,
+  useLazyGetConfessionsQuery
+} from "../../store/confession-api";
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {object, string, TypeOf} from 'zod';
 import {pushNotification} from "../../store/toast.state";
 import {useDispatch} from "react-redux";
+import InfiniteScroll from "../InfiniteScroll";
+import Card from "./Card";
 
 export default function ConfessionComments(props) {
   const { confession } = props;
@@ -17,7 +23,6 @@ export default function ConfessionComments(props) {
   const { data, error, isLoading } = useGetCommentsQuery({id: confession.id});
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const theme = useTheme();
 
   const schema = object({
     content: string()
@@ -39,6 +44,8 @@ export default function ConfessionComments(props) {
     });
   }
 
+  const CommentsInfiniteScroll = InfiniteScroll<any>;
+
 
   return (
     <>
@@ -54,7 +61,7 @@ export default function ConfessionComments(props) {
         <TextField
           // autoFocus
           // multiline
-          label="Write a comment"
+          label={t('comment.submission.placeholder')}
           fullWidth
           required
           type="text"
@@ -91,6 +98,39 @@ export default function ConfessionComments(props) {
         overflow: "hidden",
         overflowY: "scroll",
       }}>
+        {/*<CommentsInfiniteScroll*/}
+        {/*  renderItem={(comment) =>*/}
+        {/*    <>*/}
+        {/*      <ListItem>*/}
+        {/*        <ListItemText*/}
+        {/*          primary={comment.content}*/}
+        {/*          secondary={*/}
+        {/*            <>*/}
+        {/*              <Typography*/}
+        {/*                sx={{ display: 'inline' }}*/}
+        {/*                component="span"*/}
+        {/*                variant="body2"*/}
+        {/*                color="text.primary"*/}
+        {/*              >*/}
+        {/*                {t('anonymous')}*/}
+        {/*              </Typography>*/}
+        {/*              {` ${t('at')} ${new Date(comment.createdAt).toLocaleString()}`}*/}
+        {/*            </>*/}
+        {/*          }*/}
+        {/*        />*/}
+        {/*      </ListItem>*/}
+        {/*      <Divider component="li" />*/}
+        {/*    </>*/}
+        {/*}*/}
+        {/*  useLazyGetQuery={useLazyGetCommentsQuery}*/}
+        {/*  triggerParams={ {id: confession.id} }*/}
+        {/*  limit={5}*/}
+        {/*  useWindow={false}*/}
+        {/*  key={`confession-${confession.id}-comments-infinite-scroll`}*/}
+        {/*/>*/}
+
+
+
         {error ? (
           <><div>Oh no, there was an error: {JSON.stringify(error)}</div></>
         ) : isLoading ? (
@@ -99,9 +139,7 @@ export default function ConfessionComments(props) {
           <>
             {data.items.map(comment =>
               <>
-                <ListItem sx={{
-                  // padding: 0,
-                }}>
+                <ListItem>
                   <ListItemText
                     primary={comment.content}
                     secondary={
@@ -112,9 +150,9 @@ export default function ConfessionComments(props) {
                           variant="body2"
                           color="text.primary"
                         >
-                          Anonymous
+                          {t('anonymous')}
                         </Typography>
-                        {` at ${new Date(comment.createdAt).toLocaleString()}`}
+                        {` ${t('at')} ${new Date(comment.createdAt).toLocaleString()}`}
                       </>
                     }
                   />

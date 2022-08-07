@@ -58,7 +58,7 @@ export const confessionApi = createApi({
     getConfessions: builder.query<ConfessionsResult, PaginationParams>({
       query: (query: PaginationParams) => {
         const queryString = query ? qs.stringify(query as any) : '';
-        return `posts?lang=${i18n.language.split('-')[0]}&${queryString}&debug=true`
+        return `posts?lang=${i18n.language.split('-')[0]}&${queryString}`
       },
       providesTags: (result) =>
         result?.items ? result.items.map(({ id }) => ({ type: 'Confession', id })) : ['Confession']
@@ -86,15 +86,35 @@ export const confessionApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Comment'],
+      // invalidatesTags: ['Comment'],
+      invalidatesTags: (result, error, {id}) => {
+        return [{ type: 'Comment', id }]
+      },
+
+
     }),
 
     getComments: builder.query({
-      query: ({ id }) => ({
-        url: `posts/${id}/comments`,
-        method: 'GET',
-      }),
-      providesTags: (result, error, id) => [{ type: 'Comment', id }],
+      query: ({id, ...body}) => {
+        return {
+          url: `posts/${id}/comments?${qs.stringify(body || {})}`,
+          method: 'GET',
+        }
+      },
+      providesTags: (result, error, {id}) => {
+        console.log('providesTags', result, error, id)
+        return [{ type: 'Comment', id }]
+      },
+
+      // providesTags: (result, error, page) =>
+      //   result
+      //     ? [
+      //       // Provides a tag for each post in the current page,
+      //       // as well as the 'PARTIAL-LIST' tag.
+      //       ...result.items.map(({ id }) => ({ type: 'Comment' as const, id })),
+      //       { type: 'Comment', id: 'PARTIAL-LIST' },
+      //     ]
+      //     : [{ type: 'Comment', id: 'PARTIAL-LIST' }],
     }),
 
     // reactions
@@ -182,6 +202,7 @@ export const {
 
   // comments
   useCreateCommentMutation,
+  useLazyGetCommentsQuery,
   useGetCommentsQuery,
 
   // reactions

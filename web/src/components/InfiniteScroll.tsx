@@ -1,26 +1,21 @@
 import React, {useCallback, useState} from 'react';
 import * as Scroller from 'react-infinite-scroller';
-import Card from "./confession/Card";
-import {useLazyGetConfessionsQuery} from "../store/confession-api";
 import {useTranslation} from "react-i18next";
-import {Confession} from "../types/confession";
-import {ConfessionsResult} from "../types/list-result";
 
-const LIMIT = 5;
+function InfiniteScroll<Type>(props: any) {
+  const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit, key} = props;
 
-const InfiniteScroll = () => {
   const { t } = useTranslation();
-  const [items, setItems] = useState<Confession[]>([]);
+  const [items, setItems] = useState<Type[]>([]);
   const [after, setAfter] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [fetching, setFetching] = useState(false);
 
   const [trigger, result, lastPromiseInfo] =
-    useLazyGetConfessionsQuery();
+    useLazyGetQuery();
 
   const fetchItems = useCallback(
     async () => {
-      console.log('result', result);
       if (fetching) {
         return;
       }
@@ -30,13 +25,14 @@ const InfiniteScroll = () => {
       try {
         // const result = await fetchData(LIMIT, after, null);
         const result = await trigger({
-          limit: LIMIT,
+          ...triggerParams,
+          limit,
           after,
         });
         if (!result.data) {
           return;
         }
-        const { items: newItems, pageInfo } = result.data as ConfessionsResult;
+        const { items: newItems, pageInfo } = result.data;
 
 
         setItems([...items, ...newItems]);
@@ -63,19 +59,15 @@ const InfiniteScroll = () => {
       {!result?.isError && items && <Scroller
         loadMore={fetchItems}
         hasMore={hasMore}
-        loader={<div key="loader" className="loader">{t('loading')}</div>}
+        loader={<div key={key} className="loader">{t('loading')}</div>}
+        useWindow={useWindow}
       >
-        {items.map(item => (
-          <>
-            <Card key={item.id} confession={item} />
-            <br />
-          </>
-        ))}
+        {items.map(item => renderItem(item))}
       </Scroller>}
     </>
 
   );
-};
+}
 
 
 export default InfiniteScroll;

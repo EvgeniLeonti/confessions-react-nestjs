@@ -111,8 +111,15 @@ export class PostsController {
     @Query() input: ListInput,
   ): Promise<{ items: Comment[]; pageInfo: PageInfo; totalCount: number }> {
     // return this.postsService.getPublishedPostComments(user, postId);
-    const { after, before, first, last, query, lang } = input;
-    const paginationArgs = { after, before, first, last };
+    const { after, before, first, last, limit, query, lang } = input;
+
+    const paginationArgs = {
+      after: after || undefined,
+      before: before || undefined,
+      first: first || undefined,
+      last: last || undefined,
+      limit: limit || undefined,
+    };
 
     const filter = {
       // published: true,

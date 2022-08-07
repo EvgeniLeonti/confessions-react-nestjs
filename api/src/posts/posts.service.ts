@@ -197,7 +197,7 @@ export class PostsService {
     sort: Sort,
     paginationArgs: PaginationArgs,
   ) {
-    const { after, before, first, last } = paginationArgs;
+    const { after, before, limit, last } = paginationArgs;
     const findMany = (args) =>
       this.prisma.comment.findMany({
         include,
@@ -209,7 +209,7 @@ export class PostsService {
     const aggregate = () => this.prisma.comment.count({ where: filter });
 
     const rawResult = await findManyCursorConnection(findMany, aggregate, {
-      first,
+      first: limit ? Number(limit) : 10,
       last,
       before,
       after,

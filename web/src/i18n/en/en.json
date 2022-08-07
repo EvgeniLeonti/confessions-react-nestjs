@@ -2,6 +2,8 @@
   "welcome": "Welcome to React",
   "loading": "Loading...",
   "share": "Share",
+  "anonymous": "Anonymous",
+  "at": "At",
 
   "menu.home": "Home",
   "menu.confess": "Confess",
@@ -16,6 +18,7 @@
   "confession.submission.failure": "Sorry! Something went wrong. Please try again later.",
   "confession.submission.submit": "Submit",
 
+  "comment.submission.placeholder": "Write your comment here...",
   "comment.submission.submit": "Submit",
   "comment.submission.success": "Comment submitted successfully",
 

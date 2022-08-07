@@ -2,6 +2,8 @@
   "welcome": "ברוכים הבאים לריאקט!",
   "loading": "טוען...",
   "share": "שיתוף",
+  "anonymous": "אנונימי",
+  "at": "ב",
 
 
   "menu.home": "בית",
@@ -17,6 +19,7 @@
   "confession.submission.failure": "אירעה שגיאה בעת שליחת הוידוי, נא נסה שוב מאוחר יותר.",
   "confession.submission.submit": "שליחה",
 
+  "comment.submission.placeholder": "כתוב את התגובה שלך כאן",
   "comment.submission.submit": "שליחה",
   "comment.submission.success": "התגובה נשלחה בהצלחה!",
 
