@@ -66,7 +66,6 @@ export default function ConfessionCard(props) {
           {/*<ReactionsCTA confession={props.confession}/>*/}
           <div>
             <ExpandMore
-              variant={expanded ? 'outlined' : 'contained'}
               expand={expanded}
               onClick={handleExpandClick}
               aria-expanded={expanded}
@@ -93,7 +92,6 @@ export default function ConfessionCard(props) {
             <Button
               aria-label="share"
               startIcon={<ShareIcon />}
-              variant='contained'
               color="secondary"
             >
               {t('share')}

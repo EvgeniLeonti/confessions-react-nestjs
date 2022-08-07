@@ -134,8 +134,6 @@ export default function ConfessionComments(props) {
 
         {error ? (
           <><div>Oh no, there was an error: {JSON.stringify(error)}</div></>
-        ) : isLoading ? (
-          <>{t('loading')}</>
         ) : data?.items ? (
           <>
             {data.items.map((comment, index) =>
