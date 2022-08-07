@@ -11,6 +11,7 @@ import {useTranslation} from "react-i18next";
 import ConfessionReactions from "./Reactions";
 import ConfessionComments from "./Comments";
 import {useGetCommentsCountQuery} from "../../store/confession-api";
+import {useHistory} from "../../core";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -28,9 +29,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 export default function ConfessionCard(props) {
-  const {id, content, createdAt, reactions} = props.confession;
+  const {standalone, confession, sx} = props;
+  const history = useHistory();
+  const {id, content, createdAt, reactions} = confession;
   const {data: commentsCount, error, isLoading} = useGetCommentsCountQuery({id});
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(standalone);
 
   const {t} = useTranslation();
   const handleExpandClick = () => {
@@ -39,8 +42,11 @@ export default function ConfessionCard(props) {
 
   // console.log('ConfessionCard key', `confession-card-${id}-${commentsCount}`);
   return (
-    <Card sx={{minWidth: 275}} key={`confession-card-${id}-${commentsCount}`}>
-      <CardContent sx={{paddingBottom: 0}}>
+    <Card
+      sx={{...sx, minWidth: 275}}
+      key={`confession-card-${id}-${commentsCount}`}
+    >
+      <CardContent sx={{paddingBottom: 0}} onClick={() => history.push(`/confession/${confession.id}`)}>
         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
           {new Date(createdAt).toLocaleString()}
         </Typography>
@@ -99,7 +105,7 @@ export default function ConfessionCard(props) {
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <ConfessionComments confession={props.confession}/>
+          <ConfessionComments confession={props.confession} standalone={standalone}/>
         </CardContent>
       </Collapse>
 

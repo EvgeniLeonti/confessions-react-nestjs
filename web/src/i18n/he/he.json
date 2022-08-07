@@ -31,6 +31,8 @@
   "confession.submission.failure": "אירעה שגיאה בעת שליחת הוידוי, נא נסה שוב מאוחר יותר.",
   "confession.submission.submit": "שליחה",
 
+  "confession.more": "עוד וידויים",
+
   "comment.submission.placeholder": "כתוב את התגובה שלך כאן",
   "comment.submission.submit": "שליחה",
   "comment.submission.success": "התגובה נשלחה בהצלחה!",

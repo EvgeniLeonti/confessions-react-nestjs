@@ -2,12 +2,7 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import {Box, Divider, List, ListItem, ListItemText, TextField} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
-import {
-  useCreateCommentMutation,
-  useGetCommentsQuery,
-  useLazyGetCommentsQuery,
-  useLazyGetConfessionsQuery
-} from "../../store/confession-api";
+import {useCreateCommentMutation, useGetCommentsQuery} from "../../store/confession-api";
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -15,11 +10,9 @@ import {object, string, TypeOf} from 'zod';
 import {pushNotification} from "../../store/toast.state";
 import {useDispatch} from "react-redux";
 import InfiniteScroll from "../InfiniteScroll";
-import Card from "./Card";
-import {useEffect, useState} from "react";
 
 export default function ConfessionComments(props) {
-  const { confession, increaseCommentCount } = props;
+  const { confession, standalone } = props;
   const [createCommentMutation, {isLoading: isCreateCommentLoading}] = useCreateCommentMutation();
   const { data, error, isLoading } = useGetCommentsQuery({id: confession.id});
   const { t } = useTranslation();
@@ -102,8 +95,8 @@ export default function ConfessionComments(props) {
       {/* comments list */}
       <List sx={{
         width: '100%',
-        maxHeight: 300,
-        overflow: "hidden",
+        maxHeight: standalone ? 500 : 300,
+        // overflow: "hidden",
         overflowY: "scroll",
       }}>
         {/*<CommentsInfiniteScroll*/}
@@ -145,7 +138,7 @@ export default function ConfessionComments(props) {
           <>{t('loading')}</>
         ) : data?.items ? (
           <>
-            {data.items.map(comment =>
+            {data.items.map((comment, index) =>
               <>
                 <ListItem>
                   <ListItemText
@@ -165,7 +158,7 @@ export default function ConfessionComments(props) {
                     }
                   />
                 </ListItem>
-                <Divider component="li" />
+                { index === data.items.length - 1  ? null : <Divider component="li" />}
               </>
             )}
 
