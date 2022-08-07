@@ -5,11 +5,11 @@ import * as qs from 'query-string';
 import {Confession} from '../types/confession';
 import {PaginationParams} from "../types/pagination-params";
 import {ConfessionsResult} from "../types/list-result";
+import {config} from "../core";
 
-// todo use env var
-// export const BASE_URL = 'http://localhost:4000';
-export const BASE_URL = 'https://6pnry5fzb5.execute-api.eu-west-1.amazonaws.com/dev';
+export const BASE_URL = config.api.origin;
 
+// console.log('config', config)
 // Define a service using a base URL and expected endpoints
 export const confessionApi = createApi({
   reducerPath: 'confessionApi',
