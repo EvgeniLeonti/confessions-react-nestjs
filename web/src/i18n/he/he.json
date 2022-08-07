@@ -4,12 +4,24 @@
   "share": "שיתוף",
   "anonymous": "אנונימי",
   "at": "ב",
+  "login": "התחבר",
 
 
   "menu.home": "בית",
   "menu.confess": "פרסם",
   "menu.profile": "פרופיל",
   "menu.admin": "ניהול",
+
+  "login.submission.title": "התחבר",
+  "login.submission.success": "התחברת בהצלחה",
+  "login.submission.failure": "אירעה שגיאה בעת התחברות",
+  "login.submission.submit": "כניסה",
+  "login.submission.email": "דואר אלקטרוני",
+  "login.submission.password": "סיסמה",
+  "login.submission.password.min": "סיסמה חייבת להיות בעלת לפחות {min} תווים",
+  "login.submission.password.max": "סיסמה חייבת להיות בעלת לכל היותר {max} תווים",
+
+
 
   "confession.submission.title": "שליחת וידוי",
   "confession.submission.content": "תוכן הוידוי",

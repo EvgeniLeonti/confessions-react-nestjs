@@ -202,7 +202,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
             variant="outlined"
             href="/login"
             color="primary"
-            children="Log in"
+            children={t('login')}
           />
         )}
       </Toolbar>

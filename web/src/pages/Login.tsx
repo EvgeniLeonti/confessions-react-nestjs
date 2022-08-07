@@ -8,32 +8,33 @@ import {AuthState, setAccessToken, setRefreshToken} from "../store/auth.state";
 import {useEffect} from "react";
 import {RootState} from "../store/store";
 import {useHistory} from "../core";
+import {useTranslation} from "react-i18next";
 
 const Login = () => {
   const history = useHistory();
-
-  const { accessToken } = useSelector((state: RootState) => state.auth);
-
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log('store.accessToken', accessToken);
-  }, [accessToken]);
   return (
     <GenericForm
       useMutation={useLoginMutation}
-      lang={LANG.AUTH.LOGIN}
+      lang={{
+        TITLE: t('login.submission.title'),
+        SUCCESS: t('login.submission.success'),
+        FAILURE: t('login.submission.failure'),
+        SUBMIT: t('login.submission.submit'),
+      }}
       fields={[
         {
-          type: 'email', name: 'email', label: 'Email',
+          type: 'email', name: 'email', label: t('login.submission.email'),
           schema: string().nonempty('Email is required').email('Email is invalid'),
         },
         {
-          type: 'password', name: 'password', label: 'Password',
+          type: 'password', name: 'password', label: t('login.submission.password'),
           schema: string()
             .nonempty('Password is required')
-            .min(8, 'Password must be more than 8 characters')
-            .max(32, 'Password must be less than 32 characters')
+            .min(8, t('login.submission.password.min').replace('{min}', '8'))
+            .max(32, t('login.submission.password.min').replace('{min}', '32'))
         },
       ]}
       buildPayload={(input) => {

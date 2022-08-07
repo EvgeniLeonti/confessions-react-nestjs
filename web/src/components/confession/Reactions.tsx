@@ -56,6 +56,7 @@ export default function ConfessionReactions(props) {
       // console.log('name', name)
       if (currentMyReaction === name) {
         deleteReactionMutation({id, name})
+        setSelectedReaction(null);
       }
       else {
         createReactionMutation({id, name})
@@ -68,24 +69,31 @@ export default function ConfessionReactions(props) {
         return (<Badge key={`${id}-${name}-reaction-count`} badgeContent={count} sx={{
           '& .MuiBadge-badge': {
             right: '50%',
+            marginTop: '10px',
             // top: selectedReaction === name ? 15 : 10,
-            top: selectedReaction === name ? '90%' : '100%',
+            // top: selectedReaction === name ? '90%' : '100%',
+
             // left: '0.5rem',
             // border: `2px solid ${theme.palette.background.paper}`,
+            backgroundColor: `${theme.palette.background.paper}`,
             // padding: '0 4px',
           },
         }}>
           <Typography
+            component="span"
             sx={{
               cursor: 'pointer',
-              padding: '1rem',
-              fontSize: selectedReaction === name ? '36px' : '24px',
+              padding: '10px',
+              // fontSize: selectedReaction === name ? '36px' : '24px',
+              fontSize: '24px',
+              transform: selectedReaction === name ? 'scale(1.7)' : null,
               // transform: activeReaction === name ? 'scale(1.2)' : 'scale(1)',
               transition: theme.transitions.create(['background-color', 'transform'], {
                 duration: theme.transitions.duration.standard,
               }),
               '&:hover': {
-                transform: 'scale(1.5)',
+                transform: 'scale(1.7)',
+                // padding: '0 10px 0 10px',
                 // fontSize: '36px'
               },
               // '&:active': {

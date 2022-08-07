@@ -18,8 +18,8 @@ const config = {
    * https://github.com/kriasoft/relay-starter-kit
    */
   api: {
-    origin: 'https://6pnry5fzb5.execute-api.eu-west-1.amazonaws.com/dev',
-    // origin: 'http://localhost:4000',
+    // origin: 'https://6pnry5fzb5.execute-api.eu-west-1.amazonaws.com/dev',
+    origin: 'http://localhost:4000',
   },
 
   /**

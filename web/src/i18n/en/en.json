@@ -4,11 +4,23 @@
   "share": "Share",
   "anonymous": "Anonymous",
   "at": "At",
+  "login": "Login",
 
   "menu.home": "Home",
   "menu.confess": "Confess",
   "menu.profile": "Profile",
   "menu.admin": "Admin",
+
+
+  "login.submission.title": "התחבר",
+  "login.submission.success": "You have successfully logged in.",
+  "login.submission.failure": "Error occurred while logging in.",
+  "login.submission.submit": "Login",
+  "login.submission.email": "Email",
+  "login.submission.password": "Password",
+  "login.submission.password.min": "Password must be at least {min} characters long.",
+  "login.submission.password.max": "Password must be at most {max} characters long.",
+
 
   "confession.submission.title": "Confess",
   "confession.submission.content": "Content",
