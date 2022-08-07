@@ -28,7 +28,8 @@ const Confession = () => {
         useLazyGetQuery={useLazyGetConfessionsQuery}
         limit={5}
         useWindow={true}
-        key={'posts-infinite-scroll'}
+        key={`posts-infinite-scroll-confession-${id}-context`}
+        triggerParams={{exclude: [id]}}
       />
 
     </Container>

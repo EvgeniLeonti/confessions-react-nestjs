@@ -59,4 +59,7 @@ export class ListInput {
 
   @ApiPropertyOptional()
   lang?: string;
+
+  @ApiPropertyOptional()
+  exclude?: string[];
 }

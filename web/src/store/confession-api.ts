@@ -58,7 +58,10 @@ export const confessionApi = createApi({
     getConfessions: builder.query<ConfessionsResult, PaginationParams>({
       query: (query: PaginationParams) => {
         const queryString = query ? qs.stringify(query as any) : '';
-        return `posts?lang=${i18n.language.split('-')[0]}&${queryString}`
+        return {
+          url: `posts?lang=${i18n.language.split('-')[0]}&${queryString}`,
+          method: 'GET',
+        }
       },
       providesTags: (result) =>
         result?.items ? result.items.map(({ id }) => ({ type: 'Confession', id })) : ['Confession']

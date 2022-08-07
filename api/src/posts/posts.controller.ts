@@ -48,7 +48,7 @@ export class PostsController {
   async listPublishedPosts(
     @Query() input: ListInput,
   ): Promise<{ items: PostObject[]; pageInfo: PageInfo; totalCount: number }> {
-    const { after, before, first, last, limit, query, lang } = input;
+    const { after, before, first, last, limit, query, lang, exclude } = input;
 
     const paginationArgs = {
       after: after || undefined,
@@ -62,6 +62,11 @@ export class PostsController {
       published: true,
       ...(query && { content: { contains: query } }),
       ...(lang && { language: lang }),
+      ...(exclude && {
+        NOT: {
+          id: { in: exclude },
+        },
+      }),
     };
 
     const include = {
