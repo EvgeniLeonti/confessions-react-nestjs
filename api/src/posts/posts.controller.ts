@@ -10,7 +10,6 @@ import {
   Post,
   Query,
   Request,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -29,7 +28,6 @@ import { PatchPostInput } from './dto/patch-post.input';
 import { ListInput, Sort } from './dto/list.input';
 import { CreateReactionInput } from './dto/create-reaction.input';
 import { Reaction } from './models/reaction.model';
-import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 
 @Controller('posts')
@@ -38,28 +36,7 @@ export class PostsController {
   constructor(
     private configService: ConfigService,
     private postsService: PostsService,
-    private httpService: HttpService,
   ) {}
-
-  private async verifyRecaptcha(request) {
-    // const request = context.getRequest();
-    const { headers } = request;
-
-    if (!headers['recaptcha-token']) {
-      throw new UnauthorizedException('You are a bot! 😈');
-    }
-
-    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${this.configService.get(
-      'RECAPTCHA_SECRET_KEY',
-    )}&response=${headers['recaptcha-token']}`;
-
-    const res = await this.httpService.post(url).toPromise();
-
-    if (res.data.success !== true) {
-      throw new UnauthorizedException('You are a bot! 😈');
-    }
-    // console.log('res.data', res.data);
-  }
 
   @Post()
   @UseGuards(OptionalRestAuthGuard)
@@ -70,7 +47,6 @@ export class PostsController {
     @UserEntity() user: User,
     @Body() data: CreatePostInput,
   ): Promise<PostObject> {
-    await this.verifyRecaptcha(req);
     return this.postsService.createPostDraft(user, data);
   }
 
@@ -127,8 +103,6 @@ export class PostsController {
     @Param('postId') postId: string,
     @Body() data: CreateCommentInput,
   ): Promise<Comment> {
-    await this.verifyRecaptcha(req);
-
     if (data.content.trim().length < 1) {
       throw new BadRequestException('Comment content is required');
     }
@@ -192,8 +166,6 @@ export class PostsController {
     @Body() data: CreateReactionInput,
     @Headers() headers,
   ): Promise<Reaction> {
-    await this.verifyRecaptcha(req);
-
     if (data.name.trim().length < 1) {
       throw new BadRequestException('Reaction name is required');
     }
