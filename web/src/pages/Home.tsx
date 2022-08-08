@@ -20,7 +20,7 @@ function Home(): JSX.Element {
         useLazyGetQuery={useLazyGetConfessionsQuery}
         limit={5}
         useWindow={true}
-        key={'posts-infinite-scroll'}
+        uniqueId={'posts-infinite-scroll'}
       />
     </Container>
   );

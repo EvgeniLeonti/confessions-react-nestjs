@@ -19,18 +19,18 @@ const Confession = () => {
     <Container sx={{ marginTop: (x) => x.spacing(3), marginBottom: (x) => x.spacing(10) }} maxWidth="sm">
       {data && <ConfessionCard sx={{ marginBottom: (x) => x.spacing(3) }} confession={data} standalone />}
 
-      <Typography
+      {data && <Typography
         sx={{ marginTop: (theme) => theme.spacing(3), marginBottom: (theme) => theme.spacing(2) }}
         children={t('confession.more')}
         variant="h3"
-      />
+        />}
 
       <ConfessionsInfiniteScroll
         renderItem={(item) => <><ConfessionCard confession={item} /><br /></>}
         useLazyGetQuery={useLazyGetConfessionsQuery}
         limit={5}
         useWindow={true}
-        key={`posts-infinite-scroll-confession-${id}-context`}
+        uniqueId={`posts-infinite-scroll-confession-${id}-context`}
         triggerParams={{exclude: [id]}}
       />
 

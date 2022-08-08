@@ -3,9 +3,10 @@ import * as Scroller from 'react-infinite-scroller';
 import {useTranslation} from "react-i18next";
 import {Stack} from "@mui/material";
 import {Skeleton} from "@mui/lab";
+import {ConfessionsLoading} from "./ConfessionsLoading";
 
 function InfiniteScroll<Type>(props: any) {
-  const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit} = props;
+  const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit, uniqueId} = props;
 
   const { t } = useTranslation();
   const [items, setItems] = useState<Type[]>([]);
@@ -62,38 +63,10 @@ function InfiniteScroll<Type>(props: any) {
       {!result?.isError && items && <Scroller
         loadMore={fetchItems}
         hasMore={hasMore}
-        loader={<>
-          <Stack spacing={1}>
-            <Skeleton variant="text" />
-            {/*<Skeleton variant="circular" width={40} height={40} />*/}
-            <Skeleton variant="rectangular" height={118} />
-            {/*<Skeleton variant="text" />*/}
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-          </Stack>
-          <Stack spacing={1}>
-            <Skeleton variant="text" />
-            {/*<Skeleton variant="circular" width={40} height={40} />*/}
-            <Skeleton variant="rectangular" height={118} />
-            {/*<Skeleton variant="text" />*/}
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-          </Stack>
-          <Stack spacing={1}>
-            <Skeleton variant="text" />
-            {/*<Skeleton variant="circular" width={40} height={40} />*/}
-            <Skeleton variant="rectangular" height={118} />
-            {/*<Skeleton variant="text" />*/}
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-          </Stack>
-        </>}
+        loader={<ConfessionsLoading />}
         useWindow={useWindow}
       >
-        {items.map(item => <div key={`${item.id}-${item.createdAt}`}>{renderItem(item)}</div>)}
+        {items.map(item => <div key={`${uniqueId}-${item.id}-${item.createdAt}`}>{renderItem(item)}</div>)}
       </Scroller>}
     </>
 
