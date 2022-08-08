@@ -1,6 +1,8 @@
 import React, {useCallback, useState} from 'react';
 import * as Scroller from 'react-infinite-scroller';
 import {useTranslation} from "react-i18next";
+import {Stack} from "@mui/material";
+import {Skeleton} from "@mui/lab";
 
 function InfiniteScroll<Type>(props: any) {
   const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit} = props;
@@ -55,10 +57,40 @@ function InfiniteScroll<Type>(props: any) {
 
   return (
     <>
-      {result?.isError && <div>Error: {result.error.status}</div>}
+      {/*{fetching && <div>{t('loading')}</div>}*/}
+      {/*{result?.isError && <div>Error: {result.error.status}</div>}*/}
       {!result?.isError && items && <Scroller
         loadMore={fetchItems}
         hasMore={hasMore}
+        loader={<>
+          <Stack spacing={1}>
+            <Skeleton variant="text" />
+            {/*<Skeleton variant="circular" width={40} height={40} />*/}
+            <Skeleton variant="rectangular" height={118} />
+            {/*<Skeleton variant="text" />*/}
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+          </Stack>
+          <Stack spacing={1}>
+            <Skeleton variant="text" />
+            {/*<Skeleton variant="circular" width={40} height={40} />*/}
+            <Skeleton variant="rectangular" height={118} />
+            {/*<Skeleton variant="text" />*/}
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+          </Stack>
+          <Stack spacing={1}>
+            <Skeleton variant="text" />
+            {/*<Skeleton variant="circular" width={40} height={40} />*/}
+            <Skeleton variant="rectangular" height={118} />
+            {/*<Skeleton variant="text" />*/}
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+          </Stack>
+        </>}
         useWindow={useWindow}
       >
         {items.map(item => <div key={`${item.id}-${item.createdAt}`}>{renderItem(item)}</div>)}
