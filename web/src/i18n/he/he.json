@@ -19,8 +19,11 @@
   "recaptcha.privacy": "תקנון",
   "recaptcha.terms": "תנאי השימוש",
 
+  "search.label": "חיפוש",
+  "search.submit": "חפש",
+  "search.close": "סגור",
   "search.placeholder": "הקלד מילת חיפוש",
-  "search.results": "תוצאות חיפוש",
+  "search.results.for": "תוצאות חיפוש עבור:",
   "search.no-results": "לא נמצאו תוצאות",
 
 

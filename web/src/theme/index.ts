@@ -23,7 +23,7 @@ function createCustomTheme(theme: PaletteMode) {
     },
     {
       typography: typography.overrides,
-    }
+    },
   );
 }
 

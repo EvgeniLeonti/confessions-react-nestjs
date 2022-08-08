@@ -18,8 +18,11 @@
   "recaptcha.privacy": "Privacy Policy",
   "recaptcha.terms": "Terms of Service",
 
+  "search.label": "Search",
+  "search.submit": "Submit",
+  "search.close": "Close",
   "search.placeholder": "Enter keyword to search",
-  "search.results": "Search results",
+  "search.results.for": "Search results for: ",
   "search.no-results": "No results found",
 
   "contact.submission.title": "Contact",

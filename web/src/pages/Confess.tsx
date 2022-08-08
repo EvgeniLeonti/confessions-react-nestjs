@@ -3,15 +3,11 @@ import GenericForm from "./GenericForm";
 import {useCreateConfessionMutation} from "../store/confession-api";
 import {useHistory} from "../core";
 import {useTranslation} from "react-i18next";
-import {TextareaAutosize, TextField} from "@mui/material";
 import {useState} from "react";
 
 const Confess = () => {
   const history = useHistory();
   const { t } = useTranslation();
-
-  const [value, setValue] = useState("");
-
 
   return (
     <>

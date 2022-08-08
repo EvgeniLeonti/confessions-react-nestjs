@@ -3,7 +3,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Box, Button, CardActions, Collapse, IconButton} from "@mui/material";
-import ShareIcon from "@mui/icons-material/Share";
 import {useTranslation} from "react-i18next";
 import ConfessionReactions from "./Reactions";
 import ConfessionComments from "./Comments";
@@ -14,14 +13,23 @@ import PrettyText from "../PrettyText";
 import {useTheme} from "@mui/material/styles";
 import LinkIcon from '@mui/icons-material/Link';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import NotesIcon from '@mui/icons-material/Notes';
+import {Confession} from "../../types/confession";
 
-export default function ConfessionCard(props) {
-  const {standalone, confession, sx, style, uniqueId} = props;
+interface Props {
+  confession: Confession;
+  standalone: boolean;
+  sx?: any;
+  style?: any;
+  uniqueId?: string;
+  query?: string;
+}
+
+export default function ConfessionCard(props: Props): JSX.Element {
+  const {standalone, confession, sx, style, uniqueId, query} = props;
   const history = useHistory();
   const theme = useTheme();
-  const {id, content, createdAt, reactions} = confession;
-  const {data: commentsCount, error, isLoading} = useGetCommentsCountQuery({id});
+  const {id, createdAt} = confession;
+  const {data: commentsCount} = useGetCommentsCountQuery({id});
   const [expanded, setExpanded] = React.useState(standalone);
 
   const {t} = useTranslation();
@@ -63,9 +71,7 @@ export default function ConfessionCard(props) {
         </Box>
       </CardContent>
       <CardContent sx={{paddingBottom: 0}}>
-
-
-        <PrettyText text={props.confession.content}/>
+        <PrettyText text={props.confession.content} query={query}/>
       </CardContent>
       {/*<CardContent sx={{padding: 0}}>*/}
       {/*  <ConfessionReactions confession={props.confession} sx={{marginBottom: '15px'}}/>*/}

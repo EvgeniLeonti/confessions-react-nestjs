@@ -28,6 +28,8 @@ function ThemeProvider(props: ThemeProviderProps): JSX.Element {
   const detectedTheme = detectTheme();
   detectedTheme.direction = i18n.dir();
 
+  // detectedTheme.TextField.variant = "outlined";
+
   detectedTheme.components = {
     ...detectedTheme.components,
     MuiCssBaseline: {

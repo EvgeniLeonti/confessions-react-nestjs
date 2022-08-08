@@ -2,7 +2,18 @@
 /* SPDX-License-Identifier: MIT */
 
 import {ArrowDropDown, Language, NotificationsNone} from "@mui/icons-material";
-import {AppBar, AppBarProps, Button, IconButton, InputBase, Link, TextField, Toolbar, Typography,} from "@mui/material";
+import {
+  AppBar,
+  AppBarProps,
+  Backdrop, Box,
+  Button, Dialog, DialogActions, DialogContent, DialogTitle,
+  IconButton,
+  InputBase,
+  Link,
+  TextField,
+  Toolbar,
+  Typography, useMediaQuery,
+} from "@mui/material";
 import * as React from "react";
 import {useAuth, useHistory, useNavigate, useToggleTheme} from "../core";
 import {NotificationsMenu, UserMenu} from "../menus";
@@ -12,10 +23,12 @@ import {RootState} from "../store/store";
 import {LanguageMenu} from "../menus/LanguageMenu";
 import {useTranslation} from "react-i18next";
 import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
+import {styled, alpha, useTheme} from '@mui/material/styles';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import i18n from "../i18n/i18n";
+import {LoadingButton} from "@mui/lab";
+import {useRef} from "react";
 type AppToolbarProps = AppBarProps;
 
 export function AppToolbar(props: AppToolbarProps): JSX.Element {
@@ -110,6 +123,29 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
     },
   }));
 
+  const theme = useTheme();
+
+  // const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const fullScreen = true;
+
+  const [open, setIsOpen] = React.useState(false);
+  const textRef = useRef();
+
+  const StyledTextField = styled(TextField)`
+  .MuiInputBase-root {
+    background-color: ${({theme, value}) =>
+      theme.palette.background.default};
+  }
+`
+
+
+  function goToSearchResults() {
+    if (textRef?.current?.value) {
+      setIsOpen(false);
+      history.push(`/search?q=${textRef.current.value}`)
+    }
+  }
+
   return (
     <AppBar
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, ...sx }}
@@ -131,25 +167,88 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
 
         <span style={{ flexGrow: 1 }} />
 
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder={t('search.placeholder')}
-            inputProps={{ 'aria-label': 'search' }}
-            onChange={(e) => {
-              // console.log(e.target.value)
-              // history.push(`/search?q=${e.target.value}`)
-            }}
-            onKeyDown={(e) => {
-              if(e.keyCode == 13){
-                history.push(`/search?q=${e.target.value}`)
-              }
-            }}
-          />
-          {/*{i18n.dir() === 'rtl' ? <ArrowLeftIcon /> : <ArrowRightIcon />}*/}
-        </Search>
+        {/*<Search>*/}
+        {/*  <SearchIconWrapper>*/}
+        {/*    <SearchIcon />*/}
+        {/*  </SearchIconWrapper>*/}
+        {/*  <StyledInputBase*/}
+        {/*    placeholder={t('search.placeholder')}*/}
+        {/*    inputProps={{ 'aria-label': 'search' }}*/}
+        {/*    onKeyDown={(e) => {*/}
+        {/*      if(e.keyCode == 13){*/}
+        {/*        history.push(`/search?q=${e.target.value}`)*/}
+        {/*      }*/}
+        {/*    }}*/}
+        {/*  />*/}
+        {/*  /!*{i18n.dir() === 'rtl' ? <ArrowLeftIcon /> : <ArrowRightIcon />}*!/*/}
+
+        {/*</Search>*/}
+
+
+
+        <IconButton
+          ref={languageMenuAnchorRef}
+          children={<SearchIcon />}
+          onClick={() => setIsOpen(true)}
+        />
+
+        <Dialog fullScreen={fullScreen} open={open} onClose={() => setIsOpen(false)}>
+          {/*<DialogActions>*/}
+          {/*  <Button onClick={() => setIsOpen(false)}>{t('search.close')}</Button>*/}
+          {/*</DialogActions>*/}
+          <DialogContent
+            style={{display: 'flex', alignItems: 'center', justifyContent: 'center', direction: i18n.dir()}}
+          >
+            <Box
+
+              component='form'
+              noValidate
+              autoComplete='off'
+
+              // onSubmit={handleSubmit(onSubmitHandler)}
+              style={{width: '90%', maxWidth: '800px', marginBottom: theme.spacing(1)}}
+
+            >
+              <StyledTextField
+                autoFocus
+                label={t('search.label')}
+                placeholder={t('search.placeholder')}
+                fullWidth
+                required
+                type="text"
+                inputRef={textRef}
+                onKeyPress={(event) => {
+                  if(event.key === 'Enter'){
+                    goToSearchResults();
+                  }
+                }}
+              />
+              <br />
+              <br />
+              <Button
+                variant='contained'
+                onClick={(e) => {
+                  e.preventDefault();
+                  goToSearchResults();
+                }}
+                fullWidth
+              >
+                {t('search.submit')}
+              </Button>
+              <br />
+              <br />
+              <br />
+              <Button fullWidth onClick={() => setIsOpen(false)}>{t('search.close')}</Button>
+
+
+            </Box>
+          </DialogContent>
+        </Dialog>
+
+
+
+
+
 
         <ThemeButton sx={{
           marginInlineStart: (x) => x.spacing(1),
