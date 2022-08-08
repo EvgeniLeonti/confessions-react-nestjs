@@ -19,6 +19,12 @@
   "recaptcha.privacy": "תקנון",
   "recaptcha.terms": "תנאי השימוש",
 
+  "search.placeholder": "הקלד מילת חיפוש",
+  "search.results": "תוצאות חיפוש",
+  "search.no-results": "לא נמצאו תוצאות",
+
+
+
   "contact.submission.title": "צור קשר",
   "contact.submission.success": "הודעתך נשלחה בהצלחה. צוות האתר נחזור אליך בהקדם.",
   "contact.submission.failure": "שגיאה בשליחת הודעה. נא לנסות שוב.",

@@ -2,9 +2,10 @@ import HomeRoute from "./Home.route";
 import ConfessionRoutes from "./Confession.route";
 import LegalRoutes from "./Legal.route";
 import AuthRoutes from "./Auth.route";
-import createNew from "./Confess.route";
-import settings from "./Settings.route";
+import CreateRoute from "./Confess.route";
+import SettingsRoute from "./Settings.route";
 import ContactRoute from "./Contact.route";
+import SearchRoute from "./Search.route";
 import ProfileRoute from "./Profile.route";
 import AdminRoute from "./Admin.route";
 
@@ -16,9 +17,10 @@ export default [
   ConfessionRoutes,
   ProfileRoute,
   HomeRoute,
-  createNew,
-  settings,
+  CreateRoute,
+  SettingsRoute,
   ContactRoute,
+  SearchRoute,
   ...LegalRoutes,
   AdminRoute,
 ] as const;

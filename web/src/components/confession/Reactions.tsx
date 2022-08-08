@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
-import {Badge, Box, Popover} from "@mui/material";
+import {Badge, Box, IconButton, Popover} from "@mui/material";
 import {useTheme} from "@mui/material/styles";
 import {
   useCreateReactionMutation,
@@ -98,7 +98,7 @@ export default function ConfessionReactions(props: { confession: Confession }) {
             fontSize: '24px',
           }}
         >
-          {selectedEmoji ? selectedEmoji : <AddReactionIcon />}
+          {selectedEmoji ? selectedEmoji : <IconButton><AddReactionIcon /></IconButton>}
         </Typography>
 
       <Popover

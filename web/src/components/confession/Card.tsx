@@ -79,6 +79,10 @@ export default function ConfessionCard(props) {
         >
 
           <div>
+            <ConfessionReactions confession={props.confession}/>
+          </div>
+
+          <div>
             <Button
               onClick={handleExpandClick}
               aria-expanded={expanded}
@@ -90,9 +94,7 @@ export default function ConfessionCard(props) {
             </Button>
           </div>
 
-          <div>
-            <ConfessionReactions confession={props.confession}/>
-          </div>
+
 
           <div>
             <Button

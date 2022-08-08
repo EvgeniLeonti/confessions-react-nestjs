@@ -2,16 +2,20 @@
 /* SPDX-License-Identifier: MIT */
 
 import {ArrowDropDown, Language, NotificationsNone} from "@mui/icons-material";
-import {AppBar, AppBarProps, Button, IconButton, Link, Toolbar, Typography,} from "@mui/material";
+import {AppBar, AppBarProps, Button, IconButton, InputBase, Link, TextField, Toolbar, Typography,} from "@mui/material";
 import * as React from "react";
-import {useAuth, useNavigate, useToggleTheme} from "../core";
+import {useAuth, useHistory, useNavigate, useToggleTheme} from "../core";
 import {NotificationsMenu, UserMenu} from "../menus";
 import {ThemeButton} from "./ThemeButton";
 import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
 import {LanguageMenu} from "../menus/LanguageMenu";
 import {useTranslation} from "react-i18next";
-
+import SearchIcon from '@mui/icons-material/Search';
+import { styled, alpha } from '@mui/material/styles';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import i18n from "../i18n/i18n";
 type AppToolbarProps = AppBarProps;
 
 export function AppToolbar(props: AppToolbarProps): JSX.Element {
@@ -23,6 +27,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
   const { ...auth } = useAuth();
   const navigate = useNavigate();
   const authState = useSelector((state: RootState) => state.auth);
+  const history = useHistory();
 
   const me = authState.accessToken;
 
@@ -68,6 +73,42 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
     auth.signIn();
   }
 
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    // backgroundColor: alpha(theme.palette.common.white, 0.15),
+    // '&:hover': {
+    //   backgroundColor: alpha(theme.palette.common.white, 0.25),
+    // },
+    marginLeft: 0,
+    width: 'auto',
+
+
+  }));
+
+  const SearchIconWrapper = styled(IconButton)(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '0',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  }));
 
   return (
     <AppBar
@@ -85,7 +126,30 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
           </Link>
         </Typography>
 
+
+
+
         <span style={{ flexGrow: 1 }} />
+
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder={t('search.placeholder')}
+            inputProps={{ 'aria-label': 'search' }}
+            onChange={(e) => {
+              // console.log(e.target.value)
+              // history.push(`/search?q=${e.target.value}`)
+            }}
+            onKeyDown={(e) => {
+              if(e.keyCode == 13){
+                history.push(`/search?q=${e.target.value}`)
+              }
+            }}
+          />
+          {/*{i18n.dir() === 'rtl' ? <ArrowLeftIcon /> : <ArrowRightIcon />}*/}
+        </Search>
 
         <ThemeButton sx={{
           marginInlineStart: (x) => x.spacing(1),
@@ -94,59 +158,10 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
 
         <IconButton
           ref={languageMenuAnchorRef}
-          sx={{
-            'margin-inline-end': (x) => x.spacing(2),
-            width: 40,
-            height: 40,
-          }}
           children={<Language />}
-          onClick={() => {
-            openLanguageMenu();
-            // openNotificationsMenu();
-          }}
+          onClick={() => openLanguageMenu()}
         />
 
-        {/*<IconButton*/}
-        {/*  sx={{*/}
-        {/*    marginLeft: (x) => x.spacing(1),*/}
-        {/*    backgroundColor: (x) =>*/}
-        {/*      x.palette.mode === "light"*/}
-        {/*        ? x.palette.grey[300]*/}
-        {/*        : x.palette.grey[700],*/}
-        {/*    width: 40,*/}
-        {/*    height: 40,*/}
-        {/*  }}*/}
-        {/*  children={<LanguageButton />}*/}
-        {/*  onClick={openNotificationsMenu}*/}
-        {/*/>*/}
-
-
-
-
-        {/*{authState.accessToken ? 'logged-in' : 'logged-out'}*/}
-        {/*{me && (*/}
-        {/*  <Chip*/}
-        {/*    sx={{*/}
-        {/*      height: 40,*/}
-        {/*      borderRadius: 20,*/}
-        {/*      fontWeight: 600,*/}
-        {/*      backgroundColor: (x) =>*/}
-        {/*        x.palette.mode === "light"*/}
-        {/*          ? x.palette.grey[300]*/}
-        {/*          : x.palette.grey[700],*/}
-        {/*      ".MuiChip-avatar": { width: 32, height: 32 },*/}
-        {/*    }}*/}
-        {/*    component="a"*/}
-        {/*    avatar={*/}
-        {/*      <Avatar*/}
-        {/*        alt={me?.name ?? ""}*/}
-        {/*        src="https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png"*/}
-        {/*      />*/}
-        {/*    }*/}
-        {/*    label={me.email}*/}
-        {/*    onClick={navigate}*/}
-        {/*  />*/}
-        {/*)}*/}
         {me && (
           <IconButton
             sx={{
@@ -176,21 +191,6 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
             }}
             children={<ArrowDropDown />}
             onClick={openUserMenu}
-          />
-        )}
-        {!me && (
-          // <Button
-          //   variant="outlined"
-          //   href="/login"
-          //   color="primary"
-          //   onClick={signIn}
-          //   children="Log in / Register"
-          // />
-          <Button
-            variant="outlined"
-            href="/login"
-            color="primary"
-            children={t('login')}
           />
         )}
       </Toolbar>

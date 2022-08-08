@@ -6,7 +6,7 @@ import {Skeleton} from "@mui/lab";
 import {ConfessionsLoading} from "./ConfessionsLoading";
 
 function InfiniteScroll<Type>(props: any) {
-  const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit, uniqueId} = props;
+  const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit, uniqueId, renderNoResults} = props;
 
   const { t } = useTranslation();
   const [items, setItems] = useState<Type[]>([]);
@@ -17,6 +17,7 @@ function InfiniteScroll<Type>(props: any) {
   const [trigger, result, lastPromiseInfo] =
     useLazyGetQuery();
 
+  console.log('result', result)
   const fetchItems = useCallback(
     async () => {
       if (fetching) {
@@ -59,7 +60,9 @@ function InfiniteScroll<Type>(props: any) {
   return (
     <>
       {/*{fetching && <div>{t('loading')}</div>}*/}
+
       {/*{result?.isError && <div>Error: {result.error.status}</div>}*/}
+      {result?.status === "fulfilled" && items && items.length === 0 && renderNoResults && renderNoResults()}
       {!result?.isError && items && <Scroller
         loadMore={fetchItems}
         hasMore={hasMore}
