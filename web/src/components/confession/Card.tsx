@@ -4,34 +4,17 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ConfessionContent from "./Content";
 import {Box, Button, CardActions, Collapse, IconButtonProps} from "@mui/material";
-import CommentIcon from "@mui/icons-material/Comment";
 import ShareIcon from "@mui/icons-material/Share";
-import {styled, useTheme} from "@mui/material/styles";
 import {useTranslation} from "react-i18next";
 import ConfessionReactions from "./Reactions";
 import ConfessionComments from "./Comments";
 import {useGetCommentsCountQuery} from "../../store/confession-api";
 import {useHistory} from "../../core";
 
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <Button {...other} startIcon={<CommentIcon />} />;
-})(({ theme, expand }) => ({
-  // transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  // marginLeft: 'auto',
-  // transition: theme.transitions.create('transform', {
-  //   duration: theme.transitions.duration.shortest,
-  // }),
-}));
 
 export default function ConfessionCard(props) {
   const {standalone, confession, sx} = props;
   const history = useHistory();
-  const theme = useTheme();
   const {id, content, createdAt, reactions} = confession;
   const {data: commentsCount, error, isLoading} = useGetCommentsCountQuery({id});
   const [expanded, setExpanded] = React.useState(standalone);
@@ -53,9 +36,9 @@ export default function ConfessionCard(props) {
         </Typography>
         <ConfessionContent confession={props.confession}/>
       </CardContent>
-      <CardContent sx={{padding: 0}}>
-        <ConfessionReactions confession={props.confession} sx={{marginBottom: '15px'}}/>
-      </CardContent>
+      {/*<CardContent sx={{padding: 0}}>*/}
+      {/*  <ConfessionReactions confession={props.confession} sx={{marginBottom: '15px'}}/>*/}
+      {/*</CardContent>*/}
       <CardActions>
         <Box
           display="flex"
@@ -63,32 +46,19 @@ export default function ConfessionCard(props) {
           alignItems="center"
           style={{width: '100%'}}
         >
-          {/*<ReactionsCTA confession={props.confession}/>*/}
           <div>
-            <ExpandMore
-              expand={expanded}
+            <ConfessionReactions confession={props.confession}/>
+          </div>
+          <div>
+            <Button
               onClick={handleExpandClick}
               aria-expanded={expanded}
-              aria-label="show more"
+              aria-label="comments"
             >
-              {/*<ExpandMoreIcon />*/}
-              {/*<CommentIcon />*/}
-                {t('comment.list')} ({commentsCount?.count || 0})
-            </ExpandMore>
-
-
-            {/*<Button variant="outlined" startIcon={<CommentIcon />}>*/}
-            {/*  {t('comment')}*/}
-            {/*</Button>*/}
-
-
-
-
+              {t('comment.list')} ({commentsCount?.count || 0})
+            </Button>
           </div>
-
-          {/*<ConfessionReactions confession={props.confession}/>*/}
           <div>
-
             <Button
               aria-label="share"
               startIcon={<ShareIcon />}
@@ -96,8 +66,9 @@ export default function ConfessionCard(props) {
             >
               {t('share')}
             </Button>
-
           </div>
+
+
 
         </Box>
       </CardActions>
