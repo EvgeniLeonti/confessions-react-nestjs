@@ -17,7 +17,10 @@ export class RecaptchaMiddleware implements NestMiddleware {
 
     const [, entity1, id1, entity2, id2] = requestUrl.split('/');
 
-    // allow: /posts and /posts/{id}/comments
+    if (entity1 !== 'admin') {
+      return;
+    }
+
     if (entity1 !== 'posts') {
       return;
     }
