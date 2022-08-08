@@ -5,12 +5,16 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import * as React from 'react';
 import {LoadingButton} from '@mui/lab';
 import {pushNotification} from "../store/toast.state";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect} from "react";
 import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
+import {RootState} from "../store/store";
+import {setRecaptchaToken} from "../store/auth.state";
 
 
 const GenericForm = (props: any) => {
+  const authState = useSelector((state: RootState) => state.auth);
+
   const useMutation = props.useMutation; // e.g. useSignupMutation
   const lang = props.lang; // e.g. LANG.AUTH.SIGNUP = { TITLE: '', SUCCESS: '', FAILURE: '' }
   const fields = props.fields; // e.g. [{type: 'email' name: 'email', label: 'Email'}, {name: 'password', label: 'Password'}]
@@ -41,13 +45,14 @@ const GenericForm = (props: any) => {
 
     const token = await executeRecaptcha('yourAction');
     // Do whatever you want with the token
-    console.log('do something with the token', token);
+    // console.log('do something with the token', token);
+    dispatch(setRecaptchaToken(token));
   }, [executeRecaptcha]);
 
   // You can use useEffect to trigger the verification as soon as the component being loaded
-  useEffect(() => {
-    handleReCaptchaVerify();
-  }, [handleReCaptchaVerify]);
+  // useEffect(() => {
+  //   handleReCaptchaVerify();
+  // }, [handleReCaptchaVerify]);
 
   // recaptcha start
 

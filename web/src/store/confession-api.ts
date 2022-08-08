@@ -16,7 +16,7 @@ export const confessionApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
-      const {accessToken} = (getState() as RootState).auth
+      const {accessToken, recaptchaToken} = (getState() as RootState).auth
       const {clientJs} = (getState() as RootState).app
 
 
@@ -27,6 +27,10 @@ export const confessionApi = createApi({
 
       if (clientJs) {
         headers.set('browser-fingerprint', clientJs.fingerprint)
+      }
+
+      if (recaptchaToken) {
+        headers.set('recaptcha-token', recaptchaToken)
       }
 
       return headers

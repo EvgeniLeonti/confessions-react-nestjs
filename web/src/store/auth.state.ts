@@ -23,6 +23,7 @@ export interface AuthState {
   accessToken: string | null,
   refreshToken: string | null,
   user: any,
+  recaptchaToken: string | null,
 }
 const initialAccessToken = localStorage.getItem('accessToken');
 const initialRefreshToken = localStorage.getItem('refreshToken');
@@ -31,6 +32,7 @@ const initialState: AuthState = {
   accessToken: initialAccessToken,
   refreshToken: initialRefreshToken,
   user: initialAccessToken ? parseJwt(initialAccessToken) : null,
+  recaptchaToken: null,
 }
 
 export const authSlice = createSlice({
@@ -51,6 +53,9 @@ export const authSlice = createSlice({
     unsetRefreshToken: (state, action: PayloadAction<string>) => {
       state.refreshToken = null
     },
+    setRecaptchaToken: (state, action: PayloadAction<string>) => {
+      state.recaptchaToken = action.payload
+    }
   },
 
 })
@@ -61,6 +66,7 @@ export const {
   unsetAccessToken,
   setRefreshToken,
   unsetRefreshToken,
+  setRecaptchaToken,
 } = authSlice.actions
 
 export default authSlice.reducer
