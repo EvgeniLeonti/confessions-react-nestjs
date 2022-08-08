@@ -10,6 +10,8 @@ import {object, string, TypeOf} from 'zod';
 import {pushNotification} from "../../store/toast.state";
 import {useDispatch} from "react-redux";
 import InfiniteScroll from "../InfiniteScroll";
+import PrettyTime from "../PrettyTime";
+import {useTheme} from "@mui/material/styles";
 
 export default function ConfessionComments(props) {
   const { confession, standalone } = props;
@@ -17,6 +19,7 @@ export default function ConfessionComments(props) {
   const { data, error, isLoading } = useGetCommentsQuery({id: confession.id});
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const schema = object({
     content: string()
@@ -138,20 +141,33 @@ export default function ConfessionComments(props) {
           <>
             {data.items.map((comment, index) =>
               <>
-                <ListItem>
+                <ListItem style={{padding: theme.spacing(1)}}>
                   <ListItemText
-                    primary={comment.content}
+                    primary={
+                      <Typography variant="body1" gutterBottom>
+                        {comment.content}
+                      </Typography>
+                    }
                     secondary={
                       <>
+                        {' - '}
                         <Typography
                           sx={{ display: 'inline' }}
                           component="span"
-                          variant="body2"
+                          variant="caption"
                           color="text.primary"
                         >
                           {t('anonymous')}
                         </Typography>
-                        {` ${t('at')} ${new Date(comment.createdAt).toLocaleString()}`}
+                        {' '}
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="caption"
+                        >
+                          <PrettyTime date={comment.createdAt} />
+                        </Typography>
+
                       </>
                     }
                   />

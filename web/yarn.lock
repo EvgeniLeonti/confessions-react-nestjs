@@ -3864,6 +3864,7 @@ __metadata:
     react-infinite-scroller: "npm:^1.2.6"
     react-redux: "npm:^8.0.2"
     react-refresh: "npm:^0.13.0"
+    react-timeago: "npm:^7.1.0"
     react-use: "npm:^17.4.0"
     react-virtualized-auto-sizer: "npm:^1.0.6"
     react-window: "npm:^1.8.7"
@@ -9941,6 +9942,15 @@ __metadata:
     react-dnd: ^11.1.3
     react-dom: ^17.0.0
   checksum: b212f6a1d029b173690f3796292ded729cea606decc8f6bee5b621d64ac194f82101e4834d9b9eed522e966359567090991bbbadca8056e39f8d9b5cd1261166
+  languageName: node
+  linkType: hard
+
+"react-timeago@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "react-timeago@npm:7.1.0"
+  peerDependencies:
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: f27172cfdc5fb68f5304df275ee5f91e4f7c4a1675b013ae625efc6483561d06414e0c5b2a5c1a493b8ddbe1f7b9767277e987bc0119e5e3f46b6f8d1017becb
   languageName: node
   linkType: hard
 

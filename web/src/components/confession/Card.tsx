@@ -3,13 +3,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ConfessionContent from "./Content";
-import {Box, Button, CardActions, Collapse, IconButtonProps} from "@mui/material";
+import {Box, Button, CardActions, Collapse, IconButton, IconButtonProps, Tooltip} from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
 import {useTranslation} from "react-i18next";
 import ConfessionReactions from "./Reactions";
 import ConfessionComments from "./Comments";
 import {useGetCommentsCountQuery} from "../../store/confession-api";
 import {useHistory} from "../../core";
+import PrettyTime from "../PrettyTime";
 
 
 export default function ConfessionCard(props) {
@@ -30,9 +31,10 @@ export default function ConfessionCard(props) {
       sx={{...sx, minWidth: 275}}
       key={`confession-card-${id}-${commentsCount}`}
     >
+
       <CardContent sx={{paddingBottom: 0}} onClick={() => history.push(`/confession/${confession.id}`)}>
         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-          {new Date(createdAt).toLocaleString()}
+          {t('published')} <PrettyTime date={createdAt} />
         </Typography>
         <ConfessionContent confession={props.confession}/>
       </CardContent>
