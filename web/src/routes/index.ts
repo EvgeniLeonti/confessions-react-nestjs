@@ -4,6 +4,7 @@ import LegalRoutes from "./Legal.route";
 import AuthRoutes from "./Auth.route";
 import createNew from "./Confess.route";
 import settings from "./Settings.route";
+import ContactRoute from "./Contact.route";
 import ProfileRoute from "./Profile.route";
 import AdminRoute from "./Admin.route";
 
@@ -17,6 +18,7 @@ export default [
   HomeRoute,
   createNew,
   settings,
+  ContactRoute,
   ...LegalRoutes,
   AdminRoute,
 ] as const;

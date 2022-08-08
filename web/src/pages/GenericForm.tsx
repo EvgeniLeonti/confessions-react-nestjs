@@ -10,11 +10,14 @@ import {useCallback, useEffect} from "react";
 import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
 import {RootState} from "../store/store";
 import {setRecaptchaToken} from "../store/auth.state";
+import {useTranslation} from "react-i18next";
+import RecaptchaDisclaimer from "../components/RecaptchaDisclaimer";
 
 
 const GenericForm = (props: any) => {
   const authState = useSelector((state: RootState) => state.auth);
 
+  const {t} = useTranslation();
   const useMutation = props.useMutation; // e.g. useSignupMutation
   const lang = props.lang; // e.g. LANG.AUTH.SIGNUP = { TITLE: '', SUCCESS: '', FAILURE: '' }
   const fields = props.fields; // e.g. [{type: 'email' name: 'email', label: 'Email'}, {name: 'password', label: 'Password'}]
@@ -138,9 +141,9 @@ const GenericForm = (props: any) => {
             )
           })}
 
-        <Typography variant="body2" gutterBottom>
-          This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
-        </Typography>
+
+
+          <RecaptchaDisclaimer variant="body2" gutterBottom />
 
           <LoadingButton
             variant='contained'

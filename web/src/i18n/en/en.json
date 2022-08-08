@@ -7,11 +7,26 @@
   "login": "Login",
   "published": "Published",
   "no-comments-yet": "No comments yet. Be the first one to comment! \uD83D\uDDE3️",
-
+  "email-is-required": "Email is required",
+  "email-is-invalid": "Email is invalid",
   "menu.home": "Home",
   "menu.confess": "Confess",
   "menu.profile": "Profile",
   "menu.admin": "Admin",
+
+  "recaptcha.disclaimer": "This site is protected by reCAPTCHA and the Google {privacyUrl} and {termsUrl} apply.",
+  "recaptcha.privacy": "Privacy Policy",
+  "recaptcha.terms": "Terms of Service",
+
+
+  "contact.submission.title": "Contact",
+  "contact.submission.success": "Your message has been sent. We will get back to you as soon as possible.",
+  "contact.submission.failure": "Error occurred while sending your message. Please try again later.",
+  "contact.submission.submit": "Send",
+  "contact.submission.email": "Email",
+  "contact.submission.content": "Content",
+  "contact.submission.content.required": "Content is required",
+  "contact.submission.content.min": "Content must be at least {min} characters",
 
 
   "login.submission.title": "Login",
