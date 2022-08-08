@@ -44,9 +44,7 @@ const GenericForm = (props: any) => {
     }
 
     const token = await executeRecaptcha('yourAction');
-    // Do whatever you want with the token
-    // console.log('do something with the token', token);
-    dispatch(setRecaptchaToken(token));
+    return token;
   }, [executeRecaptcha]);
 
   // You can use useEffect to trigger the verification as soon as the component being loaded
@@ -73,10 +71,13 @@ const GenericForm = (props: any) => {
   });
 
 
-  const onSubmitHandler: SubmitHandler<MutationInputType> = (values) => {
+  const onSubmitHandler: SubmitHandler<MutationInputType> = async (values) => {
+    const recaptchaResult = await handleReCaptchaVerify();
 
-    handleReCaptchaVerify();
-
+    if (recaptchaResult) {
+      dispatch(setRecaptchaToken(recaptchaResult));
+    }
+    dispatch(setRecaptchaToken(recaptchaResult));
 
     mutation(buildPayload(values)).then(result => {
       if (result.error) {
