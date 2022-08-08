@@ -22,6 +22,10 @@ const config = {
     // origin: 'http://localhost:4000',
   },
 
+  recaptcha: {
+    siteKey: '6LfZ0VghAAAAAH1FPqJ6chtnpeZ_rgkr1swxcZMW',
+  }
+
   /**
    * Google Analytics (v4)
    * https://developers.google.com/analytics/devguides/collection/ga4

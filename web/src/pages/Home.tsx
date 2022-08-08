@@ -7,8 +7,10 @@ import InfiniteScroll from "../components/InfiniteScroll";
 import {Confession} from "../types/confession";
 import {useLazyGetConfessionsQuery} from "../store/confession-api";
 import ConfessionCard from "../components/confession/Card";
+import {useTheme} from "@mui/material/styles";
 
 function Home(): JSX.Element {
+  const theme = useTheme();
   const ConfessionsInfiniteScroll = InfiniteScroll<Confession>;
 
   return (

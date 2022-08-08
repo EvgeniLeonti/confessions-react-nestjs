@@ -39,6 +39,7 @@
     "query-string": "^7.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-google-recaptcha-v3": "^1.10.0",
     "react-hook-form": "^7.33.1",
     "react-i18next": "^11.18.3",
     "react-infinite-scroller": "^1.2.6",

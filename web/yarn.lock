@@ -3859,6 +3859,7 @@ __metadata:
     query-string: "npm:^7.1.1"
     react: "npm:^18.1.0"
     react-dom: "npm:^18.1.0"
+    react-google-recaptcha-v3: "npm:^1.10.0"
     react-hook-form: "npm:^7.33.1"
     react-i18next: "npm:^11.18.3"
     react-infinite-scroller: "npm:^1.2.6"
@@ -9823,6 +9824,18 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 7c5b915fb793d63563cec1f721e059e6ff0e2855ac116ab5cb7450b6c59398f5e25f95c960ce5cb93504cc58ab724a75a78e99282354e702a0e667d0d787d028
+  languageName: node
+  linkType: hard
+
+"react-google-recaptcha-v3@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "react-google-recaptcha-v3@npm:1.10.0"
+  dependencies:
+    hoist-non-react-statics: "npm:^3.3.2"
+  peerDependencies:
+    react: ^17.0 || ^18.0
+    react-dom: ^17.0 || ^18.0
+  checksum: 438b081c4b4381f7b5bc5cf4b7044aaaa2cb69cd68e98940e55627a82550feff523955228d5208c5b4daeb3cbb9244ee67ddd16f76725d59bc6fe79e41c3f4c2
   languageName: node
   linkType: hard
 

@@ -63,7 +63,7 @@ export function LanguageMenu(props: LanguageMenuProps): JSX.Element {
       {...other}
     >
       {languages.map(({code, name, flag}) => (
-        <MenuItem selected={i18n.language === code} component={Link} onClick={() => changeLanguage(code)}>
+        <MenuItem key={`language-menu-${code}-menu-item`} selected={i18n.language === code} component={Link} onClick={() => changeLanguage(code)}>
           <ListItemIcon sx={{ minWidth: 40 }} children={<div>{flag}</div>} />
           <ListItemText primary={name} />
         </MenuItem>

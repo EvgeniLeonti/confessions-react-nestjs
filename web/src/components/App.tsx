@@ -8,15 +8,12 @@ import {History, HistoryContext, LocationContext} from "../core/history";
 import type {RouterResponse} from "../core/router";
 import {resolveRoute} from "../core/router";
 import {AppToolbar} from "./AppToolbar";
-import {AuthProvider} from "./AuthProvider";
 import {ErrorPage} from "./ErrorPage";
 import {ThemeProvider} from "./ThemeProvider";
 import {BottomMenu} from "./BottomMenu";
-import {useSnackbar} from "notistack";
-import {useEffect} from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "../store/store";
 import {Wrapper} from "./Wrapper";
+import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
+import config from "../core/config";
 
 class App extends React.Component<AppProps> {
   state = {
@@ -36,10 +33,6 @@ class App extends React.Component<AppProps> {
     const { history } = this.props;
     this.dispose = history.listen(this.renderPath);
     this.renderPath({ location: history.location, action: Action.Pop });
-
-    console.log('App mounted state', this.state.location.pathname);
-
-    // document.dir = 'rtl';
   }
 
   componentDidUpdate(): void {
@@ -90,7 +83,26 @@ class App extends React.Component<AppProps> {
     }
 
     return (
-      <ThemeProvider>
+      <GoogleReCaptchaProvider
+        reCaptchaKey={config.recaptcha.siteKey}
+        language="[optional_language]"
+        // useRecaptchaNet="[optional_boolean_value]"
+        // useEnterprise="[optional_boolean_value]"
+        scriptProps={{
+          async: false, // optional, default to false,
+          defer: false, // optional, default to false
+          appendTo: 'head', // optional, default to "head", can be "head" or "body",
+          nonce: undefined // optional, default undefined
+        }}
+        // container={{ // optional to render inside custom element
+        //   element: "[required_id_or_htmlelement]",
+        //   parameters: {
+        //     badge: '[inline|bottomright|bottomleft]', // optional, default undefined
+        //     theme: 'dark', // optional, default undefined
+        //   }
+        // }}
+      >
+        <ThemeProvider>
           <HistoryContext.Provider value={history}>
             <LocationContext.Provider value={location}>
               <Wrapper>
@@ -104,7 +116,8 @@ class App extends React.Component<AppProps> {
               </Wrapper>
             </LocationContext.Provider>
           </HistoryContext.Provider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </GoogleReCaptchaProvider>
     );
   }
 }

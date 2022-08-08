@@ -1,13 +1,14 @@
-import {useHistory, useLocation} from "../core";
+import {useLocation} from "../core";
 import {useTranslation} from "react-i18next";
 import {useGetConfessionQuery, useLazyGetConfessionsQuery} from "../store/confession-api";
 import ConfessionCard from "../components/confession/Card";
 import * as React from "react";
-import {Container, Divider, Typography} from "@mui/material";
+import {Container, Typography} from "@mui/material";
 import InfiniteScroll from "../components/InfiniteScroll";
-import i18n from "../i18n/i18n";
+import {useTheme} from "@mui/material/styles";
 
 const Confession = () => {
+  const theme = useTheme();
   const location = useLocation();
   const [, , id] = location.pathname.split('/');
   const { data, error, isLoading } = useGetConfessionQuery({id});

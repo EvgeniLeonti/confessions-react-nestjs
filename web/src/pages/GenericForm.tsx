@@ -6,6 +6,8 @@ import * as React from 'react';
 import {LoadingButton} from '@mui/lab';
 import {pushNotification} from "../store/toast.state";
 import {useDispatch} from "react-redux";
+import {useCallback, useEffect} from "react";
+import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
 
 
 const GenericForm = (props: any) => {
@@ -16,6 +18,7 @@ const GenericForm = (props: any) => {
   const buildPayload = props.buildPayload;
   const onSuccess = props.onSuccess;
 
+  // form schema and validations
   let schema = object(fields.reduce((acc, field) => {
     acc[field.name] = field.schema;
     return acc;
@@ -24,6 +27,30 @@ const GenericForm = (props: any) => {
   if (refine) {
     schema = schema.refine(refine.check, refine.message);
   }
+
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  // recaptcha start
+
+  // Create an event handler so you can call the verification on button click event or form submit
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log('Execute recaptcha not yet available');
+      return;
+    }
+
+    const token = await executeRecaptcha('yourAction');
+    // Do whatever you want with the token
+    console.log('do something with the token', token);
+  }, [executeRecaptcha]);
+
+  // You can use useEffect to trigger the verification as soon as the component being loaded
+  useEffect(() => {
+    handleReCaptchaVerify();
+  }, [handleReCaptchaVerify]);
+
+  // recaptcha start
+
 
   type MutationInputType = TypeOf<typeof schema>;
 
@@ -42,6 +69,10 @@ const GenericForm = (props: any) => {
 
 
   const onSubmitHandler: SubmitHandler<MutationInputType> = (values) => {
+
+    handleReCaptchaVerify();
+
+
     mutation(buildPayload(values)).then(result => {
       if (result.error) {
         return;
@@ -73,31 +104,32 @@ const GenericForm = (props: any) => {
       >
           {fields.map(({type, name, label, multiline, rows, maxRows, textarea}, index) => {
             return (
-              <>
-                <TextField
-                  key={`field-${name}-${index}`}
-                  sx={{ mb: 3 }}
-                  label={label}
-                  fullWidth
-                  required
-                  type={type}
-                  error={!!errors[name]}
-                  helperText={errors[name] ? errors[name].message : ''}
-                  {...register(name)}
-                  multiline={multiline}
-                  rows={rows}
-                  maxRows={maxRows}
-                  InputProps={textarea && {
-                    inputComponent: TextareaAutosize,
-                    inputProps: {
-                      minRows: rows,
-                    },
-                  }}
-                />
-              </>
-
+              <TextField
+                key={`field-${name}-${index}`}
+                sx={{ mb: 3 }}
+                label={label}
+                fullWidth
+                required
+                type={type}
+                error={!!errors[name]}
+                helperText={errors[name] ? errors[name].message : ''}
+                {...register(name)}
+                multiline={multiline}
+                rows={rows}
+                maxRows={maxRows}
+                InputProps={textarea && {
+                  inputComponent: TextareaAutosize,
+                  inputProps: {
+                    minRows: rows,
+                  },
+                }}
+              />
             )
           })}
+
+        <Typography variant="body2" gutterBottom>
+          This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
+        </Typography>
 
           <LoadingButton
             variant='contained'

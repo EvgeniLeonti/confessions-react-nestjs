@@ -15,7 +15,7 @@ import {useTheme} from "@mui/material/styles";
 
 
 export default function ConfessionCard(props) {
-  const {standalone, confession, sx} = props;
+  const {standalone, confession, sx, style, uniqueId} = props;
   const history = useHistory();
   const theme = useTheme();
   const {id, content, createdAt, reactions} = confession;
@@ -31,7 +31,8 @@ export default function ConfessionCard(props) {
   return (
     <Card
       sx={{...sx, minWidth: 275}}
-      key={`confession-card-${id}-${commentsCount}`}
+      style={style}
+      key={`${uniqueId}-${commentsCount}`}
     >
 
       <CardContent sx={{paddingBottom: 0}} onClick={() => history.push(`/confession/${confession.id}`)}>

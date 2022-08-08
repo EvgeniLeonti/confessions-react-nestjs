@@ -10,8 +10,8 @@ function PrettyText(props: Props): JSX.Element {
   const {text, variant, component} = props;
   return (
     <>
-      {text && text.split("\n").map((line: string) =>
-        <Typography variant={variant || "body1"} component={component || "div"} gutterBottom>{line}</Typography>)
+      {text && text.split("\n").map((line: string, index  ) =>
+        <Typography key={`${line.replace(' ', '').substring(0, 30)}-${index}`} variant={variant || "body1"} component={component || "div"} gutterBottom>{line}</Typography>)
       }
     </>
   );

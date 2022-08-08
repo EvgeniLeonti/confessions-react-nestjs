@@ -1,25 +1,14 @@
 /* SPDX-FileCopyrightText: 2014-present Kriasoft <hello@kriasoft.com> */
 /* SPDX-License-Identifier: MIT */
 
-import { ArrowDropDown, NotificationsNone } from "@mui/icons-material";
-import {
-  AppBar,
-  AppBarProps,
-  Avatar,
-  Button,
-  Chip,
-  IconButton,
-  Link,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import {ArrowDropDown, Language, NotificationsNone} from "@mui/icons-material";
+import {AppBar, AppBarProps, Button, IconButton, Link, Toolbar, Typography,} from "@mui/material";
 import * as React from "react";
-import { config, useAuth, useNavigate, useToggleTheme } from "../core";
-import { NotificationsMenu, UserMenu } from "../menus";
-import { ThemeButton } from "./ThemeButton";
+import {useAuth, useNavigate, useToggleTheme} from "../core";
+import {NotificationsMenu, UserMenu} from "../menus";
+import {ThemeButton} from "./ThemeButton";
 import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
-import {LanguageButton} from "./LanguageButton";
 import {LanguageMenu} from "../menus/LanguageMenu";
 import {useTranslation} from "react-i18next";
 
@@ -99,8 +88,8 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
         <span style={{ flexGrow: 1 }} />
 
         <ThemeButton sx={{
-          'margin-inline-start': (x) => x.spacing(1),
-          'margin-inline-end': (x) => x.spacing(1),
+          marginInlineStart: (x) => x.spacing(1),
+          marginInlineEnd: (x) => x.spacing(1),
         }} />
 
         <IconButton
@@ -110,9 +99,8 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
             width: 40,
             height: 40,
           }}
-          children={<LanguageButton />}
+          children={<Language />}
           onClick={() => {
-            console.log('sd')
             openLanguageMenu();
             // openNotificationsMenu();
           }}

@@ -3,7 +3,7 @@ import * as Scroller from 'react-infinite-scroller';
 import {useTranslation} from "react-i18next";
 
 function InfiniteScroll<Type>(props: any) {
-  const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit, key} = props;
+  const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit} = props;
 
   const { t } = useTranslation();
   const [items, setItems] = useState<Type[]>([]);
@@ -59,10 +59,9 @@ function InfiniteScroll<Type>(props: any) {
       {!result?.isError && items && <Scroller
         loadMore={fetchItems}
         hasMore={hasMore}
-        loader={<div key={key} className="loader">{t('loading')}</div>}
         useWindow={useWindow}
       >
-        {items.map(item => renderItem(item))}
+        {items.map(item => <div key={`${item.id}-${item.createdAt}`}>{renderItem(item)}</div>)}
       </Scroller>}
     </>
 

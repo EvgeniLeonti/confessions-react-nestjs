@@ -26,7 +26,16 @@ function StyleProvider(props: ThemeProviderProps) {
 
 function ThemeProvider(props: ThemeProviderProps): JSX.Element {
   const detectedTheme = detectTheme();
-  detectedTheme.direction = i18n.dir()
+  detectedTheme.direction = i18n.dir();
+
+  detectedTheme.components = {
+    ...detectedTheme.components,
+    MuiCssBaseline: {
+      styleOverrides: `
+        .grecaptcha-badge { opacity:0;}
+      `,
+    }
+  }
 
   document.getElementById('root')?.setAttribute('dir', i18n.dir());
   // document.body.dir = i18n.dir();

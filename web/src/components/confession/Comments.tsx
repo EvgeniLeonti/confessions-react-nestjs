@@ -49,7 +49,7 @@ export default function ConfessionComments(props) {
   //   }
   // }, [isSubmitSuccessful])
 
-  const CommentsInfiniteScroll = InfiniteScroll<any>;
+  // const CommentsInfiniteScroll = InfiniteScroll<any>;
 
 
   return (
