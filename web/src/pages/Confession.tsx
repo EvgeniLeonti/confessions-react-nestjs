@@ -6,6 +6,8 @@ import * as React from "react";
 import {Container, Typography} from "@mui/material";
 import InfiniteScroll from "../components/InfiniteScroll";
 import {useTheme} from "@mui/material/styles";
+import {useEffect} from "react";
+import i18n from "../i18n/i18n";
 
 const Confession = () => {
   const theme = useTheme();
@@ -15,6 +17,25 @@ const Confession = () => {
   const { t } = useTranslation();
   const ConfessionsInfiniteScroll = InfiniteScroll<Confession>;
 
+  useEffect(() => {
+    // todo think about better solution
+    // console.log('data', data);
+    if (!data) {
+      return
+    }
+    if (data.language && data.language !== i18n.language) {
+      console.log('changine language from', i18n.language, 'to', data.language);
+      const lng = data.language;
+      const prevLng = i18n.language;
+      i18n.changeLanguage(lng).then(() => {
+        if (prevLng !== lng) {
+          history.go(0); // todo invalidate get posts cache
+        }
+      });
+      document.body.dir = i18n.dir() || 'ltr';
+      theme.direction = i18n.dir() || 'ltr';
+    }
+  }, [data])
   return (
     <Container sx={{ marginTop: (x) => x.spacing(3), marginBottom: (x) => x.spacing(10) }} maxWidth="sm">
       {data && <ConfessionCard sx={{ marginBottom: (x) => x.spacing(3) }} confession={data} standalone />}
