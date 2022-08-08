@@ -1,4 +1,4 @@
-import {Box, Container, TextField, Typography,} from '@mui/material';
+import {Box, Container, TextareaAutosize, TextField, Typography,} from '@mui/material';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {object, TypeOf} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -71,7 +71,7 @@ const GenericForm = (props: any) => {
         autoComplete='off'
         onSubmit={handleSubmit(onSubmitHandler)}
       >
-          {fields.map(({type, name, label, multiline, rows}, index) => {
+          {fields.map(({type, name, label, multiline, rows, maxRows, textarea}, index) => {
             return (
               <>
                 <TextField
@@ -86,6 +86,13 @@ const GenericForm = (props: any) => {
                   {...register(name)}
                   multiline={multiline}
                   rows={rows}
+                  maxRows={maxRows}
+                  InputProps={textarea && {
+                    inputComponent: TextareaAutosize,
+                    inputProps: {
+                      minRows: rows,
+                    },
+                  }}
                 />
               </>
 

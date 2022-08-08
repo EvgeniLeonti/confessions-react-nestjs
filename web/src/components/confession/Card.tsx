@@ -2,8 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import ConfessionContent from "./Content";
-import {Box, Button, CardActions, Collapse, IconButton, IconButtonProps, Tooltip} from "@mui/material";
+import {Box, Button, CardActions, Collapse} from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
 import {useTranslation} from "react-i18next";
 import ConfessionReactions from "./Reactions";
@@ -11,11 +10,14 @@ import ConfessionComments from "./Comments";
 import {useGetCommentsCountQuery} from "../../store/confession-api";
 import {useHistory} from "../../core";
 import PrettyTime from "../PrettyTime";
+import PrettyText from "../PrettyText";
+import {useTheme} from "@mui/material/styles";
 
 
 export default function ConfessionCard(props) {
   const {standalone, confession, sx} = props;
   const history = useHistory();
+  const theme = useTheme();
   const {id, content, createdAt, reactions} = confession;
   const {data: commentsCount, error, isLoading} = useGetCommentsCountQuery({id});
   const [expanded, setExpanded] = React.useState(standalone);
@@ -36,7 +38,7 @@ export default function ConfessionCard(props) {
         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
           {t('published')} <PrettyTime date={createdAt} />
         </Typography>
-        <ConfessionContent confession={props.confession}/>
+        <PrettyText text={props.confession.content}/>
       </CardContent>
       {/*<CardContent sx={{padding: 0}}>*/}
       {/*  <ConfessionReactions confession={props.confession} sx={{marginBottom: '15px'}}/>*/}
@@ -76,7 +78,7 @@ export default function ConfessionCard(props) {
       </CardActions>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
+        <CardContent style={{paddingBottom: theme.spacing(1)}}>
           <ConfessionComments confession={props.confession} standalone={standalone}/>
         </CardContent>
       </Collapse>

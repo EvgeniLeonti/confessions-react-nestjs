@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import {Box, Divider, List, ListItem, ListItemText, TextField} from "@mui/material";
+import {Box, Divider, List, ListItem, ListItemText, TextareaAutosize, TextField} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 import {useCreateCommentMutation, useGetCommentsQuery} from "../../store/confession-api";
 import {useTranslation} from "react-i18next";
@@ -12,6 +12,7 @@ import {useDispatch} from "react-redux";
 import InfiniteScroll from "../InfiniteScroll";
 import PrettyTime from "../PrettyTime";
 import {useTheme} from "@mui/material/styles";
+import PrettyText from "../PrettyText";
 
 export default function ConfessionComments(props) {
   const { confession, standalone } = props;
@@ -60,7 +61,7 @@ export default function ConfessionComments(props) {
         noValidate
         autoComplete='off'
         onSubmit={handleSubmit(onSubmitHandler)}
-        style={{width: '100%'}}
+        style={{width: '100%', marginBottom: theme.spacing(1)}}
       >
         <TextField
           // autoFocus
@@ -79,6 +80,9 @@ export default function ConfessionComments(props) {
           // error={!!errors.content} // todo fix
           // helperText={errors.content ? error.content.message : ''} // todo fix
           {...register('content')}
+          InputProps={{
+            inputComponent: TextareaAutosize,
+          }}
         />
         <LoadingButton
           variant='contained'
@@ -101,6 +105,7 @@ export default function ConfessionComments(props) {
         maxHeight: standalone ? 500 : 300,
         // overflow: "hidden",
         overflowY: "scroll",
+        padding: 0,
       }}>
         {/*<CommentsInfiniteScroll*/}
         {/*  renderItem={(comment) =>*/}
@@ -137,17 +142,13 @@ export default function ConfessionComments(props) {
 
         {error ? (
           <><div>Oh no, there was an error: {JSON.stringify(error)}</div></>
-        ) : data?.items ? (
+        ) : Array.isArray(data?.items) ? (
           <>
-            {data.items.map((comment, index) =>
-              <>
+            {data.items.length === 0 && <div style={{marginBottom: theme.spacing(1)}}>{t('no-comments-yet')}</div>}
+            {data.items.length > 0 && data.items.map((comment, index) => <>
                 <ListItem style={{padding: theme.spacing(1)}}>
                   <ListItemText
-                    primary={
-                      <Typography variant="body1" gutterBottom>
-                        {comment.content}
-                      </Typography>
-                    }
+                    primary={<PrettyText text={comment.content} variant="body2" />}
                     secondary={
                       <>
                         {' - '}
@@ -173,8 +174,7 @@ export default function ConfessionComments(props) {
                   />
                 </ListItem>
                 { index === data.items.length - 1  ? null : <Divider component="li" />}
-              </>
-            )}
+              </>)}
 
           </>
         ) : null}

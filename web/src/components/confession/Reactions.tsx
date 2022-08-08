@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
-import {Badge, Box, Button, Popover} from "@mui/material";
+import {Badge, Box, Popover} from "@mui/material";
 import {useTheme} from "@mui/material/styles";
 import {
   useCreateReactionMutation,
@@ -10,10 +10,12 @@ import {
 } from "../../store/confession-api";
 import {useTranslation} from "react-i18next";
 import AddReactionIcon from '@mui/icons-material/AddReaction';
+import {Confession} from "../../types/confession";
 
-export default function ConfessionReactions(props) {
-  const {id, content, createdAt, reactions} = props.confession;
+export default function ConfessionReactions(props: { confession: Confession }) {
+  const {id} = props.confession;
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -29,7 +31,7 @@ export default function ConfessionReactions(props) {
   const { data, error, isLoading } = useGetReactionsSummaryQuery({id});
   const theme = useTheme();
   const [selectedReaction, setSelectedReaction] = useState(null);
-  const [summary, setSummary] = useState(null);
+  const [summary, setSummary] = useState<{myReaction: {name: string}}|null>(null);
   const currentMyReaction = summary?.myReaction?.name;
   const {t} = useTranslation();
 

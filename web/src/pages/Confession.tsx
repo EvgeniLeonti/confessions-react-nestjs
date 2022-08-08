@@ -5,6 +5,7 @@ import ConfessionCard from "../components/confession/Card";
 import * as React from "react";
 import {Container, Divider, Typography} from "@mui/material";
 import InfiniteScroll from "../components/InfiniteScroll";
+import i18n from "../i18n/i18n";
 
 const Confession = () => {
   const location = useLocation();
