@@ -51,9 +51,7 @@ export default function ConfessionCard(props) {
           alignItems="center"
           style={{width: '100%'}}
         >
-          <div>
-            <ConfessionReactions confession={props.confession}/>
-          </div>
+
           <div>
             <Button
               onClick={handleExpandClick}
@@ -63,6 +61,11 @@ export default function ConfessionCard(props) {
               {t('comment.list')} ({commentsCount?.count || 0})
             </Button>
           </div>
+
+          <div>
+            <ConfessionReactions confession={props.confession}/>
+          </div>
+
           <div>
             <Button
               aria-label="share"

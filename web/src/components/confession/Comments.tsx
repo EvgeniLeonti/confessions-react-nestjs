@@ -13,10 +13,13 @@ import InfiniteScroll from "../InfiniteScroll";
 import PrettyTime from "../PrettyTime";
 import {useTheme} from "@mui/material/styles";
 import PrettyText from "../PrettyText";
+import {useCallback, useEffect} from "react";
+import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
+import {setRecaptchaToken} from "../../store/auth.state";
 
 export default function ConfessionComments(props) {
   const { confession, standalone } = props;
-  const [createCommentMutation, {isLoading: isCreateCommentLoading}] = useCreateCommentMutation();
+  const [createCommentMutation, {isLoading: isCreateCommentLoading, isSuccess: isCreateCommentSuccess}] = useCreateCommentMutation();
   const { data, error, isLoading } = useGetCommentsQuery({id: confession.id});
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -35,19 +38,38 @@ export default function ConfessionComments(props) {
     resolver: zodResolver(schema),
   });
 
-  const onSubmitHandler = (result) => {
-    createCommentMutation({id: confession.id, content: result.content}).then(() => {
-      dispatch(pushNotification({message: t('comment.submission.success'), options: { variant: 'success' } }))
-      reset()
-    });
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log('Execute recaptcha not yet available');
+      return;
+    }
+
+    const token = await executeRecaptcha('submit_comment');
+    return token;
+  }, [executeRecaptcha]);
+
+  const onSubmitHandler = async (result) => {
+    const recaptchaResult = await handleReCaptchaVerify();
+
+    if (recaptchaResult) {
+      dispatch(setRecaptchaToken(recaptchaResult));
+    }
+
+    createCommentMutation({id: confession.id, content: result.content})
   }
 
-  // useEffect(() => {
-  //   // console.log('isSubmitSuccessful', isSubmitSuccessful)
-  //   if (isSubmitSuccessful) {
-  //     increaseCommentCount(confession.id)
-  //   }
-  // }, [isSubmitSuccessful])
+
+  useEffect(() => {
+    // console.log('isSubmitSuccessful', isSubmitSuccessful)
+    if (isCreateCommentSuccess) {
+      dispatch(pushNotification({message: t('comment.submission.success'), options: { variant: 'success' } }))
+      reset()
+    }
+  }, [isCreateCommentSuccess])
+
+
+
 
   // const CommentsInfiniteScroll = InfiniteScroll<any>;
 
@@ -145,7 +167,7 @@ export default function ConfessionComments(props) {
         ) : Array.isArray(data?.items) ? (
           <>
             {data.items.length === 0 && <div style={{marginBottom: theme.spacing(1)}}>{t('no-comments-yet')}</div>}
-            {data.items.length > 0 && data.items.map((comment, index) => <>
+            {data.items.length > 0 && data.items.map((comment, index) => <div key={`comment-${comment.id}-${index}`}>
                 <ListItem style={{padding: theme.spacing(1)}}>
                   <ListItemText
                     primary={<PrettyText text={comment.content} variant="body2" />}
@@ -174,7 +196,7 @@ export default function ConfessionComments(props) {
                   />
                 </ListItem>
                 { index === data.items.length - 1  ? null : <Divider component="li" />}
-              </>)}
+              </div>)}
 
           </>
         ) : null}

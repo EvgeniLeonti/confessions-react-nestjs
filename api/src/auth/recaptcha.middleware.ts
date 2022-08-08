@@ -13,7 +13,18 @@ export class RecaptchaMiddleware implements NestMiddleware {
 
   private async verifyRecaptcha(request) {
     // const request = context.getRequest();
-    const { headers } = request;
+    const { headers, url: requestUrl } = request;
+
+    const [, entity1, id1, entity2, id2] = requestUrl.split('/');
+
+    // allow: /posts and /posts/{id}/comments
+    if (entity1 !== 'posts') {
+      return;
+    }
+
+    if (entity2 === 'reactions') {
+      return;
+    }
 
     if (!headers['recaptcha-token']) {
       throw new UnauthorizedException('You are a bot! 😈');
@@ -29,6 +40,7 @@ export class RecaptchaMiddleware implements NestMiddleware {
     if (res.data.success !== true) {
       throw new UnauthorizedException('You are a bot! 😈');
     }
+
     // console.log('res.data', res.data);
   }
 

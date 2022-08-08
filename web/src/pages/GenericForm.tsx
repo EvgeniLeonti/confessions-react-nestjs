@@ -43,7 +43,7 @@ const GenericForm = (props: any) => {
       return;
     }
 
-    const token = await executeRecaptcha('yourAction');
+    const token = await executeRecaptcha('submit_generic_form');
     return token;
   }, [executeRecaptcha]);
 
@@ -57,7 +57,7 @@ const GenericForm = (props: any) => {
 
   type MutationInputType = TypeOf<typeof schema>;
 
-  const [mutation, {isLoading}] = useMutation();
+  const [mutation, result] = useMutation();
 
   const dispatch = useDispatch();
 
@@ -77,14 +77,12 @@ const GenericForm = (props: any) => {
     if (recaptchaResult) {
       dispatch(setRecaptchaToken(recaptchaResult));
     }
-    dispatch(setRecaptchaToken(recaptchaResult));
 
     mutation(buildPayload(values)).then(result => {
       if (result.error) {
         return;
       }
 
-      dispatch(pushNotification({message: lang.SUCCESS, options: { variant: 'success' } }))
 
       if (onSuccess) {
         onSuccess(result.data);
@@ -92,10 +90,17 @@ const GenericForm = (props: any) => {
     })
   };
 
+  useEffect(() => {
+    // console.log('result', 'result', result)
+    if (result?.isSuccess) {
+      dispatch(pushNotification({message: lang.SUCCESS, options: { variant: 'success' } }))
+    }
+  }, [result]);
+
   return (
     <Container
       maxWidth="sm"
-      sx={{ marginTop: (x) => x.spacing(3), marginBottom: (x) => x.spacing(3) }}
+      sx={{ marginTop: (x) => x.spacing(3), marginBottom: (x) => x.spacing(15) }}
     >
       <Typography
         sx={{ marginBottom: (theme) => theme.spacing(2) }}
@@ -141,7 +146,7 @@ const GenericForm = (props: any) => {
             variant='contained'
             fullWidth
             type='submit'
-            loading={isLoading}
+            loading={result.isLoading}
             sx={{ py: '0.8rem', mt: '1rem' }}
           >
             {lang.SUBMIT}
