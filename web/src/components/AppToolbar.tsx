@@ -132,10 +132,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
   const textRef = useRef();
 
   const StyledTextField = styled(TextField)`
-  .MuiInputBase-root {
-    background-color: ${({theme, value}) =>
-      theme.palette.background.default};
-  }
+
 `
 
 
@@ -197,18 +194,21 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
           {/*  <Button onClick={() => setIsOpen(false)}>{t('search.close')}</Button>*/}
           {/*</DialogActions>*/}
           <DialogContent
-            style={{display: 'flex', alignItems: 'center', justifyContent: 'center', direction: i18n.dir()}}
+            style={{display: 'flex', direction: i18n.dir()}}
           >
             <Box
-
               component='form'
               noValidate
               autoComplete='off'
 
               // onSubmit={handleSubmit(onSubmitHandler)}
-              style={{width: '90%', maxWidth: '800px', marginBottom: theme.spacing(1)}}
+              style={{width: '100%', marginBottom: theme.spacing(1)}}
 
             >
+              <Button color="secondary" onClick={() => setIsOpen(false)}>{t('search.close')}</Button>
+              <br />
+              <br />
+              <br />
               <StyledTextField
                 autoFocus
                 label={t('search.label')}
@@ -235,10 +235,7 @@ export function AppToolbar(props: AppToolbarProps): JSX.Element {
               >
                 {t('search.submit')}
               </Button>
-              <br />
-              <br />
-              <br />
-              <Button fullWidth onClick={() => setIsOpen(false)}>{t('search.close')}</Button>
+
 
 
             </Box>
