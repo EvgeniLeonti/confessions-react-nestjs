@@ -14,8 +14,6 @@ import {BottomMenu} from "./BottomMenu";
 import {Wrapper} from "./Wrapper";
 import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
 import config from "../core/config";
-import LogRocket from 'logrocket';
-LogRocket.init('ohquht/confessions');
 
 class App extends React.Component<AppProps> {
   state = {
