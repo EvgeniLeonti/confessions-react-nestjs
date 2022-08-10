@@ -84,7 +84,7 @@ export default function ConfessionReactions(props: { confession: Confession }) {
 
   return (
     <>
-        <Typography
+      {selectedEmoji ? <Typography
           aria-describedby={`${id}-reactions-popover`}
           onClick={handleClick}
           aria-label="react"
@@ -98,8 +98,15 @@ export default function ConfessionReactions(props: { confession: Confession }) {
             fontSize: '24px',
           }}
         >
-          {selectedEmoji ? selectedEmoji : <IconButton><AddReactionIcon /></IconButton>}
-        </Typography>
+        {selectedEmoji}
+        </Typography> :
+        <IconButton
+          aria-describedby={`${id}-reactions-popover`}
+          onClick={handleClick}
+        >
+          <AddReactionIcon />
+        </IconButton>
+      }
 
       <Popover
         elevation={1}
