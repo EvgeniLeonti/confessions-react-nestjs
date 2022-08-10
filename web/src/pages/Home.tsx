@@ -16,7 +16,7 @@ function Home(): JSX.Element {
   return (
     <Container sx={{ marginTop: (x) => x.spacing(3), marginBottom: (x) => x.spacing(10) }} maxWidth="sm">
       <ConfessionsInfiniteScroll
-        renderItem={(item) => <><ConfessionCard confession={item} /><br /></>}
+        renderItem={(item: Confession) => <><ConfessionCard confession={item} /><br /></>}
         useLazyGetQuery={useLazyGetConfessionsQuery}
         limit={5}
         useWindow={true}

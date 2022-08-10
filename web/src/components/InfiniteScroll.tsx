@@ -15,9 +15,11 @@ function InfiniteScroll<Type>(props: any) {
   const [trigger, result, lastPromiseInfo] =
     useLazyGetQuery();
 
-  console.log('result', result)
   const fetchItems = useCallback(
     async () => {
+      // console.log('fetching', fetching)
+      // console.log('result', result)
+
       if (fetching) {
         return;
       }
