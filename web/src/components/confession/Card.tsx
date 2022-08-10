@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import {Box, Button, CardActions, Collapse, IconButton} from "@mui/material";
+import {Badge, Box, Button, CardActions, Collapse, IconButton} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import ConfessionReactions from "./Reactions";
 import ConfessionComments from "./Comments";
@@ -14,7 +14,9 @@ import {useTheme} from "@mui/material/styles";
 import LinkIcon from '@mui/icons-material/Link';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {Confession} from "../../types/confession";
-
+import AddReactionIcon from "@mui/icons-material/AddReaction";
+import CommentIcon from '@mui/icons-material/Comment';
+import ShareIcon from '@mui/icons-material/Share';
 interface Props {
   confession: Confession;
   standalone: boolean;
@@ -84,32 +86,36 @@ export default function ConfessionCard(props: Props): JSX.Element {
           style={{width: '100%'}}
         >
 
+          {/*reactions*/}
           <div>
             <ConfessionReactions confession={props.confession}/>
           </div>
 
-          <div>
-            <Button
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="comments"
-              // startIcon={<NotesIcon />}
+          {/*comments*/}
+          <div style={{height: 'auto'}}>
+            <Badge badgeContent={commentsCount?.count || 0} color="primary">
+              <IconButton
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="comments"
+              >
 
-            >
-              {t('comment.list')} ({commentsCount?.count || 0})
-            </Button>
+                <CommentIcon/>
+              </IconButton>
+            </Badge>
           </div>
 
-
-
+          {/*share*/}
           <div>
-            <Button
-              aria-label="share"
-              // startIcon={<ShareIcon />}
-              color="secondary"
-            >
-              {t('share')}
-            </Button>
+            <Badge badgeContent={commentsCount?.count || 0} color="primary">
+              <IconButton
+                aria-label="share"
+                color="secondary"
+              >
+
+                <ShareIcon />
+              </IconButton>
+            </Badge>
           </div>
 
 
