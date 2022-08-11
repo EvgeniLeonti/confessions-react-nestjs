@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import {Badge, Box, Button, CardActions, Collapse, IconButton} from "@mui/material";
+import {Badge, Box, CardActions, Collapse, IconButton} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import ConfessionReactions from "./Reactions";
 import ConfessionComments from "./Comments";
@@ -14,12 +14,12 @@ import {useTheme} from "@mui/material/styles";
 import LinkIcon from '@mui/icons-material/Link';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {Confession} from "../../types/confession";
-import AddReactionIcon from "@mui/icons-material/AddReaction";
 import CommentIcon from '@mui/icons-material/Comment';
 import ShareIcon from '@mui/icons-material/Share';
+
 interface Props {
   confession: Confession;
-  standalone: boolean;
+  standalone?: boolean;
   sx?: any;
   style?: any;
   uniqueId?: string;
@@ -37,6 +37,14 @@ export default function ConfessionCard(props: Props): JSX.Element {
   const {t} = useTranslation();
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const badgeStyle = {
+    '& .MuiBadge-badge': {
+      right: '5%',
+      top: '25%',
+      backgroundColor: `${theme.palette.background.paper}`,
+    },
   };
 
   // console.log('ConfessionCard key', `confession-card-${id}-${commentsCount}`);
@@ -92,8 +100,12 @@ export default function ConfessionCard(props: Props): JSX.Element {
           </div>
 
           {/*comments*/}
-          <div style={{height: 'auto'}}>
-            <Badge badgeContent={commentsCount?.count || 0} color="primary">
+          <div>
+            <Badge
+              badgeContent={commentsCount?.count || 0}
+              // color="primary"
+              sx={badgeStyle}
+            >
               <IconButton
                 onClick={handleExpandClick}
                 aria-expanded={expanded}
@@ -107,19 +119,12 @@ export default function ConfessionCard(props: Props): JSX.Element {
 
           {/*share*/}
           <div>
-            <Badge badgeContent={commentsCount?.count || 0} color="primary">
-              <IconButton
-                aria-label="share"
-                color="secondary"
-              >
-
-                <ShareIcon />
-              </IconButton>
-            </Badge>
+            <IconButton
+              aria-label="share"
+            >
+              <ShareIcon />
+            </IconButton>
           </div>
-
-
-
         </Box>
       </CardActions>
 

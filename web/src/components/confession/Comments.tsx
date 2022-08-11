@@ -166,7 +166,7 @@ export default function ConfessionComments(props) {
           <><div>Oh no, there was an error: {JSON.stringify(error)}</div></>
         ) : Array.isArray(data?.items) ? (
           <>
-            {data.items.length === 0 && <div style={{marginBottom: theme.spacing(1)}}>{t('no-comments-yet')}</div>}
+            {data.items.length === 0 && <Typography style={{padding: theme.spacing(1)}} variant="body2">{t('no-comments-yet')}</Typography>}
             {data.items.length > 0 && data.items.map((comment, index) => <div key={`comment-${comment.id}-${index}`}>
                 <ListItem style={{padding: theme.spacing(1)}}>
                   <ListItemText
