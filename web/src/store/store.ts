@@ -4,7 +4,6 @@ import authReducer, {unsetAccessToken} from './auth.state'
 import toastReducer, {pushNotification} from './toast.state'
 import appReducer, {setLanguage} from './app.state'
 import {confessionApi} from "./confession-api";
-import LogRocket from 'logrocket';
 import { applyMiddleware, createStore } from 'redux';
 
 
@@ -77,7 +76,7 @@ export const store = configureStore({
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(confessionApi.middleware, customMiddleware, LogRocket.reduxMiddleware()),
+    getDefaultMiddleware().concat(confessionApi.middleware, customMiddleware),
 
 })
 

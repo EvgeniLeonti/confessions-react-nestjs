@@ -15,6 +15,11 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="/manifest.json" />
+
+    <!--
+      counter.dev integration
+    -->
+    <script>if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"brizer2@gmail.com",utcoffset:"3"}))};sessionStorage.setItem("_swa","1");</script>
     <title>Confessions</title>
   </head>
   <body>
