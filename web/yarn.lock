@@ -3851,7 +3851,6 @@ __metadata:
     js-cookie: "npm:^3.0.1"
     jss: "npm:^10.9.1"
     jss-rtl: "npm:^0.3.0"
-    logrocket: "npm:^3.0.1"
     mui-datatables: "npm:^4.2.2"
     notistack: "npm:^2.0.5"
     parse-link-header: "npm:^2.0.0"
@@ -3866,6 +3865,7 @@ __metadata:
     react-infinite-scroller: "npm:^1.2.6"
     react-redux: "npm:^8.0.2"
     react-refresh: "npm:^0.13.0"
+    react-share: "npm:^4.4.0"
     react-timeago: "npm:^7.1.0"
     react-use: "npm:^17.4.0"
     react-virtualized-auto-sizer: "npm:^1.0.6"
@@ -4535,6 +4535,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"classnames@npm:^2.2.5":
+  version: 2.3.1
+  resolution: "classnames@npm:2.3.1"
+  checksum: 282e29eeb023740bfd9d00e44d6baf2b2f023f0d0a460cd327869062eaa512cea66a1fd97d730b4f934fb94b9425c1702963be62029fa0ec1383c5e34c89f404
+  languageName: node
+  linkType: hard
+
 "clean-css@npm:^5.2.2":
   version: 5.3.1
   resolution: "clean-css@npm:5.3.1"
@@ -4966,7 +4973,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:2.6.9":
+"debug@npm:2.6.9, debug@npm:^2.1.3":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
   dependencies:
@@ -8112,6 +8119,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsonp@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "jsonp@npm:0.2.1"
+  dependencies:
+    debug: "npm:^2.1.3"
+  checksum: 66ebe92376db7c44e2dbdfbf520ad9d4aff347f7863a0a3dbfd4aa70702672ed7d245efa5ab84dadcb149691a1ceffa3efd0c7e5d8fe41acdece4cac53499843
+  languageName: node
+  linkType: hard
+
 "jss-rtl@npm:^0.3.0":
   version: 0.3.0
   resolution: "jss-rtl@npm:0.3.0"
@@ -8336,13 +8352,6 @@ __metadata:
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 3ac18e92108d68f88429fcddee609e42cf2b653583d9bac22308815a4cd6b185b89a0ad0d9b0c670c371d9d6b61571a98fee6b36e1db14e52766ca253ed9cba0
-  languageName: node
-  linkType: hard
-
-"logrocket@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "logrocket@npm:3.0.1"
-  checksum: 981820c5d21f71535b256b244d75a1d9e3d2e6cbdb19b4cd162ee14c5320a056976b80fe6231526f26e9bea29fe6e221061dd39814bc97ae404a7efeb0704ca4
   languageName: node
   linkType: hard
 
@@ -9942,6 +9951,18 @@ __metadata:
   version: 0.13.0
   resolution: "react-refresh@npm:0.13.0"
   checksum: 58d398b6474cd3ae8a4034f3500d0e0dab0e2cb06b9281d4926ad4b780df923800ce28d6e87c8c5abab5df6f58eb622665c291f9037f8f93e8d73fdbac3c0697
+  languageName: node
+  linkType: hard
+
+"react-share@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "react-share@npm:4.4.0"
+  dependencies:
+    classnames: "npm:^2.2.5"
+    jsonp: "npm:^0.2.1"
+  peerDependencies:
+    react: ^16.3.0 || ^17
+  checksum: 403c9b9fbb917c9ad9cc31f8393095d3e5ef187100fc815700e81c2e45f8ce49c23010671a7323a525a5e60466c271d9e34277df6b5a857fdda247bdbee3bd6e
   languageName: node
   linkType: hard
 

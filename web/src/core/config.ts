@@ -11,6 +11,7 @@ const config = {
    */
   app: {
     name: "Confessions",
+    baseUrl: "https://new.confessions.co.il"
     // env: process.env.APP_ENV as "local" | "test" | "production",
   },
   /**

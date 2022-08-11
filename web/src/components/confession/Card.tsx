@@ -16,6 +16,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {Confession} from "../../types/confession";
 import CommentIcon from '@mui/icons-material/Comment';
 import ShareIcon from '@mui/icons-material/Share';
+import ConfessionShare from "./Share";
 
 interface Props {
   confession: Confession;
@@ -119,11 +120,9 @@ export default function ConfessionCard(props: Props): JSX.Element {
 
           {/*share*/}
           <div>
-            <IconButton
-              aria-label="share"
-            >
-              <ShareIcon />
-            </IconButton>
+            <ConfessionShare confession={props.confession}/>
+
+
           </div>
         </Box>
       </CardActions>
