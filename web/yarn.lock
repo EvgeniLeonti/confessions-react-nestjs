@@ -1400,7 +1400,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.18.9
   resolution: "@babel/runtime@npm:7.18.9"
   dependencies:
@@ -3043,6 +3043,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-virtualized@npm:^9":
+  version: 9.21.21
+  resolution: "@types/react-virtualized@npm:9.21.21"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    "@types/react": "npm:^17"
+  checksum: 9c834253d26efea6e49eaa1010b1cd36833156a192fd0ee6dde3442d7adf96381dcf39ba0d01cb6fbf647feb2d25dc4962ff23e29bc8b55cc72581453afb107a
+  languageName: node
+  linkType: hard
+
 "@types/react-window-infinite-loader@npm:^1":
   version: 1.0.6
   resolution: "@types/react-window-infinite-loader@npm:1.0.6"
@@ -3070,6 +3080,17 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 4c6dd07079c8403d8733450289a1fc1b5626af058261cf0128f8b6e0e600bcdd6b789d6304703eb9c1986236bee5f917ff4ca08559b45e06376c6871b7658f30
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^17":
+  version: 17.0.48
+  resolution: "@types/react@npm:17.0.48"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    "@types/scheduler": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 9663361074230a138a34ab1cd0f3c81e5844c988d1b12a83e8eda858772f211df522ee45e1709c54d28287525fe0a9fd611a7bd3a5e2d7fbbd3751f06e11bb30
   languageName: node
   linkType: hard
 
@@ -3815,6 +3836,7 @@ __metadata:
     "@types/react": "npm:^18.0.12"
     "@types/react-dom": "npm:^18.0.5"
     "@types/react-infinite-scroller": "npm:^1"
+    "@types/react-virtualized": "npm:^9"
     "@types/react-virtualized-auto-sizer": "npm:^1"
     "@types/react-window": "npm:^1"
     "@types/react-window-infinite-loader": "npm:^1"
@@ -3846,12 +3868,12 @@ __metadata:
     i18next: "npm:^21.8.16"
     i18next-browser-languagedetector: "npm:^6.1.4"
     ignore-webpack-plugin: "npm:^0.3.0"
+    immutable: "npm:^4.1.0"
     inline-chunk-html-plugin: "npm:^1.1.1"
     jest: "npm:^28.1.1"
     js-cookie: "npm:^3.0.1"
     jss: "npm:^10.9.1"
     jss-rtl: "npm:^0.3.0"
-    logrocket: "npm:^3.0.1"
     mui-datatables: "npm:^4.2.2"
     notistack: "npm:^2.0.5"
     parse-link-header: "npm:^2.0.0"
@@ -3859,6 +3881,7 @@ __metadata:
     prettier: "npm:^2.6.2"
     query-string: "npm:^7.1.1"
     react: "npm:^18.1.0"
+    react-cool-virtual: "npm:^0.7.0"
     react-dom: "npm:^18.1.0"
     react-google-recaptcha-v3: "npm:^1.10.0"
     react-hook-form: "npm:^7.33.1"
@@ -3868,6 +3891,7 @@ __metadata:
     react-refresh: "npm:^0.13.0"
     react-timeago: "npm:^7.1.0"
     react-use: "npm:^17.4.0"
+    react-virtualized: "npm:^9.22.3"
     react-virtualized-auto-sizer: "npm:^1.0.6"
     react-window: "npm:^1.8.7"
     react-window-infinite-loader: "npm:^1.0.8"
@@ -7075,6 +7099,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immutable@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "immutable@npm:4.1.0"
+  checksum: 73b16013a6e7592cf8757d717a14a53016b1c6b1d0c683c74dbfe6fdfd44ca3dcceb7efab34d0ed226f189d9e7b4d3d65ec03c3a892dad839f45209f54e474b3
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^2.0.0":
   version: 2.0.0
   resolution: "import-fresh@npm:2.0.0"
@@ -8336,13 +8367,6 @@ __metadata:
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 3ac18e92108d68f88429fcddee609e42cf2b653583d9bac22308815a4cd6b185b89a0ad0d9b0c670c371d9d6b61571a98fee6b36e1db14e52766ca253ed9cba0
-  languageName: node
-  linkType: hard
-
-"logrocket@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "logrocket@npm:3.0.1"
-  checksum: 981820c5d21f71535b256b244d75a1d9e3d2e6cbdb19b4cd162ee14c5320a056976b80fe6231526f26e9bea29fe6e221061dd39814bc97ae404a7efeb0704ca4
   languageName: node
   linkType: hard
 
@@ -9762,6 +9786,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-cool-virtual@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "react-cool-virtual@npm:0.7.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.16.7"
+  peerDependencies:
+    react: ">= 16.8.0"
+  checksum: cf6724d5225aa2f346ec297bc77bab289a40c19537a184771813c5dfad39badd54a2e8cadc28de2447f83760c4ed2bac279e9c10e6b9f37e6cb319a515c3db6c
+  languageName: node
+  linkType: hard
+
 "react-display-name@npm:^0.2.0":
   version: 0.2.5
   resolution: "react-display-name@npm:0.2.5"
@@ -10047,7 +10082,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-virtualized@npm:^9.21.2":
+"react-virtualized@npm:^9.21.2, react-virtualized@npm:^9.22.3":
   version: 9.22.3
   resolution: "react-virtualized@npm:9.22.3"
   dependencies:

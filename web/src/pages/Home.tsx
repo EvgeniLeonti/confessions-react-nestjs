@@ -1,28 +1,25 @@
-/* SPDX-FileCopyrightText: 2014-present Kriasoft <hello@kriasoft.com> */
-/* SPDX-License-Identifier: MIT */
-
-import {Container} from "@mui/material";
 import * as React from "react";
-import InfiniteScroll from "../components/InfiniteScroll";
 import {Confession} from "../types/confession";
 import {useLazyGetConfessionsQuery} from "../store/confession-api";
 import ConfessionCard from "../components/confession/Card";
-import {useTheme} from "@mui/material/styles";
+import InfiniteScroll2 from "../components/InfiniteScroll2";
+import InfiniteScroll3 from "../components/InfiniteScroll3";
+import {Container} from "@mui/material";
 
 function Home(): JSX.Element {
-  const theme = useTheme();
-  const ConfessionsInfiniteScroll = InfiniteScroll<Confession>;
+  const ConfessionsInfiniteScroll = InfiniteScroll2<Confession>;
+
+
 
   return (
-    <Container sx={{ marginTop: (x) => x.spacing(3), marginBottom: (x) => x.spacing(10) }} maxWidth="sm">
-      <ConfessionsInfiniteScroll
+      <InfiniteScroll2
         renderItem={(item: Confession) => <><ConfessionCard confession={item} /><br /></>}
         useLazyGetQuery={useLazyGetConfessionsQuery}
-        limit={5}
+        limit={10}
         useWindow={true}
         uniqueId={'posts-infinite-scroll'}
       />
-    </Container>
+
   );
 }
 

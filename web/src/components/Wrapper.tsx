@@ -9,8 +9,9 @@ import {useSnackbar} from "notistack";
 import {clearNotifications} from "../store/toast.state";
 import {ClientJS} from 'clientjs'
 import {setClientJs} from "../store/app.state";
+import i18n from "../i18n/i18n";
 
-export function Wrapper(props: { children: any }): JSX.Element {
+export function Wrapper(props: { children: any, style?: any }): JSX.Element {
   const {notifications} = useSelector((state: RootState) => state.toast);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const dispatch = useDispatch();
@@ -47,9 +48,12 @@ export function Wrapper(props: { children: any }): JSX.Element {
   })
 
   return (
-    <>
+    <div style={{
+      ...props?.style,
+      direction: i18n.dir(),
+    }}>
       {props.children}
-    </>
+    </div>
   );
 }
 
