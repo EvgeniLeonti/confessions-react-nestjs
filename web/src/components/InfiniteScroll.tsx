@@ -53,7 +53,7 @@ function InfiniteScroll<Type>(props: any) {
         setFetching(false);
       }
     },
-    [items, fetching]
+    [fetching]
   );
 
 
