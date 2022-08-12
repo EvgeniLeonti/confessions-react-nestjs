@@ -10,6 +10,7 @@ import { PostsModule } from 'src/posts/posts.module';
 import config from 'src/common/configs/config';
 import { loggingMiddleware } from 'src/common/middleware/logging.middleware';
 import { RecaptchaMiddleware } from '../auth/recaptcha.middleware';
+import { ContactModule } from '../contact/contact.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { RecaptchaMiddleware } from '../auth/recaptcha.middleware';
     AuthModule,
     UsersModule,
     PostsModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService],
