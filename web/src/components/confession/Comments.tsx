@@ -16,6 +16,7 @@ import PrettyText from "../PrettyText";
 import {useCallback, useEffect} from "react";
 import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
 import {setRecaptchaToken} from "../../store/auth.state";
+import RecaptchaDisclaimer from "../RecaptchaDisclaimer";
 
 export default function ConfessionComments(props) {
   const { confession, standalone } = props;
@@ -106,6 +107,7 @@ export default function ConfessionComments(props) {
             inputComponent: TextareaAutosize,
           }}
         />
+
         <LoadingButton
           variant='contained'
           type='submit'
@@ -120,6 +122,8 @@ export default function ConfessionComments(props) {
           {t('comment.submission.submit')}
         </LoadingButton>
       </Box>
+
+      <RecaptchaDisclaimer variant="caption" gutterBottom />
 
       {/* comments list */}
       <List sx={{

@@ -157,6 +157,16 @@ export const confessionApi = createApi({
       invalidatesTags: (result, error, id) => ([{ type: 'Reactions', id: result.postId }]),
     }),
 
+
+    // message
+    createContact: builder.mutation<Confession, Partial<Confession> & Pick<Confession, 'id'>>({
+      query: ({ id, ...body }) => ({
+        url: `contact`,
+        method: 'POST',
+        body,
+      }),
+    }),
+
     // admin
     getAdminConfessions: builder.query<ConfessionsResult, string>({
       query: () => `admin/posts`,
@@ -223,6 +233,9 @@ export const {
   useCreateReactionMutation,
   useGetReactionsSummaryQuery,
   useDeleteReactionMutation,
+
+  // messages
+  useCreateContactMutation,
 
   useGetAdminConfessionsQuery,
   usePatchConfessionMutation,

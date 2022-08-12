@@ -66,7 +66,12 @@ export class PostsController {
 
     const filter = {
       published: true,
-      ...(query && { content: { contains: decodeURIComponent(query) } }),
+      ...(query && {
+        content: {
+          contains: decodeURIComponent(query),
+          mode: 'insensitive', // todo seems like this is not working
+        },
+      }),
       ...(lang && { language: lang }),
       ...(exclude && {
         NOT: {
