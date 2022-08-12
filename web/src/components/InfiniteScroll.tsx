@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import * as Scroller from 'react-infinite-scroller';
 import {useTranslation} from "react-i18next";
-import {ConfessionsLoading} from "./ConfessionsLoading";
+import {ConfessionLoading} from "./Confession/ConfessionLoading";
 
 function InfiniteScroll<Type>(props: any) {
   const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit, uniqueId, renderNoResults} = props;
@@ -53,7 +53,7 @@ function InfiniteScroll<Type>(props: any) {
         setFetching(false);
       }
     },
-    [fetching]
+    [items, fetching, after],
   );
 
 
@@ -66,7 +66,7 @@ function InfiniteScroll<Type>(props: any) {
       {!result?.isError && items && <Scroller
         loadMore={fetchItems}
         hasMore={hasMore}
-        loader={<ConfessionsLoading />}
+        loader={<ConfessionLoading />}
         useWindow={useWindow}
       >
         {items.map(item => <div key={`${uniqueId}-${item.id}-${item.createdAt}`}>{renderItem(item)}</div>)}
