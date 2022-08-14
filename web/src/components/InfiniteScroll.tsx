@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import * as Scroller from 'react-infinite-scroller';
 import {useTranslation} from "react-i18next";
-import {ConfessionLoading} from "./Confession/ConfessionLoading";
+import ConfessionLoading from "./Confession/ConfessionLoading";
 
 function InfiniteScroll<Type>(props: any) {
   const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit, uniqueId, renderNoResults} = props;
