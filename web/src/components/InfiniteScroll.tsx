@@ -1,7 +1,8 @@
 import React, {useCallback, useState} from 'react';
 import * as Scroller from 'react-infinite-scroller';
 import {useTranslation} from "react-i18next";
-import ConfessionLoading from "./Confession/ConfessionLoading";
+import {Stack} from "@mui/material";
+import {Skeleton} from "@mui/lab";
 
 function InfiniteScroll<Type>(props: any) {
   const {renderItem, useWindow, useLazyGetQuery, triggerParams, limit, uniqueId, renderNoResults} = props;
@@ -66,7 +67,15 @@ function InfiniteScroll<Type>(props: any) {
       {!result?.isError && items && <Scroller
         loadMore={fetchItems}
         hasMore={hasMore}
-        loader={<ConfessionLoading />}
+        loader={    <Stack spacing={1}>
+          <Skeleton variant="text" />
+          {/*<Skeleton variant="circular" width={40} height={40} />*/}
+          <Skeleton variant="rectangular" height={118} />
+          {/*<Skeleton variant="text" />*/}
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+        </Stack>}
         useWindow={useWindow}
       >
         {items.map(item => <div key={`${uniqueId}-${item.id}-${item.createdAt}`}>{renderItem(item)}</div>)}
