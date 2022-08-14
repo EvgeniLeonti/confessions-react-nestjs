@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "sls offline": "npx serverless offline start",
+    "sls offline": "nest build && npx serverless offline start",
     "sls deploy": "npx prisma generate && yarn run build && npx serverless deploy",
     "prebuild": "rimraf dist",
     "build": "nest build",
