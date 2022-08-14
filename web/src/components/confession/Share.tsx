@@ -89,34 +89,15 @@ export default function ConfessionShare(props: { confession: Confession }) {
       }
   }
 
-  const selectedEmoji = summary?.count?.[selectedReaction]?.emoji;
-
   return (
     <>
-      {selectedEmoji ? <Typography
-          aria-describedby={`${id}-reactions-popover`}
-          onClick={handleClick}
-          aria-label="react"
-          component="span"
-          display="flex"
-
-          sx={{
-            alignSelf: 'bottom',
-            padding: theme.spacing(0, 1, 0, 1),
-            cursor: 'pointer',
-            fontSize: '24px',
-          }}
-        >
-        {selectedEmoji}
-        </Typography> :
-        <IconButton
-          aria-label="share"
-          aria-describedby={`${id}-share-popover`}
-          onClick={handleClick}
-        >
-        <ShareIcon />
-        </IconButton>
-      }
+      <IconButton
+        aria-label="share"
+        aria-describedby={`${id}-share-popover`}
+        onClick={handleClick}
+      >
+      <ShareIcon />
+      </IconButton>
 
       <Popover
         elevation={1}

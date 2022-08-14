@@ -120,6 +120,7 @@ export default function ConfessionCard(props: Props): JSX.Element {
 
           {/*share*/}
           <div>
+
             <ConfessionShare confession={props.confession}/>
 
 
