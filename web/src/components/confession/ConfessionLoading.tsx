@@ -2,7 +2,7 @@ import {Stack} from "@mui/material";
 import {Skeleton} from "@mui/lab";
 import React from "react";
 
-export const ConfessionLoading = (props: any) => {
+export default function ConfessionLoading (props: any) {
   return <>
     <Stack spacing={1}>
       <Skeleton variant="text" />
